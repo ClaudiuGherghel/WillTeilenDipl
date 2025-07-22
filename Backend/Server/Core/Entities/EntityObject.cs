@@ -15,5 +15,9 @@ namespace Core.Entities
 
         [Timestamp]
         public byte[]? RowVersion { get; set; }
+
+        // Beim ersten Speichern wird eine RowVersion generiert.
+        // Bei jedem erfolgreichen SaveChanges() wird RowVersion auf einen neuen Wert gesetzt.
+        // Der Eintrag wird gelöscht, die RowVersion wird nicht mehr relevant.
     }
 }

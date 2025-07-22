@@ -86,5 +86,14 @@ namespace Persistence
         //dotnet ef database update
         //dotnet ef database drop --force
 
-    }
+
+        /* VALIDIERUNG!
+        1️. Ein Admin kann Kategorien per API erstellen →
+        → DTO-Validation verhindert leere Namen beim API-Aufruf. ModelState prüft DTOs
+
+        2️. Ein internes System importiert Daten direkt ins DbContext →
+        → Hier greift nur die Entity-Validation oder ein ValidationService.
+        */
+
+}
 }

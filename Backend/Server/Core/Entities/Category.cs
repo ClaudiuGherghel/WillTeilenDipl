@@ -9,7 +9,7 @@ namespace Core.Entities
 {
     public class Category: EntityObject
     {
-        [Required(ErrorMessage = "Kategoriename muss eingegeben werden")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Kategoriename muss eingegeben werden")]
         public string Name { get; set; } = string.Empty;
 
         //Navigation Property

@@ -10,8 +10,8 @@ namespace Core.Entities
 {
     public class SubCategory: EntityObject
     {
-        //ToDo: Unique
-        [Required]
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Subkategoriename muss eingegeben werden")]
         public string Name { get; set; } = string.Empty;
 
 
@@ -21,7 +21,7 @@ namespace Core.Entities
 
 
         //Navigation Properties
-        public Category? Category { get; set; }
+        public Category Category { get; set; } = null!;
         public ICollection<Item> Items { get; set; } = [];
     }
 }

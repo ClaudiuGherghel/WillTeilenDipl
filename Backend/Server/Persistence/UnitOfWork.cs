@@ -93,7 +93,7 @@ namespace Persistence
             {
                 bool exists = await _dbContext.Categories
                     .AnyAsync(a => a.Id != category.Id &&
-                                   string.Equals(a.Name, category.Name, StringComparison.OrdinalIgnoreCase));
+                                   EF.Functions.Like(a.Name, category.Name));
 
                 if (exists)
                 {

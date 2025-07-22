@@ -1,12 +1,105 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\persistence\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|solutionrelative:persistence\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\middleware\\exceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\middleware\\exceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\core\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|solutionrelative:core\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\persistence\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|solutionrelative:persistence\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ExceptionMiddleware.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Middleware\\ExceptionMiddleware.cs",
+              "RelativeDocumentMoniker": "WebApi\\Middleware\\ExceptionMiddleware.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Middleware\\ExceptionMiddleware.cs",
+              "RelativeToolTip": "WebApi\\Middleware\\ExceptionMiddleware.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAtwCoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T11:41:33.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Category.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\Category.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\Category.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\Category.cs",
+              "RelativeToolTip": "Core\\Entities\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T11:19:57.374Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "Persistence\\UnitOfWork.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\UnitOfWork.cs",
+              "RelativeToolTip": "Persistence\\UnitOfWork.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAlwDgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T10:37:17.849Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CategoriesController.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\CategoriesController.cs",
+              "RelativeDocumentMoniker": "WebApi\\Controllers\\CategoriesController.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\CategoriesController.cs",
+              "RelativeToolTip": "WebApi\\Controllers\\CategoriesController.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAD4vycAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T08:46:49.588Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CategoryRepository.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\CategoryRepository.cs",
+              "RelativeDocumentMoniker": "Persistence\\CategoryRepository.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\CategoryRepository.cs",
+              "RelativeToolTip": "Persistence\\CategoryRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T08:51:05.7Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

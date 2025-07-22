@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ConsoleFillDB")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cdf861395d16d4a96ed37f72e52af81b8db60309")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48fa3b23017b50c99c1fd1c943b9ad384e0966a2")]
 [assembly: System.Reflection.AssemblyProductAttribute("ConsoleFillDB")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ConsoleFillDB")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
