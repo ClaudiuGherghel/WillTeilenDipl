@@ -1,27 +1,26 @@
 ﻿using Core.Enums;
-using System;
-using System.Collections.Generic;
+using Core.Validations;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Core.Entities
 {
+    [DateFromBeforeTo(nameof(From), nameof(To))] // 5.
     public class Rental: EntityObject
     {
-        [Required]
-        //[ReservationDateValidation]
-        public DateTime StartTime { get; set; }
 
-        // Ende der Reservierung
-        [Required]
-        public DateTime EndTime { get; set; }
+        [DataType(DataType.Date)] // macht keine Validierung, für API kein nutzen
+        [DateNotMinValue(nameof(From))] // 1.
+        [DateNotInFuture(nameof(From))] // 2.
+        public DateTime From { get; set; }
 
-        // Optionale Notiz zur Reservierung
+        [DataType(DataType.Date)] 
+        [DateNotMinValue(nameof(To))] // 3.
+        [DateNotInFuture(nameof(To))] // 4.
+        public DateTime To { get; set; }
+
         public string Note { get; set; } = string.Empty;
-
         public RentalStatus Status { get; set; } = RentalStatus.Active;
 
 
@@ -38,3 +37,8 @@ namespace Core.Entities
     }
 }
 
+
+/* Reihenfolge der Validierungen
+ * 1. Property-Level-Validierung
+ * 2. Class-Level-Validierung
+ */

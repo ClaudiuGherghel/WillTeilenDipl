@@ -4,23 +4,24 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Mappings;
 
 namespace WebApi.Controllers
 {
 
     public record SubCategoryPostDto(
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Kategoriename muss eingegeben werden")] string Name,
-    int CategoryId
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] string Name,
+    [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] int CategoryId
     );
     public record SubCategoryPutDto(
         int Id,
-        //byte[]? RowVersion,
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Kategoriename muss eingegeben werden")] string Name,
-        int CategoryId
-        );
+        byte[]? RowVersion,
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] string Name,
+        [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] int CategoryId
+    );
 
 
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     //Kein if (ModelState.IsValid) mehr nötig, bei ApiController passiert das automatisch, (Fehlerausgabe ProblemDetails) 
     [ApiController]
     public class SubCategoriesController (IUnitOfWork uow) : ControllerBase
@@ -72,16 +73,12 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            SubCategory newSubCategory = new()
-            {
-                CategoryId = category.Id,
-                Name = subCategoryDto.Name,
-            };
+            SubCategory subCategoryToPost = subCategoryDto.ToEntity();
 
-            _uow.SubCategoryRepository.Insert(newSubCategory);
+            _uow.SubCategoryRepository.Insert(subCategoryToPost);
             await _uow.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Get), new { id = newSubCategory.Id }, newSubCategory);
+            return CreatedAtAction(nameof(Get), new { id = subCategoryToPost.Id }, subCategoryToPost);
         }
 
 
@@ -95,9 +92,12 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] SubCategoryPutDto subCategoryDto)
         {
 
-            SubCategory? subCategory = await _uow.SubCategoryRepository.GetByIdAsync(id);
+            if (subCategoryDto.Id != id)
+                return BadRequest("ID im Body stimmt nicht mit ID in URL überein.");
 
-            if (subCategory == null)
+            SubCategory? subCategoryToPut = await _uow.SubCategoryRepository.GetByIdAsync(id);
+
+            if (subCategoryToPut == null)
             {
                 return NotFound();
             }
@@ -108,12 +108,11 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            subCategory.Name = subCategoryDto.Name;
-            subCategory.CategoryId = subCategoryDto.CategoryId;
+            subCategoryDto.UpdateEntity(subCategoryToPut);
 
-            _uow.SubCategoryRepository.Update(subCategory);
+            _uow.SubCategoryRepository.Update(subCategoryToPut);
             await _uow.SaveChangesAsync();
-            return Ok(subCategory);
+            return Ok(subCategoryToPut);
         }
 
 
@@ -122,13 +121,13 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Delete(int id)
         {
-            SubCategory? subCategory = await _uow.SubCategoryRepository.GetByIdAsync(id);
-            if (subCategory is null)
+            SubCategory? subCategoryToRemove = await _uow.SubCategoryRepository.GetByIdAsync(id);
+            if (subCategoryToRemove is null)
             {
                 return NotFound();
             }
 
-            _uow.SubCategoryRepository.Delete(subCategory);
+            _uow.SubCategoryRepository.Delete(subCategoryToRemove);
             await _uow.SaveChangesAsync();
             return NoContent();
         }

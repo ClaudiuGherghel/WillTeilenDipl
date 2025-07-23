@@ -3,24 +3,40 @@
   "WorkspaceRootPath": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\core\\entities\\rental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|solutionrelative:core\\entities\\rental.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\core\\validations\\datefrombeforeto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|solutionrelative:core\\validations\\datefrombeforeto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\core\\validations\\datenotminvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|solutionrelative:core\\validations\\datenotminvalue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\core\\validations\\datenotinfuture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|solutionrelative:core\\validations\\datenotinfuture.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\core\\validations\\datevalidationhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|solutionrelative:core\\validations\\datevalidationhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|solutionrelative:core\\entities\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\controllers\\subcategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\subcategoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\persistence\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|solutionrelative:persistence\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\middleware\\exceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\middleware\\exceptionmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\core\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|solutionrelative:core\\entities\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\categoriescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\persistence\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|solutionrelative:persistence\\categoryrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +46,123 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ExceptionMiddleware.cs",
-              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Middleware\\ExceptionMiddleware.cs",
-              "RelativeDocumentMoniker": "WebApi\\Middleware\\ExceptionMiddleware.cs",
-              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Middleware\\ExceptionMiddleware.cs",
-              "RelativeToolTip": "WebApi\\Middleware\\ExceptionMiddleware.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAtwCoAAAAIAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "DateValidationHelper.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\DateValidationHelper.cs",
+              "RelativeDocumentMoniker": "Core\\Validations\\DateValidationHelper.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\DateValidationHelper.cs",
+              "RelativeToolTip": "Core\\Validations\\DateValidationHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAB1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T11:41:33.254Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Category.cs",
-              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\Category.cs",
-              "RelativeDocumentMoniker": "Core\\Entities\\Category.cs",
-              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\Category.cs",
-              "RelativeToolTip": "Core\\Entities\\Category.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T11:19:57.374Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UnitOfWork.cs",
-              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\UnitOfWork.cs",
-              "RelativeDocumentMoniker": "Persistence\\UnitOfWork.cs",
-              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\UnitOfWork.cs",
-              "RelativeToolTip": "Persistence\\UnitOfWork.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAlwDgAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T10:37:17.849Z",
+              "WhenOpened": "2025-07-23T17:28:58.397Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "CategoriesController.cs",
-              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\CategoriesController.cs",
-              "RelativeDocumentMoniker": "WebApi\\Controllers\\CategoriesController.cs",
-              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\CategoriesController.cs",
-              "RelativeToolTip": "WebApi\\Controllers\\CategoriesController.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAD4vycAAAAIAAAAAAAAAA==",
+              "Title": "DateNotInFuture.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\DateNotInFuture.cs",
+              "RelativeDocumentMoniker": "Core\\Validations\\DateNotInFuture.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\DateNotInFuture.cs",
+              "RelativeToolTip": "Core\\Validations\\DateNotInFuture.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T08:46:49.588Z",
+              "WhenOpened": "2025-07-23T10:04:53Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CategoryRepository.cs",
-              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\CategoryRepository.cs",
-              "RelativeDocumentMoniker": "Persistence\\CategoryRepository.cs",
-              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\CategoryRepository.cs",
-              "RelativeToolTip": "Persistence\\CategoryRepository.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAIAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "DateNotMinValue.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\DateNotMinValue.cs",
+              "RelativeDocumentMoniker": "Core\\Validations\\DateNotMinValue.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\DateNotMinValue.cs",
+              "RelativeToolTip": "Core\\Validations\\DateNotMinValue.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAACBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-22T08:51:05.7Z",
+              "WhenOpened": "2025-07-23T17:30:36.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DateFromBeforeTo.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\DateFromBeforeTo.cs",
+              "RelativeDocumentMoniker": "Core\\Validations\\DateFromBeforeTo.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\DateFromBeforeTo.cs",
+              "RelativeToolTip": "Core\\Validations\\DateFromBeforeTo.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAB9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T10:04:01.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Rental.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\Rental.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\Rental.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\Rental.cs",
+              "RelativeToolTip": "Core\\Entities\\Rental.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAswBEAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T09:34:17.238Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Category.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\Category.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\Category.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\Category.cs",
+              "RelativeToolTip": "Core\\Entities\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T08:42:23.865Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\User.cs",
+              "RelativeDocumentMoniker": "Core\\Entities\\User.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Entities\\User.cs",
+              "RelativeToolTip": "Core\\Entities\\User.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowB4AAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-23T07:29:49.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "SubCategoriesController.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\SubCategoriesController.cs",
+              "RelativeDocumentMoniker": "WebApi\\Controllers\\SubCategoriesController.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\SubCategoriesController.cs",
+              "RelativeToolTip": "WebApi\\Controllers\\SubCategoriesController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAADcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T19:07:36.12Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "Persistence\\UnitOfWork.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\UnitOfWork.cs",
+              "RelativeToolTip": "Persistence\\UnitOfWork.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAqwFQAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-22T10:37:17.849Z",
               "EditorCaption": ""
             }
           ]

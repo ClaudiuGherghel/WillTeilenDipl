@@ -4,10 +4,10 @@ namespace Core.Contracts
 {
     public interface ISubCategoryRepository
     {
-        void Delete(SubCategory subCategory);
+        void Delete(SubCategory subCategoryToRemove);
         Task<ICollection<SubCategory>> GetAllAsync();
         Task<SubCategory?> GetByIdAsync(int id);
-        void Insert(SubCategory newSubCategory);
-        void Update(SubCategory subCategory);
+        void Insert(SubCategory subCategoryToPost);
+        void Update(SubCategory subCategoryToPut);
     }
 }

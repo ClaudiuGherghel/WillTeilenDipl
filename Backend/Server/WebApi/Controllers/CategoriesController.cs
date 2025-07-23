@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Core.Contracts;
-using Persistence;
 using Core.Entities;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+using WebApi.Mappings;
 
 
 namespace WebApi.Controllers
@@ -66,14 +64,11 @@ namespace WebApi.Controllers
                 return BadRequest();
             }
 
-            Category newCategory = new()
-            {
-                Name = categoryDto.Name,
-            };
+            Category categoryToPost = categoryDto.ToEntity();
 
-            _uow.CategoryRepository.Insert(newCategory);
+            _uow.CategoryRepository.Insert(categoryToPost);
             await _uow.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = newCategory.Id }, newCategory);
+            return CreatedAtAction(nameof(Get), new { id = categoryToPost.Id }, categoryToPost);
         }
 
 
@@ -87,16 +82,18 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put(int id, [FromBody] CategoryPutDto categoryDto)
         {
+            if (categoryDto.Id != id)
+                return BadRequest("ID im Body stimmt nicht mit ID in URL überein.");
 
-            Category? category = await _uow.CategoryRepository.GetByIdAsync(id);
-            if (category == null)
+            Category? categoryToPut = await _uow.CategoryRepository.GetByIdAsync(id);
+            if (categoryToPut == null)
                 return NotFound();
-            
-            category.Name = categoryDto.Name;
 
-            _uow.CategoryRepository.Update(category);
+            categoryDto.UpdateEntity(categoryToPut);
+
+            _uow.CategoryRepository.Update(categoryToPut);
             await _uow.SaveChangesAsync();
-            return Ok(category);
+            return Ok(categoryToPut);
         }
 
 
@@ -105,11 +102,11 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            Category? category = await _uow.CategoryRepository.GetByIdAsync(id);
-            if (category == null)
+            Category? categoryToRemove = await _uow.CategoryRepository.GetByIdAsync(id);
+            if (categoryToRemove == null)
                 return NotFound();
 
-            _uow.CategoryRepository.Delete(category);
+            _uow.CategoryRepository.Delete(categoryToRemove);
             await _uow.SaveChangesAsync(); 
             return NoContent();
         }

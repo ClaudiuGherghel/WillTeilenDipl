@@ -105,7 +105,8 @@ namespace Persistence
 
             if (entity is Image image)
             {
-                bool exists = await _dbContext.Images.AnyAsync(a => a.Id != image.Id && string.Equals(a.ImageUrl, image.ImageUrl, StringComparison.OrdinalIgnoreCase));
+                bool exists = await _dbContext.Images.AnyAsync(a => a.Id != image.Id &&
+                EF.Functions.Like(a.ImageUrl, image.ImageUrl));
                 if (exists)
                 {
                     throw new ValidationException(
@@ -117,7 +118,7 @@ namespace Persistence
             {
                 bool exists = await _dbContext.SubCategories
                     .AnyAsync(a => a.Id != subCategory.Id &&
-                                   string.Equals(a.Name, subCategory.Name, StringComparison.OrdinalIgnoreCase));
+                                   EF.Functions.Like(a.Name, subCategory.Name));
 
                 if (exists)
                 {
@@ -130,12 +131,22 @@ namespace Persistence
             {
                 bool exists = await _dbContext.Users
                     .AnyAsync(a => a.Id != user.Id &&
-                                   string.Equals(a.Email, user.Email, StringComparison.OrdinalIgnoreCase));
+                                   EF.Functions.Like(a.Email, user.Email));
 
                 if (exists)
                 {
                     throw new ValidationException(
                         new ValidationResult("E-Mail existiert bereits", [nameof(User.Email)]), null, user);
+                }
+
+                exists = await _dbContext.Users
+                    .AnyAsync(a => a.Id != user.Id &&
+                                   EF.Functions.Like(a.Username, user.Username));
+
+                if (exists)
+                {
+                    throw new ValidationException(
+                        new ValidationResult("Benutzername existiert bereits", [nameof(User.Username)]), null, user);
                 }
             }
         }

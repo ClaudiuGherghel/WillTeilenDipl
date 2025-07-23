@@ -9,7 +9,7 @@ namespace WebApi.Middleware
 {
 
 
-    /* Output
+    /* Bsp. Output
         {
           "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
           "title": "Validation Error",
@@ -23,7 +23,6 @@ namespace WebApi.Middleware
 
     public class ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
-        public record ErrorDto(string Error);
         private readonly RequestDelegate _next = next;
         private readonly ILogger<ExceptionMiddleware> _logger = logger;
 
