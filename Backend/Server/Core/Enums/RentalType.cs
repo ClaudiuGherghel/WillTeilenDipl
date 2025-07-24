@@ -8,6 +8,7 @@ namespace Core.Enums
 {
     public enum RentalType
     {
+        Unknown,
 
         Privat,
 

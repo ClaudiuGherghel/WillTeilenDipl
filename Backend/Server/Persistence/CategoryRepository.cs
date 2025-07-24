@@ -24,7 +24,7 @@ namespace Persistence
         public async Task<Category?> GetByIdAsync(int id)
         {
             return await DbContext.Categories
-                //.Include(i => i.SubCategories) //ICollection
+                .Include(i => i.SubCategories) //ICollection
                 .AsNoTracking()
                 .SingleOrDefaultAsync(s => s.Id == id);
         }

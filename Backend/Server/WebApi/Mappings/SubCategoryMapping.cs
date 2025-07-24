@@ -10,14 +10,14 @@ namespace WebApi.Mappings
             return new SubCategory
             {
                 CategoryId = subCategoryDto.CategoryId,
-                Name = subCategoryDto.Name,
+                Name = subCategoryDto.Name ?? string.Empty,
             };
         }
 
 
         public static void UpdateEntity(this SubCategoryPutDto subCategoryDto, SubCategory subCategoryToPut)
         {
-            subCategoryToPut.Name = subCategoryDto.Name;
+            subCategoryToPut.Name = subCategoryDto.Name ?? string.Empty;
             subCategoryToPut.CategoryId = subCategoryDto.CategoryId;
             subCategoryToPut.RowVersion = subCategoryDto.RowVersion;
         }

@@ -39,7 +39,7 @@ namespace Core.Validations
             var fromValue = (DateTime)fromProp.GetValue(value)!;
             var toValue = (DateTime)toProp.GetValue(value)!;
 
-            var result = DateValidationHelper.ValidateFromBeforeTo(fromValue, toValue, FromPropertyName, ToPropertyName);
+            var result = ValidationHelper.ValidateFromBeforeTo(fromValue, toValue, FromPropertyName, ToPropertyName);
             if (result != ValidationResult.Success)
             {
                 return result;

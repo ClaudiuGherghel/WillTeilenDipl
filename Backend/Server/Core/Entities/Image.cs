@@ -10,10 +10,22 @@ namespace Core.Entities
 {
     public class Image: EntityObject
     {
-        [Required]
-        public string ImageUrl { get; set; } = string.Empty;  // Pfad oder URL des Bildes
-        public string Description { get; set; } = string.Empty;  // Optional: Eine Beschreibung des Bildes
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Url muss eingegeben werden")]
+        [StringLength(300, ErrorMessage = "Die Bild-URL darf maximal 300 Zeichen lang sein.")]
+        [Url] //Fehlermeldung auch bei ""
+        public string ImageUrl { get; set; } = string.Empty;  // Pfad oder URL des Bildes
+
+        [StringLength(150, ErrorMessage = "Der Alternativtext darf maximal 150 Zeichen lang sein.")]
+        public string AltText { get; set; } = string.Empty;
+
+        [StringLength(100, ErrorMessage = "Der MIME-Typ darf maximal 100 Zeichen lang sein.")]
+        public string MimeType { get; set; } = string.Empty; // z. B. "image/jpeg"
+
+
+        //Image-Sortierung
+        public int DisplayOrder { get; set; } = 0;
+        public bool IsMainImage { get; set; } = false;
 
         // Foreign Key
         [ForeignKey(nameof(ItemId))]
@@ -23,3 +35,5 @@ namespace Core.Entities
         public Item? Item { get; set; }
     }
 }
+
+//Die Navigation-Property Item ist nullable, was bei ORM-Modellen üblich ist, weil das verknüpfte Objekt z. B. nicht immer mitgeladen wird.

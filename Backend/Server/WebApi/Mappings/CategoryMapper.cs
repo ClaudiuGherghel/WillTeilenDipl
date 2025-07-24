@@ -9,14 +9,14 @@ namespace WebApi.Mappings
         {
             return new Category
             {
-                Name = categoryDto.Name,
+                Name = categoryDto.Name ?? string.Empty,
             };
         }
 
 
         public static void UpdateEntity(this CategoryPutDto categoryDto, Category categoryToPut)
         {
-            categoryToPut.Name = categoryDto.Name;
+            categoryToPut.Name = categoryDto.Name ?? string.Empty;
             categoryToPut.RowVersion = categoryDto.RowVersion;
         }
     }

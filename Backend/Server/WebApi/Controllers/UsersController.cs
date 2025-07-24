@@ -11,54 +11,68 @@ namespace WebApi.Controllers
 
     public record UserPostDto(
         [Required(AllowEmptyStrings = false, ErrorMessage = "Benutzername muss eingegeben werden")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Benutzername muss zwischen 2 und 50 Zeichen lang sein")]
         string Username,
         [Required(AllowEmptyStrings = false, ErrorMessage = "Passwort muss eingegeben werden")]
         string PasswordHash,
         [Required(AllowEmptyStrings = false, ErrorMessage = "E-Mail muss eingegeben werden")]
+        [StringLength(100, ErrorMessage = "E-Mail darf maximal 100 Zeichen lang sein")]
         [EmailAddress(ErrorMessage = "E-Mail ist nicht gültig")]
         string Email,
         [Required(AllowEmptyStrings = false, ErrorMessage = "Vorname muss eingegeben werden")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Vorname muss zwischen 2 und 50 Zeichen lang sein")]
         string FirstName,
         [Required(AllowEmptyStrings = false, ErrorMessage = "Nachname muss eingegeben werden")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Nachname muss zwischen 2 und 50 Zeichen lang sein")]
         string LastName,
-        [DataType(DataType.Date)]
         [DateNotMinValue(nameof(BirthDate))] // 1.
         [DateNotInFuture(nameof(BirthDate))] // 2.
         DateTime BirthDate,
         Roles Role,
+        [StringLength(100, ErrorMessage = "Land darf maximal 100 Zeichen lang sein")]
         string Country,
+        [StringLength(20, ErrorMessage = "Postleitzahl darf maximal 20 Zeichen lang sein")]
         string PostalCode,
+        [StringLength(100, ErrorMessage = "Ort darf maximal 100 Zeichen lang sein")]
         string Place,
+        [StringLength(200, ErrorMessage = "Adresse darf maximal 200 Zeichen lang sein")]
         string Address,
-        [Phone(ErrorMessage = "Telefonnummer ist nicht gültig")]
+        [OptionalPhone]
         string PhoneNumber
     );
     public record UserPutDto(
         int Id,
         byte[]? RowVersion,
         [Required(AllowEmptyStrings = false, ErrorMessage = "Benutzername muss eingegeben werden")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Benutzername muss zwischen 2 und 50 Zeichen lang sein")]
         string Username,
         [Required(AllowEmptyStrings = false, ErrorMessage = "Passwort muss eingegeben werden")]
         string PasswordHash,
         [Required(AllowEmptyStrings = false, ErrorMessage = "E-Mail muss eingegeben werden")]
+        [StringLength(100, ErrorMessage = "E-Mail darf maximal 100 Zeichen lang sein")]
         [EmailAddress(ErrorMessage = "E-Mail ist nicht gültig")]
         string Email,
         [Required(AllowEmptyStrings = false, ErrorMessage = "Vorname muss eingegeben werden")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Vorname muss zwischen 2 und 50 Zeichen lang sein")]
         string FirstName,
         [Required(AllowEmptyStrings = false, ErrorMessage = "Nachname muss eingegeben werden")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Nachname muss zwischen 2 und 50 Zeichen lang sein")]
         string LastName,
-        [DataType(DataType.Date)]
         [DateNotMinValue(nameof(BirthDate))] // 1.
         [DateNotInFuture(nameof(BirthDate))] // 2.
         DateTime BirthDate,
         Roles Role,
+        [StringLength(100, ErrorMessage = "Land darf maximal 100 Zeichen lang sein")]
         string Country,
+        [StringLength(20, ErrorMessage = "Postleitzahl darf maximal 20 Zeichen lang sein")]
         string PostalCode,
+        [StringLength(100, ErrorMessage = "Ort darf maximal 100 Zeichen lang sein")]
         string Place,
+        [StringLength(200, ErrorMessage = "Adresse darf maximal 200 Zeichen lang sein")]
         string Address,
-        [Phone(ErrorMessage = "Telefonnummer ist nicht gültig")]
+        [OptionalPhone]
         string PhoneNumber
-        );
+    );
 
 
     [Route("api/[controller]/[action]")]

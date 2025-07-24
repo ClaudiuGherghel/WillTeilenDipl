@@ -27,7 +27,7 @@ namespace Core.Validations
 
             var dateValue = (DateTime)property.GetValue(instance)!;
 
-            var result = DateValidationHelper.ValidateNotMinValue(dateValue, PropertyName);
+            var result = ValidationHelper.ValidateNotMinValue(dateValue, PropertyName);
             if (result != ValidationResult.Success)
             {
                 return result;

@@ -20,7 +20,9 @@ namespace Core.Entities
         [DateNotInFuture(nameof(To))] // 4.
         public DateTime To { get; set; }
 
+        [StringLength(1000, ErrorMessage = "Notiz darf maximal 1000 Zeichen lang sein")]
         public string Note { get; set; } = string.Empty;
+
         public RentalStatus Status { get; set; } = RentalStatus.Active;
 
 

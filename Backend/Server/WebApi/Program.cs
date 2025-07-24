@@ -1,5 +1,6 @@
 using Core.Contracts;
 using Persistence;
+using System.Text.Json.Serialization;
 using WebApi.Middleware;
 
 namespace WebApi
@@ -13,7 +14,15 @@ namespace WebApi
             // Add services to the container.
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    // Enums als Strings statt Zahlen serialisieren/deserialisieren
+                    // ? Eingabe z.?B. "role": "Admin" statt "role": 1
+                    // ? Ausgabe z.?B. "role": "Admin" statt "role": 1
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); //Statt Zahlen Enum-Werte
+                });
+
 
             // Swagger hinzufügen (Standard mit Swashbuckle)
             builder.Services.AddEndpointsApiExplorer();
@@ -33,9 +42,13 @@ namespace WebApi
                 app.UseSwaggerUI();
             }
 
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.MapControllers();
 

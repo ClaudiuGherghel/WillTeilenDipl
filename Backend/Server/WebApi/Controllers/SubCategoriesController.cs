@@ -10,14 +10,20 @@ namespace WebApi.Controllers
 {
 
     public record SubCategoryPostDto(
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] string Name,
-    [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] int CategoryId
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] 
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Subkategoriename muss zwischen 2 und 100 Zeichen lang sein")]
+        string Name,
+        [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] 
+        int CategoryId
     );
     public record SubCategoryPutDto(
         int Id,
         byte[]? RowVersion,
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] string Name,
-        [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] int CategoryId
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] 
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Subkategoriename muss zwischen 2 und 100 Zeichen lang sein")]
+        string Name,
+        [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] 
+        int CategoryId
     );
 
 
@@ -109,7 +115,6 @@ namespace WebApi.Controllers
             }
 
             subCategoryDto.UpdateEntity(subCategoryToPut);
-
             _uow.SubCategoryRepository.Update(subCategoryToPut);
             await _uow.SaveChangesAsync();
             return Ok(subCategoryToPut);

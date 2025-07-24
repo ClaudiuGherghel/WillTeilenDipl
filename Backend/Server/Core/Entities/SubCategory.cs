@@ -12,6 +12,7 @@ namespace Core.Entities
     {
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Subkategoriename muss eingegeben werden")]
+        [StringLength(100, MinimumLength = 2, ErrorMessage = "Subkategoriename muss zwischen 2 und 100 Zeichen lang sein")]
         public string Name { get; set; } = string.Empty;
 
 
@@ -19,9 +20,7 @@ namespace Core.Entities
         [ForeignKey(nameof(CategoryId))]
         public int CategoryId { get; set; }
 
-
         //Navigation Properties
-        public Category Category { get; set; } = null!;
         public ICollection<Item> Items { get; set; } = [];
     }
 }

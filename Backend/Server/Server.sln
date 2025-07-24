@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36202.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleFillDB", "ConsoleFillDB\ConsoleFillDB.csproj", "{EB619C04-71B6-481F-9EB9-412BD3DAFD2A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{92B74793-C600-4040-8A9F-8344259EE4C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}"
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EB619C04-71B6-481F-9EB9-412BD3DAFD2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB619C04-71B6-481F-9EB9-412BD3DAFD2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB619C04-71B6-481F-9EB9-412BD3DAFD2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB619C04-71B6-481F-9EB9-412BD3DAFD2A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{92B74793-C600-4040-8A9F-8344259EE4C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{92B74793-C600-4040-8A9F-8344259EE4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92B74793-C600-4040-8A9F-8344259EE4C4}.Release|Any CPU.ActiveCfg = Release|Any CPU

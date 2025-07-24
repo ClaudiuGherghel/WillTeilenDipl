@@ -5,7 +5,7 @@ namespace Core.Validations
 {
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false)] //optional, dient als Einstränkung um Fehler zu reduzieren
-    public class DateNotInFutureAttribute(string propertyName) : ValidationAttribute
+    public class DateNotInFuture(string propertyName) : ValidationAttribute
     {
         public string PropertyName { get; } = propertyName;
 
@@ -23,7 +23,7 @@ namespace Core.Validations
 
             var dateValue = (DateTime)property.GetValue(instance)!;
 
-            var result = DateValidationHelper.ValidateNotInFuture(dateValue, PropertyName);
+            var result = ValidationHelper.ValidateNotInFuture(dateValue, PropertyName);
             if (result != ValidationResult.Success)
             {
                 return result;
