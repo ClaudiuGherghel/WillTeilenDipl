@@ -32,7 +32,7 @@ namespace Core.Entities
         public int ItemId { get; set; }
 
         // Navigation Property
-        public Item? Item { get; set; }
+        public Item Item { get; set; } = null!;
     }
 }
 

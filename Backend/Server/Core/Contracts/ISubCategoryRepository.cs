@@ -8,6 +8,7 @@ namespace Core.Contracts
         Task<ICollection<SubCategory>> GetAllAsync();
         Task<SubCategory?> GetByIdAsync(int id);
         void Insert(SubCategory subCategoryToPost);
+        void SoftDelete(int id);
         void Update(SubCategory subCategoryToPut);
     }
 }

@@ -151,13 +151,19 @@ namespace Persistence
             }
         }
 
-        //public async Task FillDbAsync()
-        //{
-        //    await DeleteDatabaseAsync();
-        //    await MigrateDatabaseAsync();
-        //    await _dbContext.SaveChangesAsync();
-        //    Console.WriteLine("Datenbank wurde erfolgreich gelöscht, migriert und befüllt.");
-        //}
+        public async Task FillDbAsync()
+        {
+            await DeleteDatabaseAsync();
+            await MigrateDatabaseAsync();
+
+
+
+
+
+
+            await _dbContext.SaveChangesAsync();
+            Console.WriteLine("Datenbank wurde erfolgreich gelöscht, migriert und befüllt.");
+        }
 
     }
 }

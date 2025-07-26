@@ -20,13 +20,9 @@ namespace Core.Entities
 
 
         [DataType(DataType.Date)]
-        [DateNotMinValue(nameof(CreatedAt))] // 1.
-        [DateNotInFuture(nameof(CreatedAt))] // 2.
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [DataType(DataType.Date)]
-        [DateNotMinValue(nameof(UpdatedAt))] // 3.
-        [DateNotInFuture(nameof(UpdatedAt))] // 4.
         public DateTime UpdatedAt { get; set; }
 
         public bool IsDeleted { get; set; } = false; // Soft-Delete

@@ -18,18 +18,22 @@ namespace Persistence
         public async Task<ICollection<User>> GetAllAsync()
         {
             return await DbContext.Users
-                //.Include(i=> i.Reservations)
-                //.Include(i=> i.UserItems)
                 .AsNoTracking()
+                //.Include(i => i.Rentals) // ICollection
+                //.Include(i => i.OwnedItems) // ICollection
+                .Where(w=> w.IsDeleted == false)
+                .OrderBy(o=> o.LastName)
+                .ThenBy(t=> t.FirstName)
                 .ToListAsync();
         }
 
         public async Task<User?> GetByIdAsync(int id)
         {
             return await DbContext.Users
-                //.Include(i => i.Reservations)
-                //.Include(i => i.UserItems)
                 .AsNoTracking()
+                //.Include(i=> i.Rentals) // ICollection
+                //.Include(i=> i.OwnedItems) // ICollection
+                .Where(w=> w.IsDeleted == false)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
         public void Insert(User userToPost)
@@ -47,5 +51,39 @@ namespace Persistence
             DbContext.Users.Remove(userToRemove);
         }
 
+        public void SoftDelete(int id)
+        {
+            var user = DbContext.Users
+                .Include(u => u.OwnedItems)
+                    .ThenInclude(i => i.Images)
+                .Include(u => u.OwnedItems)
+                    .ThenInclude(i => i.Rentals)
+                .FirstOrDefault(u => u.Id == id);
+
+            if (user == null)
+                return;
+
+            user.IsDeleted = true;
+            user.UpdatedAt = DateTime.UtcNow;
+
+
+            foreach (var item in user.OwnedItems)
+            {
+                item.IsDeleted = true;
+                item.UpdatedAt = DateTime.UtcNow;
+
+                foreach (var img in item.Images)
+                {
+                    img.IsDeleted = true;
+                    img.UpdatedAt = DateTime.UtcNow;
+                }
+
+                foreach (var rental in item.Rentals)
+                {
+                    rental.IsDeleted = true;
+                    rental.UpdatedAt = DateTime.UtcNow;
+                }
+            }
+        }
     }
 }

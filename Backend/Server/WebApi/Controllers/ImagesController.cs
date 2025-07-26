@@ -13,25 +13,36 @@ namespace WebApi.Controllers
         [Required(AllowEmptyStrings = false, ErrorMessage = "Url muss eingegeben werden")]
         [StringLength(300, ErrorMessage = "Die Bild-URL darf maximal 300 Zeichen lang sein.")]
         [Url] //Fehlermeldung auch bei ""
-        string Url,
+        string ImageUrl,
+
         [StringLength(150, ErrorMessage = "Der Alternativtext darf maximal 150 Zeichen lang sein.")]
         string AltText,
+
         [StringLength(100, ErrorMessage = "Der MIME-Typ darf maximal 100 Zeichen lang sein.")]
         string MimeType, // z. B. "image/jpeg"
+
+        int DisplayOrder,
+        bool IsMainImage,
         [Range(1, int.MaxValue, ErrorMessage = "ItemId muss größer als 0 sein.")]
         int ItemId
     );
     public record ImagePutDto(
         int Id,
         byte[]? RowVersion,
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Url muss eingegeben werden")]
         [StringLength(300, ErrorMessage = "Die Bild-URL darf maximal 300 Zeichen lang sein.")]
         [Url] //Fehlermeldung auch bei ""
-        string Url,
+        string ImageUrl,
+
         [StringLength(150, ErrorMessage = "Der Alternativtext darf maximal 150 Zeichen lang sein.")]
         string AltText,
+
         [StringLength(100, ErrorMessage = "Der MIME-Typ darf maximal 100 Zeichen lang sein.")]
         string MimeType, // z. B. "image/jpeg"
+
+        int DisplayOrder,
+        bool IsMainImage,
         [Range(1, int.MaxValue, ErrorMessage = "ItemId muss größer als 0 sein.")]
         int ItemId
     );
@@ -114,6 +125,11 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put(int id, [FromBody] ImagePutDto imageDto)
         {
+            if (imageDto == null)
+            {
+                return BadRequest();
+            }
+
             if (imageDto.Id != id)
                 return BadRequest("ID im Body stimmt nicht mit ID in URL überein.");
 
@@ -148,7 +164,10 @@ namespace WebApi.Controllers
             {
                 return NotFound();
             }
-            _uow.ImageRepository.Delete(imageToRemove);
+            //_uow.ImageRepository.Delete(imageToRemove);
+
+            _uow.ImageRepository.SoftDelete(id);
+
             await _uow.SaveChangesAsync();
             return NoContent();
         }

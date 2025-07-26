@@ -16,6 +16,7 @@ namespace WebApi.Controllers
     public record CategoryPutDto(
         int Id,
         byte[]? RowVersion,
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Kategoriename muss eingegeben werden")] 
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Kategoriename muss zwischen 2 und 100 Zeichen lang sein")]
         string Name
@@ -86,6 +87,11 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put(int id, [FromBody] CategoryPutDto categoryDto)
         {
+            if (categoryDto == null)
+            {
+                return BadRequest();
+            }
+
             if (categoryDto.Id != id)
                 return BadRequest("ID im Body stimmt nicht mit ID in URL überein.");
 
@@ -110,7 +116,9 @@ namespace WebApi.Controllers
             if (categoryToRemove == null)
                 return NotFound();
 
-            _uow.CategoryRepository.Delete(categoryToRemove);
+            //_uow.CategoryRepository.Delete(categoryToRemove);
+
+            _uow.CategoryRepository.SoftDelete(id);
             await _uow.SaveChangesAsync(); 
             return NoContent();
         }

@@ -3,12 +3,13 @@ using WebApi.Controllers;
 
 namespace WebApi.Mappings
 {
-    public static class SubCategoryMapping
+    public static class SubCategoryMapper
     {
         public static SubCategory ToEntity(this SubCategoryPostDto subCategoryDto)
         {
             return new SubCategory
             {
+                CreatedAt = DateTime.UtcNow,
                 CategoryId = subCategoryDto.CategoryId,
                 Name = subCategoryDto.Name ?? string.Empty,
             };
@@ -17,9 +18,10 @@ namespace WebApi.Mappings
 
         public static void UpdateEntity(this SubCategoryPutDto subCategoryDto, SubCategory subCategoryToPut)
         {
+            subCategoryToPut.UpdatedAt = DateTime.UtcNow;
+            subCategoryToPut.RowVersion = subCategoryDto.RowVersion;
             subCategoryToPut.Name = subCategoryDto.Name ?? string.Empty;
             subCategoryToPut.CategoryId = subCategoryDto.CategoryId;
-            subCategoryToPut.RowVersion = subCategoryDto.RowVersion;
         }
     }
 }

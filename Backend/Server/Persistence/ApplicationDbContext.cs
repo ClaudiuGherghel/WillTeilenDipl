@@ -50,34 +50,83 @@ namespace Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder); // Ruft die Basiskonfiguration auf (wichtig für EF Core-internes Setup, z. B. Identity)
 
-            // Verhindert, dass beim Löschen eines Users alle seine Items automatisch gelöscht werden (besser für Datenintegrität)
-            // Item-Owner Beziehung (kann optional Restrict sein, je nachdem, ob du alle Items löschen willst)
+            // Beziehung: Rental → Renter (User)
+            modelBuilder.Entity<Rental>()
+                .HasOne(r => r.Renter)                // Ein Rental hat einen Renter (User)
+                .WithMany(u => u.Rentals)             // Ein User kann viele Rentals haben
+                .HasForeignKey(r => r.RenterId)       // Fremdschlüssel in Rental ist RenterId
+                .OnDelete(DeleteBehavior.Restrict);   // Kein Cascade Delete → Benutzer muss erst manuell gelöscht werden (z. B. via Soft Delete)
+
+            // Beziehung: Item → Owner (User)
             modelBuilder.Entity<Item>()
-                .HasOne(i => i.Owner)
-                .WithMany(u => u.OwnedItems)
-                .HasForeignKey(i => i.OwnerId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict); // Oder Cascade, wenn du möchtest
+                .HasOne(i => i.Owner)                 // Ein Item gehört einem Besitzer
+                .WithMany(u => u.OwnedItems)          // Ein User kann viele Items besitzen
+                .HasForeignKey(i => i.OwnerId)        // Fremdschlüssel ist OwnerId
+                .OnDelete(DeleteBehavior.Restrict);   // Kein Cascade Delete
 
-            // Verhindert den Fehler "multiple cascade paths" – Mieten bleiben bestehen, auch wenn ein User gelöscht wird
-            // Rental-Renter Beziehung (niemals mit Cascade, da es zu den Konflikten führt)
-            modelBuilder.Entity<Rental>()
-                .HasOne(r => r.Renter)
-                .WithMany(u => u.Rentals)
-                .HasForeignKey(r => r.RenterId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
+            // Beziehung: SubCategory → Category
+            modelBuilder.Entity<SubCategory>()
+                .HasOne(sc => sc.Category)            // Jede SubCategory gehört zu einer Category
+                .WithMany(c => c.SubCategories)       // Eine Category kann viele SubCategories haben
+                .HasForeignKey(sc => sc.CategoryId)   // Fremdschlüssel ist CategoryId
+                .OnDelete(DeleteBehavior.Restrict);   // Kein Cascade Delete
 
-            // Logisch sinnvoll: Wenn ein Item gelöscht wird, sollen auch alle zugehörigen Mietvorgänge verschwinden
-            // Rental-Item Beziehung (Cascade ist hier unproblematisch, wenn gewünscht)
+            // Beziehung: Item → SubCategory
+            modelBuilder.Entity<Item>()
+                .HasOne(i => i.SubCategory)           // Jedes Item gehört zu einer SubCategory
+                .WithMany(sc => sc.Items)             // Eine SubCategory kann viele Items enthalten
+                .HasForeignKey(i => i.SubCategoryId)  // Fremdschlüssel ist SubCategoryId
+                .OnDelete(DeleteBehavior.Restrict);   // Kein Cascade Delete
+
+            // Beziehung: Image → Item
+            modelBuilder.Entity<Image>()
+                .HasOne(img => img.Item)              // Ein Bild gehört zu genau einem Item
+                .WithMany(i => i.Images)              // Ein Item kann viele Bilder haben
+                .HasForeignKey(img => img.ItemId)     // Fremdschlüssel ist ItemId
+                .OnDelete(DeleteBehavior.Restrict);   // Kein Cascade Delete
+
+            // Beziehung: Rental → Item
             modelBuilder.Entity<Rental>()
-                .HasOne(r => r.Item)
-                .WithMany(i => i.Rentals)
-                .HasForeignKey(r => r.ItemId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(r => r.Item)                  // Ein Rental bezieht sich auf ein Item
+                .WithMany(i => i.Rentals)             // Ein Item kann mehrfach vermietet worden sein
+                .HasForeignKey(r => r.ItemId)         // Fremdschlüssel ist ItemId
+                .OnDelete(DeleteBehavior.Restrict);   // Kein Cascade Delete
         }
+
+
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+
+        //    // Verhindert, dass beim Löschen eines Users alle seine Items automatisch gelöscht werden (besser für Datenintegrität)
+        //    // Item-Owner Beziehung (kann optional Restrict sein, je nachdem, ob du alle Items löschen willst)
+        //    modelBuilder.Entity<Item>()
+        //        .HasOne(i => i.Owner)
+        //        .WithMany(u => u.OwnedItems)
+        //        .HasForeignKey(i => i.OwnerId)
+        //        .IsRequired()
+        //        .OnDelete(DeleteBehavior.Restrict); // Oder Cascade, wenn du möchtest
+
+        //    // Verhindert den Fehler "multiple cascade paths" – Mieten bleiben bestehen, auch wenn ein User gelöscht wird
+        //    // Rental-Renter Beziehung (niemals mit Cascade, da es zu den Konflikten führt)
+        //    modelBuilder.Entity<Rental>()
+        //        .HasOne(r => r.Renter)
+        //        .WithMany(u => u.Rentals)
+        //        .HasForeignKey(r => r.RenterId)
+        //        .IsRequired()
+        //        .OnDelete(DeleteBehavior.Restrict);
+
+        //    // Logisch sinnvoll: Wenn ein Item gelöscht wird, sollen auch alle zugehörigen Mietvorgänge verschwinden
+        //    // Rental-Item Beziehung (Cascade ist hier unproblematisch, wenn gewünscht)
+        //    modelBuilder.Entity<Rental>()
+        //        .HasOne(r => r.Item)
+        //        .WithMany(i => i.Rentals)
+        //        .HasForeignKey(r => r.ItemId)
+        //        .IsRequired()
+        //        .OnDelete(DeleteBehavior.Cascade);
+        //}
 
 
         //dotnet tool install --global dotnet-ef --version 9.0.7
@@ -95,5 +144,5 @@ namespace Persistence
         → Hier greift nur die Entity-Validation oder ein ValidationService.
         */
 
-}
+    }
 }

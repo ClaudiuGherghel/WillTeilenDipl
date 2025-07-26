@@ -9,6 +9,7 @@ namespace WebApi.Mappings
         {
             return new Category
             {
+                CreatedAt = DateTime.UtcNow,
                 Name = categoryDto.Name ?? string.Empty,
             };
         }
@@ -16,8 +17,9 @@ namespace WebApi.Mappings
 
         public static void UpdateEntity(this CategoryPutDto categoryDto, Category categoryToPut)
         {
-            categoryToPut.Name = categoryDto.Name ?? string.Empty;
+            categoryToPut.UpdatedAt = DateTime.UtcNow;
             categoryToPut.RowVersion = categoryDto.RowVersion;
+            categoryToPut.Name = categoryDto.Name ?? string.Empty;
         }
     }
 }

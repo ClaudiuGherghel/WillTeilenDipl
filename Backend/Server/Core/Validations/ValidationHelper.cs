@@ -24,7 +24,7 @@ namespace Core.Validations
 
         public static ValidationResult? ValidateNotInFuture(DateTime date, string fieldDisplayName)
         {
-            if (date > DateTime.Now)
+            if (date > DateTime.UtcNow)
             {
                 return new ValidationResult($"{fieldDisplayName} darf nicht in der Zukunft liegen.");
             }

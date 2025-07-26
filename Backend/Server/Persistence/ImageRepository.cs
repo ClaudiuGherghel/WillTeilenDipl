@@ -19,16 +19,19 @@ namespace Persistence
         public async Task<ICollection<Image>> GetAllAsync()
         {
             return await DbContext.Images
-                //.Include(i => i.Item)
                 .AsNoTracking()
+                //.Include(i => i.Item)
+                .Where(w=> w.IsDeleted == false)
+                .OrderBy(o=> o.ImageUrl)
                 .ToListAsync();
         }
 
         public async Task<Image?> GetByIdAsync(int id)
         {
             return await DbContext.Images
-                //.Include(i => i.Item)
                 .AsNoTracking()
+                //.Include(i => i.Item)
+                .Where(w=> w.IsDeleted == false)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
         public void Insert(Image imageToPost)
@@ -46,5 +49,17 @@ namespace Persistence
             DbContext.Images.Remove(imageToRemove);
         }
 
+        public void SoftDelete(int id)
+        {
+            var image = DbContext.Images
+                .FirstOrDefault(img => img.Id == id);
+
+            if (image == null)
+                return;
+
+            image.IsDeleted = true;
+            image.UpdatedAt = DateTime.UtcNow;
+
+        }
     }
 }

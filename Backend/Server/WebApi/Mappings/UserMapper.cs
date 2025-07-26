@@ -3,12 +3,13 @@ using WebApi.Controllers;
 
 namespace WebApi.Mappings
 {
-    public static class UserMapping
+    public static class UserMapper
     {
         public static User ToEntity(this UserPostDto userDto)
         {
             return new User
             {
+                CreatedAt = DateTime.UtcNow,
                 Username = userDto.Username ?? string.Empty,
                 PasswordHash = userDto.PasswordHash ?? string.Empty,
                 Email = userDto.Email ?? string.Empty,
@@ -27,11 +28,13 @@ namespace WebApi.Mappings
 
         public static void UpdateEntity(this UserPutDto userDto, User userToPut)
         {
-            userToPut.Username = userDto.Username;
-            userToPut.PasswordHash = userDto.PasswordHash;
-            userToPut.Email = userDto.Email;
-            userToPut.FirstName = userDto.FirstName;
-            userToPut.LastName = userDto.LastName;
+            userToPut.UpdatedAt = DateTime.UtcNow;
+            userToPut.RowVersion = userDto.RowVersion;
+            userToPut.Username = userDto.Username ?? string.Empty;
+            userToPut.PasswordHash = userDto.PasswordHash ?? string.Empty;
+            userToPut.Email = userDto.Email ?? string.Empty;
+            userToPut.FirstName = userDto.FirstName ?? string.Empty;
+            userToPut.LastName = userDto.LastName ?? string.Empty;
             userToPut.BirthDate = userDto.BirthDate;
             userToPut.PhoneNumber = userDto.PhoneNumber ?? string.Empty;
             userToPut.Country = userDto.Country ?? string.Empty;
@@ -39,7 +42,6 @@ namespace WebApi.Mappings
             userToPut.Place = userDto.Place ?? string.Empty;
             userToPut.Address = userDto.Address ?? string.Empty;
             userToPut.Role = userDto.Role;
-            userToPut.RowVersion = userDto.RowVersion;
         }
 
     }

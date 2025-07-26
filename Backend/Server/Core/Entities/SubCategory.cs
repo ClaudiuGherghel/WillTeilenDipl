@@ -21,6 +21,7 @@ namespace Core.Entities
         public int CategoryId { get; set; }
 
         //Navigation Properties
+        public Category Category { get; set; } = null!;
         public ICollection<Item> Items { get; set; } = [];
     }
 }

@@ -8,6 +8,7 @@ namespace Core.Contracts
         Task<ICollection<Image>> GetAllAsync();
         Task<Image?> GetByIdAsync(int id);
         void Insert(Image imageToPost);
+        void SoftDelete(int id);
         void Update(Image imageToPut);
     }
 }

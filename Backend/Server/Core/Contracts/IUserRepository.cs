@@ -8,6 +8,7 @@ namespace Core.Contracts
         Task<ICollection<User>> GetAllAsync();
         Task<User?> GetByIdAsync(int id);
         void Insert(User userToPost);
+        void SoftDelete(int id);
         void Update(User userToPut);
     }
 }

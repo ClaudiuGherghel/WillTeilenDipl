@@ -1,0 +1,15 @@
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\bin\Debug\net9.0\ConsoleFillDb.exe
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\bin\Debug\net9.0\ConsoleFillDb.deps.json
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\bin\Debug\net9.0\ConsoleFillDb.runtimeconfig.json
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\bin\Debug\net9.0\ConsoleFillDb.dll
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\bin\Debug\net9.0\ConsoleFillDb.pdb
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\ConsoleFillDb.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\ConsoleFillDb.AssemblyInfoInputs.cache
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\ConsoleFillDb.AssemblyInfo.cs
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\ConsoleFillDb.csproj.CoreCompileInputs.cache
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\ConsoleFillDb.sourcelink.json
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\ConsoleFillDb.dll
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\refint\ConsoleFillDb.dll
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\ConsoleFillDb.pdb
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\ConsoleFillDb.genruntimeconfig.cache
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\ConsoleFillDb\obj\Debug\net9.0\ref\ConsoleFillDb.dll

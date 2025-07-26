@@ -34,8 +34,8 @@ namespace Core.Entities
         public int ItemId { get; set; }
 
         // Navigation Properties
-        public User? Renter { get; set; }
-        public Item? Item { get; set; }
+        public User Renter { get; set; } = null!;
+        public Item Item { get; set; } = null!;
     }
 }
 

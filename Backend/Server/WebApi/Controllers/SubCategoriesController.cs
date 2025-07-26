@@ -13,15 +13,19 @@ namespace WebApi.Controllers
         [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] 
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Subkategoriename muss zwischen 2 und 100 Zeichen lang sein")]
         string Name,
+
         [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] 
         int CategoryId
     );
     public record SubCategoryPutDto(
         int Id,
         byte[]? RowVersion,
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] 
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Subkategoriename muss zwischen 2 und 100 Zeichen lang sein")]
         string Name,
+
+        //Foreign Keys
         [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] 
         int CategoryId
     );
@@ -35,6 +39,8 @@ namespace WebApi.Controllers
         // Bei Fehlern wird Middleware einspringen
 
         private readonly IUnitOfWork _uow = uow;
+
+
 
         [HttpGet]
         [ProducesResponseType(typeof(SubCategory[]), StatusCodes.Status200OK)]
@@ -52,12 +58,13 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
         {
-            SubCategory? category = await _uow.SubCategoryRepository.GetByIdAsync(id);
+            SubCategory? subCategory = await _uow.SubCategoryRepository.GetByIdAsync(id);
 
-            if (category is null)
+            if (subCategory is null)
+            {
                 return NotFound();
-            else
-                return Ok(category);
+            }
+            return Ok(subCategory);
         }
 
 
@@ -65,6 +72,7 @@ namespace WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(SubCategory), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Post([FromBody] SubCategoryPostDto subCategoryDto)
         {
 
@@ -97,6 +105,10 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Put(int id, [FromBody] SubCategoryPutDto subCategoryDto)
         {
+            if (subCategoryDto == null)
+            {
+                return BadRequest();
+            }
 
             if (subCategoryDto.Id != id)
                 return BadRequest("ID im Body stimmt nicht mit ID in URL überein.");
@@ -132,7 +144,10 @@ namespace WebApi.Controllers
                 return NotFound();
             }
 
-            _uow.SubCategoryRepository.Delete(subCategoryToRemove);
+            //_uow.SubCategoryRepository.Delete(subCategoryToRemove);
+
+            _uow.SubCategoryRepository.SoftDelete(id);
+
             await _uow.SaveChangesAsync();
             return NoContent();
         }

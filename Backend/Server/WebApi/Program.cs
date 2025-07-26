@@ -23,6 +23,9 @@ namespace WebApi
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); //Statt Zahlen Enum-Werte
                 });
 
+            //Ignore circular references
+            builder.Services.AddControllers().AddJsonOptions(x =>
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             // Swagger hinzufügen (Standard mit Swashbuckle)
             builder.Services.AddEndpointsApiExplorer();
