@@ -3,6 +3,8 @@ using Core.Enums;
 using System.Diagnostics.Metrics;
 using System.Net;
 using WebApi.Controllers;
+using WebApi.Dtos;
+using static WebApi.Dtos.ItemDto;
 
 namespace WebApi.Mappings
 {

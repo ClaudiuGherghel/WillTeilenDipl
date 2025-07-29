@@ -2,62 +2,18 @@
 using Core.Entities;
 using Core.Enums;
 using Core.Validations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
+using WebApi.Dtos;
 using WebApi.Mappings;
+using static WebApi.Dtos.RentalDto;
 
 namespace WebApi.Controllers
 {
-
-    public record RentalPostDto(
-        [DateNotMinValue(nameof(From))] // 1.
-        [DateNotInFuture(nameof(From))] // 2.
-        DateTime From,
-
-        [DateNotMinValue(nameof(To))] // 3.
-        [DateNotInFuture(nameof(To))] // 4.
-        DateTime To,
-
-        [StringLength(1000, ErrorMessage = "Notiz darf maximal 1000 Zeichen lang sein")]
-        string Note,
-
-        RentalStatus Status,
-
-        //Foreign Keys
-        [Range(1, int.MaxValue, ErrorMessage = "RenterId (UserId) muss größer als 0 sein.")]
-        int RenterId,
-
-        [Range(1, int.MaxValue, ErrorMessage = "ItemId muss größer als 0 sein.")]
-        int ItemId
-    );
-
-    public record RentalPutDto(
-        int Id,
-        byte[]? RowVersion,
-
-        [DateNotMinValue(nameof(From))] // 1.
-        [DateNotInFuture(nameof(From))] // 2.
-        DateTime From,
-
-        [DateNotMinValue(nameof(To))] // 3.
-        [DateNotInFuture(nameof(To))] // 4.
-        DateTime To,
-
-        [StringLength(1000, ErrorMessage = "Notiz darf maximal 1000 Zeichen lang sein")]
-        string Note,
-
-        RentalStatus Status,
-
-        //Foreign Keys
-        [Range(1, int.MaxValue, ErrorMessage = "RenterId (UserId) muss größer als 0 sein.")]
-        int RenterId,
-
-        [Range(1, int.MaxValue, ErrorMessage = "ItemId muss größer als 0 sein.")]
-        int ItemId
-    );
-
 
 
     [Route("api/[controller]")]
@@ -72,7 +28,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(Rental[]), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetByAll()
         {
             ICollection<Rental> rentals = await _uow.RentalRepository.GetAllAsync();
 
@@ -84,7 +40,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Rental), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetByAll(int id)
         {
             Rental? rental = await _uow.RentalRepository.GetByIdAsync(id);
 
@@ -98,15 +54,21 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(typeof(Rental), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Post([FromBody] RentalPostDto rentalDto)
         {
-
-            if (rentalDto == null)
+            // Nur Eigentümer oder Admin darf änder
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId))
             {
-                return BadRequest();
+                return Unauthorized();
+            }
+
+            if (userId != rentalDto.RenterId && !User.IsInRole(nameof(Roles.Admin)))
+            {
+                return Forbid();
             }
 
             User? user = await _uow.UserRepository.GetByIdAsync(rentalDto.RenterId);
@@ -126,26 +88,33 @@ namespace WebApi.Controllers
             _uow.RentalRepository.Insert(rentalToPost);
             await _uow.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Get), new { id = rentalToPost.Id }, rentalToPost);
+            return CreatedAtAction(nameof(GetByAll), new { id = rentalToPost.Id }, rentalToPost);
         }
 
 
 
 
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(typeof(Rental), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Put(int id, [FromBody] RentalPutDto rentalDto)
         {
-            if (rentalDto == null)
-            {
+            if (id != rentalDto.Id)
                 return BadRequest();
+
+            // Nur Eigentümer oder Admin darf änder
+            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId))
+            {
+                return Unauthorized();
             }
 
-            if (rentalDto.Id != id)
-                return BadRequest("ID im Body stimmt nicht mit ID in URL überein.");
+            if (userId != rentalDto.RenterId && !User.IsInRole(nameof(Roles.Admin)))
+            {
+                return Forbid();
+            }
 
             Rental? rentalToPut = await _uow.RentalRepository.GetByIdAsync(id);
             if (rentalToPut == null)
@@ -173,6 +142,7 @@ namespace WebApi.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> Delete(int id)

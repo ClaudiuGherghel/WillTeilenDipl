@@ -1,8 +1,8 @@
 [
   {
     "ContainingType": "WebApi.Controllers.CategoriesController",
-    "Method": "Delete",
-    "RelativePath": "api/categories/delete/{id}",
+    "Method": "DeleteByAdmin",
+    "RelativePath": "api/categories/deletebyadmin/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -17,8 +17,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.CategoriesController",
-    "Method": "Get",
-    "RelativePath": "api/categories/get",
+    "Method": "GetByAll",
+    "RelativePath": "api/categories/getbyall",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -37,8 +37,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.CategoriesController",
-    "Method": "Get",
-    "RelativePath": "api/categories/get/{id}",
+    "Method": "GetByAll",
+    "RelativePath": "api/categories/getbyall/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -72,15 +72,15 @@
   },
   {
     "ContainingType": "WebApi.Controllers.CategoriesController",
-    "Method": "Post",
-    "RelativePath": "api/categories/post",
+    "Method": "PostByAdmin",
+    "RelativePath": "api/categories/postbyadmin",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "categoryDto",
-        "Type": "WebApi.Controllers.CategoryPostDto",
+        "Type": "WebApi.Dtos.CategoryDto\u002BCategoryPostDto",
         "IsRequired": true
       }
     ],
@@ -107,8 +107,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.CategoriesController",
-    "Method": "Put",
-    "RelativePath": "api/categories/put/{id}",
+    "Method": "PutByAdmin",
+    "RelativePath": "api/categories/putbyadmin/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -120,7 +120,7 @@
       },
       {
         "Name": "categoryDto",
-        "Type": "WebApi.Controllers.CategoryPutDto",
+        "Type": "WebApi.Dtos.CategoryDto\u002BCategoryPutDto",
         "IsRequired": true
       }
     ],
@@ -196,8 +196,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.ImagesController",
-    "Method": "Get",
-    "RelativePath": "api/images/get",
+    "Method": "GetByAll",
+    "RelativePath": "api/images/getbyall",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -216,8 +216,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.ImagesController",
-    "Method": "Get",
-    "RelativePath": "api/images/get/{id}",
+    "Method": "GetByAll",
+    "RelativePath": "api/images/getbyall/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -259,7 +259,7 @@
     "Parameters": [
       {
         "Name": "imageDto",
-        "Type": "WebApi.Controllers.ImagePostDto",
+        "Type": "WebApi.Dtos.ImageDto\u002BImagePostDto",
         "IsRequired": true
       }
     ],
@@ -295,8 +295,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.ImagesController",
-    "Method": "Put",
-    "RelativePath": "api/images/put/{id}",
+    "Method": "Post",
+    "RelativePath": "api/images/post/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -308,7 +308,7 @@
       },
       {
         "Name": "imageDto",
-        "Type": "WebApi.Controllers.ImagePutDto",
+        "Type": "WebApi.Dtos.ImageDto\u002BImagePutDto",
         "IsRequired": true
       }
     ],
@@ -400,8 +400,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.ItemsController",
-    "Method": "Get",
-    "RelativePath": "api/items/get",
+    "Method": "GetByAll",
+    "RelativePath": "api/items/getbyall",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -420,8 +420,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.ItemsController",
-    "Method": "Get",
-    "RelativePath": "api/items/get/{id}",
+    "Method": "GetByAll",
+    "RelativePath": "api/items/getbyall/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -455,8 +455,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.ItemsController",
-    "Method": "GetByFilter",
-    "RelativePath": "api/items/getbyfilter",
+    "Method": "GetByFilterByAll",
+    "RelativePath": "api/items/getbyfilterbyall",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -489,7 +489,7 @@
     "Parameters": [
       {
         "Name": "itemDto",
-        "Type": "WebApi.Controllers.ItemPostDto",
+        "Type": "WebApi.Dtos.ItemDto\u002BItemPostDto",
         "IsRequired": true
       }
     ],
@@ -538,7 +538,7 @@
       },
       {
         "Name": "itemDto",
-        "Type": "WebApi.Controllers.ItemPutDto",
+        "Type": "WebApi.Dtos.ItemDto\u002BItemPutDto",
         "IsRequired": true
       }
     ],
@@ -583,7 +583,7 @@
   },
   {
     "ContainingType": "WebApi.Controllers.RentalsController",
-    "Method": "Get",
+    "Method": "GetByAll",
     "RelativePath": "api/rentals",
     "HttpMethod": "GET",
     "IsController": true,
@@ -611,7 +611,7 @@
     "Parameters": [
       {
         "Name": "rentalDto",
-        "Type": "WebApi.Controllers.RentalPostDto",
+        "Type": "WebApi.Dtos.RentalDto\u002BRentalPostDto",
         "IsRequired": true
       }
     ],
@@ -647,7 +647,7 @@
   },
   {
     "ContainingType": "WebApi.Controllers.RentalsController",
-    "Method": "Get",
+    "Method": "GetByAll",
     "RelativePath": "api/rentals/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -695,7 +695,7 @@
       },
       {
         "Name": "rentalDto",
-        "Type": "WebApi.Controllers.RentalPutDto",
+        "Type": "WebApi.Dtos.RentalDto\u002BRentalPutDto",
         "IsRequired": true
       }
     ],
@@ -771,8 +771,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.SubCategoriesController",
-    "Method": "Delete",
-    "RelativePath": "api/subcategories/delete/{id}",
+    "Method": "DeleteByAdmin",
+    "RelativePath": "api/subcategories/deletebyadmin/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -802,8 +802,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.SubCategoriesController",
-    "Method": "Get",
-    "RelativePath": "api/subcategories/get",
+    "Method": "GetByAll",
+    "RelativePath": "api/subcategories/getbyall",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -822,8 +822,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.SubCategoriesController",
-    "Method": "Get",
-    "RelativePath": "api/subcategories/get/{id}",
+    "Method": "GetByAll",
+    "RelativePath": "api/subcategories/getbyall/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -857,15 +857,15 @@
   },
   {
     "ContainingType": "WebApi.Controllers.SubCategoriesController",
-    "Method": "Post",
-    "RelativePath": "api/subcategories/post",
+    "Method": "PostByAdmin",
+    "RelativePath": "api/subcategories/postbyadmin",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "subCategoryDto",
-        "Type": "WebApi.Controllers.SubCategoryPostDto",
+        "Type": "WebApi.Dtos.SubCategoryDto\u002BSubCategoryPostDto",
         "IsRequired": true
       }
     ],
@@ -901,8 +901,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.SubCategoriesController",
-    "Method": "Put",
-    "RelativePath": "api/subcategories/put/{id}",
+    "Method": "PutByAdmin",
+    "RelativePath": "api/subcategories/putbyadmin/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -914,7 +914,7 @@
       },
       {
         "Name": "subCategoryDto",
-        "Type": "WebApi.Controllers.SubCategoryPutDto",
+        "Type": "WebApi.Dtos.SubCategoryDto\u002BSubCategoryPutDto",
         "IsRequired": true
       }
     ],
@@ -927,6 +927,60 @@
           "text/json"
         ],
         "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 409
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApi.Controllers.UsersController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/users/changepassword/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "userDto",
+        "Type": "WebApi.Dtos.UserDto\u002BUserChangePasswordDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
       },
       {
         "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
@@ -990,8 +1044,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.UsersController",
-    "Method": "Get",
-    "RelativePath": "api/users/get",
+    "Method": "GetByAdmin",
+    "RelativePath": "api/users/getbyadmin",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1010,8 +1064,8 @@
   },
   {
     "ContainingType": "WebApi.Controllers.UsersController",
-    "Method": "Get",
-    "RelativePath": "api/users/get/{id}",
+    "Method": "GetByAdmin",
+    "RelativePath": "api/users/getbyadmin/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1045,15 +1099,31 @@
   },
   {
     "ContainingType": "WebApi.Controllers.UsersController",
-    "Method": "Post",
-    "RelativePath": "api/users/post",
+    "Method": "Login",
+    "RelativePath": "api/users/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "WebApi.Dtos.UserDto\u002BLoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApi.Controllers.UsersController",
+    "Method": "PostByAdmin",
+    "RelativePath": "api/users/postbyadmin",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "userDto",
-        "Type": "WebApi.Controllers.UserPostDto",
+        "Type": "WebApi.Dtos.UserDto\u002BUserPostDto",
         "IsRequired": true
       }
     ],
@@ -1080,8 +1150,43 @@
   },
   {
     "ContainingType": "WebApi.Controllers.UsersController",
-    "Method": "Put",
-    "RelativePath": "api/users/put/{id}",
+    "Method": "Register",
+    "RelativePath": "api/users/register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userDto",
+        "Type": "WebApi.Dtos.UserDto\u002BUserPostDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Core.Entities.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 201
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApi.Controllers.UsersController",
+    "Method": "Update",
+    "RelativePath": "api/users/update/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -1093,7 +1198,7 @@
       },
       {
         "Name": "userDto",
-        "Type": "WebApi.Controllers.UserPutDto",
+        "Type": "WebApi.Dtos.UserDto\u002BUserPutDto",
         "IsRequired": true
       }
     ],

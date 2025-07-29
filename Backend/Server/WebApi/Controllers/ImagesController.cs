@@ -1,53 +1,15 @@
 ﻿using Core.Contracts;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Mappings;
+using static WebApi.Dtos.ImageDto;
 
 namespace WebApi.Controllers
 {
-
-    public record ImagePostDto(
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Url muss eingegeben werden")]
-        [StringLength(300, ErrorMessage = "Die Bild-URL darf maximal 300 Zeichen lang sein.")]
-        [Url] //Fehlermeldung auch bei ""
-        string ImageUrl,
-
-        [StringLength(150, ErrorMessage = "Der Alternativtext darf maximal 150 Zeichen lang sein.")]
-        string AltText,
-
-        [StringLength(100, ErrorMessage = "Der MIME-Typ darf maximal 100 Zeichen lang sein.")]
-        string MimeType, // z. B. "image/jpeg"
-
-        int DisplayOrder,
-        bool IsMainImage,
-        [Range(1, int.MaxValue, ErrorMessage = "ItemId muss größer als 0 sein.")]
-        int ItemId
-    );
-    public record ImagePutDto(
-        int Id,
-        byte[]? RowVersion,
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Url muss eingegeben werden")]
-        [StringLength(300, ErrorMessage = "Die Bild-URL darf maximal 300 Zeichen lang sein.")]
-        [Url] //Fehlermeldung auch bei ""
-        string ImageUrl,
-
-        [StringLength(150, ErrorMessage = "Der Alternativtext darf maximal 150 Zeichen lang sein.")]
-        string AltText,
-
-        [StringLength(100, ErrorMessage = "Der MIME-Typ darf maximal 100 Zeichen lang sein.")]
-        string MimeType, // z. B. "image/jpeg"
-
-        int DisplayOrder,
-        bool IsMainImage,
-        [Range(1, int.MaxValue, ErrorMessage = "ItemId muss größer als 0 sein.")]
-        int ItemId
-    );
-
-
 
 
     [Route("api/[controller]/[action]")]
@@ -64,7 +26,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(Image[]), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetByAll()
         {
             ICollection<Image> images = await _uow.ImageRepository.GetAllAsync();
             return Ok(images);
@@ -75,7 +37,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Image), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetByAll(int id)
         {
             Image? image = await _uow.ImageRepository.GetByIdAsync(id);
 
@@ -89,17 +51,13 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
+        [Authorize]
         [ProducesResponseType(typeof(Image), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Post([FromBody] ImagePostDto imageDto)
         {
-
-            if (imageDto == null)
-            {
-                return BadRequest();
-            }
 
             Item? item = await _uow.ItemRepository.GetByIdAsync(imageDto.ItemId);
             if (item is null)
@@ -112,26 +70,21 @@ namespace WebApi.Controllers
             _uow.ImageRepository.Insert(imageToPost);
             await _uow.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Get), new { id = imageToPost.Id }, imageToPost);
+            return CreatedAtAction(nameof(GetByAll), new { id = imageToPost.Id }, imageToPost);
         }
 
 
 
-
         [HttpPut("{id}")]
+        [Authorize]
         [ProducesResponseType(typeof(Image), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Put(int id, [FromBody] ImagePutDto imageDto)
+        public async Task<IActionResult> Post(int id, [FromBody] ImagePutDto imageDto)
         {
-            if (imageDto == null)
-            {
+            if (id != imageDto.Id)
                 return BadRequest();
-            }
-
-            if (imageDto.Id != id)
-                return BadRequest("ID im Body stimmt nicht mit ID in URL überein.");
 
             Image? imageToPut = await _uow.ImageRepository.GetByIdAsync(id);
             if (imageToPut == null)
@@ -155,6 +108,7 @@ namespace WebApi.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
@@ -174,6 +128,7 @@ namespace WebApi.Controllers
 
 
         [HttpPost("upload")]
+        [Authorize]
         [RequestSizeLimit(5_000_000)] // z. B. 5 MB Limit
         public async Task<IActionResult> UploadImage(IFormFile file)
         {

@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Core.Enums;
 using WebApi.Controllers;
+using static WebApi.Dtos.RentalDto;
 
 namespace WebApi.Mappings
 {

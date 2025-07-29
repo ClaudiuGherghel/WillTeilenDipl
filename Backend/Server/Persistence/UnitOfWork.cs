@@ -1,13 +1,17 @@
 ﻿using Core.Contracts;
 using Core.Entities;
+using Core.Enums;
+using Core.Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utils;
 
 namespace Persistence
 {
@@ -156,14 +160,43 @@ namespace Persistence
             await DeleteDatabaseAsync();
             await MigrateDatabaseAsync();
 
+            string[][]? csv = await FillDbHelper.ReadStringMatrixFromCsvAsync("subCategories.csv", true);
+
+            //Mockdaten
+            ICollection<Category> categories = [.. csv
+                .GroupBy(c => new
+                {
+                    Category = c[0]
+                })
+                .Select(grp => new Category
+                {
+                    Name = grp.Key.Category
+                })];
+
+            ICollection<SubCategory> subCategories = [.. csv
+                .Select(sc => new SubCategory{
+                    Name = sc[1],
+                    Category = categories.Single(s => string.Equals(s.Name.Trim(), sc[0].Trim(), StringComparison.OrdinalIgnoreCase))})
+                ];
+
+            ICollection<User> users = [
+                new User{ Username = "Admin", PasswordHash = SecurityHelper.HashPassword("admin"), Email ="",
+                    FirstName="Claudiu", LastName="Gherghel", BirthDate = DateTime.ParseExact("29.01.1994", "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                    Role = Roles.Admin, PhoneNumber = "06601234123"
+                },
+                new User{ Username = "User", PasswordHash = SecurityHelper.HashPassword("user"), Email ="user@gmail.com",
+                    FirstName="Tomislav", LastName="Laus", BirthDate = DateTime.ParseExact("22.07.1995", "dd.MM.yyyy", CultureInfo.InvariantCulture), //Date Kulturunabhängig
+                    Country="Österreich", PostalCode="4600", Place="Wels", PhoneNumber = "0699331674"
+                },
+                ];
 
 
-
-
-
+            _dbContext.AddRange(subCategories);
+            _dbContext.AddRange(users);
             await _dbContext.SaveChangesAsync();
             Console.WriteLine("Datenbank wurde erfolgreich gelöscht, migriert und befüllt.");
         }
 
     }
 }
+

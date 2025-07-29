@@ -16,3 +16,4 @@ D:\Dipl-Project\WillTeilenDipl\Backend\Server\Persistence\obj\Debug\net9.0\refin
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\Persistence\obj\Debug\net9.0\Persistence.pdb
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\Persistence\obj\Debug\net9.0\Persistence.genruntimeconfig.cache
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\Persistence\obj\Debug\net9.0\ref\Persistence.dll
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\Persistence\bin\Debug\net9.0\appsettings.json

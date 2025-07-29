@@ -1,6 +1,7 @@
 ﻿using Core.Contracts;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Core.Helper;
 
 namespace Persistence
 {
@@ -85,5 +86,35 @@ namespace Persistence
                 }
             }
         }
+
+        public async Task<User?> AuthenticateSimpleAsync(string username, string password)
+        {
+            var hashedPassword = SecurityHelper.HashPasswordSimple(password);
+
+            return await DbContext.Users
+                .AsNoTracking()
+                .Where(u => !u.IsDeleted &&
+                            u.Username == username &&
+                            u.PasswordHash == hashedPassword)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<User?> AuthenticateAsync(string username, string password)
+        {
+            var user = await DbContext.Users
+                .AsNoTracking()
+                .Where(u => !u.IsDeleted && u.Username == username)
+                .FirstOrDefaultAsync();
+
+            if (user is null)
+                return null;
+
+            bool isValid = SecurityHelper.VerifyPassword(password, user.PasswordHash);
+
+            return isValid ? user : null;
+        }
+
+
+
     }
 }

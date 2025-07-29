@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using WebApi.Controllers;
+using static WebApi.Dtos.ImageDto;
 
 namespace WebApi.Mappings
 {

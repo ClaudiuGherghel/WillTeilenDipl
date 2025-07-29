@@ -91,3 +91,4 @@ D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApi\obj\Debug\net9.0\refint\Web
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApi\obj\Debug\net9.0\WebApi.pdb
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApi\obj\Debug\net9.0\WebApi.genruntimeconfig.cache
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApi\obj\Debug\net9.0\ref\WebApi.dll
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApi\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

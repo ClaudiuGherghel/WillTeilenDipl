@@ -19,6 +19,7 @@ namespace Core.Entities
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Passwort muss eingegeben werden")]
         public string PasswordHash { get; set; } = string.Empty;
+        public Roles Role { get; set; } = Roles.User; // Standardrolle
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "E-Mail muss eingegeben werden")]
         [StringLength(100, ErrorMessage = "E-Mail darf maximal 100 Zeichen lang sein")]
@@ -38,7 +39,6 @@ namespace Core.Entities
         [DateNotInFuture(nameof(BirthDate))] // 2.
         public DateTime BirthDate { get; set; }
 
-        public Roles Role { get; set; } = Roles.User; // Standardrolle
 
         [StringLength(100, ErrorMessage = "Land darf maximal 100 Zeichen lang sein")]
         public string Country { get; set; } = string.Empty;

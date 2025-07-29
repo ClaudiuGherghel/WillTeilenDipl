@@ -18,7 +18,7 @@ namespace Core.Contracts
         Task DeleteDatabaseAsync();
         Task MigrateDatabaseAsync();
         Task<int> SaveChangesAsync();
-        //Task FillDbAsync();
+        Task FillDbAsync();
 
     }
 }

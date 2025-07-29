@@ -1,26 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Core.Contracts;
+﻿using Core.Contracts;
 using Core.Entities;
+using Core.Enums;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Mappings;
+using static WebApi.Dtos.CategoryDto;
 
 
 namespace WebApi.Controllers
 {
-
-    public record CategoryPostDto(
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Kategoriename muss eingegeben werden")]
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Kategoriename muss zwischen 2 und 100 Zeichen lang sein")]
-        string Name
-    );
-    public record CategoryPutDto(
-        int Id,
-        byte[]? RowVersion,
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Kategoriename muss eingegeben werden")] 
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Kategoriename muss zwischen 2 und 100 Zeichen lang sein")]
-        string Name
-    );
 
 
     [Route("api/[controller]/[action]")]
@@ -36,7 +25,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(Category[]), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetByAll()
         {
             ICollection<Category> categories = await _uow.CategoryRepository.GetAllAsync();
             return Ok(categories);
@@ -46,7 +35,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Category), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetByAll(int id)
         {
             Category? category = await _uow.CategoryRepository.GetByIdAsync(id);
 
@@ -59,21 +48,17 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = nameof(Roles.Admin))]
         [ProducesResponseType(typeof(Category), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<IActionResult> Post([FromBody] CategoryPostDto categoryDto)
+        public async Task<IActionResult> PostByAdmin([FromBody] CategoryPostDto categoryDto)
         {
-            if (categoryDto == null)
-            {
-                return BadRequest();
-            }
-
             Category categoryToPost = categoryDto.ToEntity();
 
             _uow.CategoryRepository.Insert(categoryToPost);
             await _uow.SaveChangesAsync();
-            return CreatedAtAction(nameof(Get), new { id = categoryToPost.Id }, categoryToPost);
+            return CreatedAtAction(nameof(GetByAll), new { id = categoryToPost.Id }, categoryToPost);
         }
 
 
@@ -81,19 +66,15 @@ namespace WebApi.Controllers
 
 
         [HttpPut("{id}")]
+        [Authorize(Roles = nameof(Roles.Admin))]
         [ProducesResponseType(typeof(Category), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Put(int id, [FromBody] CategoryPutDto categoryDto)
+        public async Task<IActionResult> PutByAdmin(int id, [FromBody] CategoryPutDto categoryDto)
         {
-            if (categoryDto == null)
-            {
+            if (id != categoryDto.Id)
                 return BadRequest();
-            }
-
-            if (categoryDto.Id != id)
-                return BadRequest("ID im Body stimmt nicht mit ID in URL überein.");
 
             Category? categoryToPut = await _uow.CategoryRepository.GetByIdAsync(id);
             if (categoryToPut == null)
@@ -110,7 +91,8 @@ namespace WebApi.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [Authorize(Roles = nameof(Roles.Admin))]
+        public async Task<IActionResult> DeleteByAdmin(int id)
         {
             Category? categoryToRemove = await _uow.CategoryRepository.GetByIdAsync(id);
             if (categoryToRemove == null)

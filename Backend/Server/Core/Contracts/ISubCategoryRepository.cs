@@ -4,6 +4,7 @@ namespace Core.Contracts
 {
     public interface ISubCategoryRepository
     {
+        Task<int> CountAsync();
         void Delete(SubCategory subCategoryToRemove);
         Task<ICollection<SubCategory>> GetAllAsync();
         Task<SubCategory?> GetByIdAsync(int id);

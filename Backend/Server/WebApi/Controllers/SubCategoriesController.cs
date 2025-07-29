@@ -1,34 +1,16 @@
 ﻿using Core.Contracts;
 using Core.Entities;
+using Core.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Mappings;
+using static WebApi.Dtos.SubCategoryDto;
 
 namespace WebApi.Controllers
 {
-
-    public record SubCategoryPostDto(
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] 
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Subkategoriename muss zwischen 2 und 100 Zeichen lang sein")]
-        string Name,
-
-        [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] 
-        int CategoryId
-    );
-    public record SubCategoryPutDto(
-        int Id,
-        byte[]? RowVersion,
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Unterkategoriename muss eingegeben werden")] 
-        [StringLength(100, MinimumLength = 2, ErrorMessage = "Subkategoriename muss zwischen 2 und 100 Zeichen lang sein")]
-        string Name,
-
-        //Foreign Keys
-        [Range(1, int.MaxValue, ErrorMessage = "CategoryId muss größer als 0 sein.")] 
-        int CategoryId
-    );
 
 
     [Route("api/[controller]/[action]")]
@@ -44,7 +26,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(SubCategory[]), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetByAll()
         {
             ICollection<SubCategory> categories = await _uow.SubCategoryRepository.GetAllAsync();
 
@@ -56,7 +38,7 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(SubCategory), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetByAll(int id)
         {
             SubCategory? subCategory = await _uow.SubCategoryRepository.GetByIdAsync(id);
 
@@ -70,17 +52,12 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = nameof(Roles.Admin))]
         [ProducesResponseType(typeof(SubCategory), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Post([FromBody] SubCategoryPostDto subCategoryDto)
+        public async Task<IActionResult> PostByAdmin([FromBody] SubCategoryPostDto subCategoryDto)
         {
-
-            if (subCategoryDto == null)
-            {
-                return BadRequest();
-            }
-
             Category? category = await _uow.CategoryRepository.GetByIdAsync(subCategoryDto.CategoryId);
             if (category is null)
             {
@@ -92,26 +69,22 @@ namespace WebApi.Controllers
             _uow.SubCategoryRepository.Insert(subCategoryToPost);
             await _uow.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(Get), new { id = subCategoryToPost.Id }, subCategoryToPost);
+            return CreatedAtAction(nameof(GetByAll), new { id = subCategoryToPost.Id }, subCategoryToPost);
         }
 
 
 
 
         [HttpPut("{id}")]
+        [Authorize(Roles = nameof(Roles.Admin))]
         [ProducesResponseType(typeof(SubCategory), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> Put(int id, [FromBody] SubCategoryPutDto subCategoryDto)
+        public async Task<IActionResult> PutByAdmin(int id, [FromBody] SubCategoryPutDto subCategoryDto)
         {
-            if (subCategoryDto == null)
-            {
+            if (id != subCategoryDto.Id)
                 return BadRequest();
-            }
-
-            if (subCategoryDto.Id != id)
-                return BadRequest("ID im Body stimmt nicht mit ID in URL überein.");
 
             SubCategory? subCategoryToPut = await _uow.SubCategoryRepository.GetByIdAsync(id);
 
@@ -134,9 +107,10 @@ namespace WebApi.Controllers
 
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = nameof(Roles.Admin))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> DeleteByAdmin(int id)
         {
             SubCategory? subCategoryToRemove = await _uow.SubCategoryRepository.GetByIdAsync(id);
             if (subCategoryToRemove is null)
