@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Validations
+namespace Core.Validations.Helper
 {
     public static class ValidationHelper
     {
@@ -31,9 +31,9 @@ namespace Core.Validations
             return ValidationResult.Success;
         }
 
-        public static ValidationResult? ValidateFromBeforeTo(DateTime fromDate, DateTime toDate, string fromFieldName, string toFieldName)
+        public static ValidationResult? ValidateFromBeforeTo(DateTime fromDate, DateTime? toDate, string fromFieldName, string toFieldName)
         {
-            if (fromDate > toDate)
+            if (toDate!= null && fromDate > toDate)
             {
                 return new ValidationResult($"{fromFieldName} darf nicht nach {toFieldName} liegen.");
             }

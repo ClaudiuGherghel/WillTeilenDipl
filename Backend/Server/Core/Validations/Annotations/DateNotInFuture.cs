@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Core.Validations.Helper;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Core.Validations
+namespace Core.Validations.Annotations
 {
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false)] //optional, dient als Einstränkung um Fehler zu reduzieren

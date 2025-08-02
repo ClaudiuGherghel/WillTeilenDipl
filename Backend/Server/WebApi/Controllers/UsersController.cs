@@ -19,18 +19,18 @@ namespace WebApi.Controllers
 {
 
     [Route("api/[controller]/[action]")]
-    //Kein if (ModelState.IsValid) mehr nötig, bei ApiController passiert das automatisch, (Fehlerausgabe ProblemDetails) 
     [ApiController]
-    public class UsersController(IUnitOfWork uow, IConfiguration config) : ControllerBase
-    {
-        private readonly IUnitOfWork _uow = uow;
-        private readonly IConfiguration _configuration = config;
 
-        // Bei Fehlern wird Middleware einspringen
+    public class UsersController(IUnitOfWork uow, ILogger<ItemsController> logger, IConfiguration config, IWebHostEnvironment env) : BaseController(uow, logger)
+    {
+        private readonly IConfiguration _configuration = config;
+        private readonly IWebHostEnvironment _env = env;
+
 
         [HttpGet]
         [Authorize(Roles = nameof(Roles.Admin))]
         [ProducesResponseType(typeof(User[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetByAdmin()
         {
             ICollection<User> users = await _uow.UserRepository.GetAllAsync();
@@ -43,14 +43,14 @@ namespace WebApi.Controllers
         [Authorize(Roles = nameof(Roles.Admin))]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetByAdmin(int id)
         {
             User? user = await _uow.UserRepository.GetByIdAsync(id);
 
             if (user is null)
-            {
-                return NotFound();
-            }
+                return NotFound(new { error = $"Kein Benutzer mit der ID {id} gefunden." });
+
             return Ok(user);
         }
 
@@ -59,6 +59,9 @@ namespace WebApi.Controllers
         [Authorize(Roles = nameof(Roles.Admin))]
         [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PostByAdmin([FromBody] UserPostDto userDto)
         {
             User userToPost = userDto.ToEntity();
@@ -72,9 +75,9 @@ namespace WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(User), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Register([FromBody] UserPostDto userDto)
         {
-
             User userToPost = userDto.ToEntity();
 
             _uow.UserRepository.Insert(userToPost);
@@ -84,6 +87,9 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var user = await _uow.UserRepository.AuthenticateAsync(request.Username, request.Password);
@@ -123,25 +129,24 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update(int id, [FromBody] UserPutDto userDto)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateByUser(int id, [FromBody] UserPutDto userDto)
         {
-            // Benutzer darf sich nur selbst bearbeiten - außer Admin
 
             if (id != userDto.Id)
-                return BadRequest();
-
-            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId))
-                return Unauthorized();
-
-            if (userId != id && !User.IsInRole(nameof(Roles.Admin)))
-                return Forbid();
+                return BadRequest("Die übergebene ID stimmt nicht mit der Item-ID überein.");
 
             User? userToPut = await _uow.UserRepository.GetByIdAsync(id);
             if (userToPut == null)
-            {
-                return NotFound();
-            }
+                return NotFound(new { error = $"Kein Benutzer mit der ID {userDto.Id} gefunden." });
 
+            int? userId = GetUserIdFromClaims();
+            if (userId == null)
+                return Unauthorized(new { error = "Benutzer nicht angemeldet." });
+
+            if (userId != userDto.Id && !User.IsInRole(nameof(Roles.Admin)))
+                return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur Eigentümer oder Admin darf Benutzer bearbeiten." });
+ 
             userDto.UpdateEntity(userToPut);
 
             _uow.UserRepository.Update(userToPut);
@@ -156,23 +161,22 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        public async Task<IActionResult> ChangePassword(int id, [FromBody] UserChangePasswordDto userDto)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> ChangePasswordByUser(int id, [FromBody] UserChangePasswordDto userDto)
         {
-            // Benutzer darf nur eigenes Passwort ändern - außer Admin
             if (id != userDto.Id)
-                return BadRequest();
+                return BadRequest("Die übergebene ID stimmt nicht mit der Item-ID überein.");
 
-            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId))
-                return Unauthorized();
-
-            if (userId != id && !User.IsInRole(nameof(Roles.Admin)))
-                return Forbid();
-
-            var userToPut = await _uow.UserRepository.GetByIdAsync(id);
+            User? userToPut = await _uow.UserRepository.GetByIdAsync(id);
             if (userToPut == null)
-            {
-                return NotFound();
-            }
+                return NotFound(new { error = $"Kein Benutzer mit der ID {userDto.Id} gefunden." });
+
+        int? userId = GetUserIdFromClaims();
+            if (userId == null)
+                return Unauthorized(new { error = "Benutzer nicht angemeldet." });
+
+            if (userId != userDto.Id && !User.IsInRole(nameof(Roles.Admin)))
+                return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur Eigentümer oder Admin darf das Passwort ändern." });
 
             userDto.ChangePassword(userToPut);
 
@@ -189,27 +193,25 @@ namespace WebApi.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Delete(int id)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteByUser(int id)
         {
-
-            // Benutzer darf nur sich selbst löschen – außer Admin
-            if (!int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out int userId))
-                return Unauthorized();
-
-            if (userId != id && !User.IsInRole(nameof(Roles.Admin)))
-                return Forbid();
-
             User? userToRemove = await _uow.UserRepository.GetByIdAsync(id);
             if (userToRemove is null)
-            {
-                return NotFound();
-            }
-            //_uow.UserRepository.Delete(userToRemove);
+                return NotFound(new { error = $"Kein Benutzer mit der ID {id} gefunden." });
 
+            int? userId = GetUserIdFromClaims();
+            if (userId is null)
+                return Unauthorized(new { error = "Benutzer nicht angemeldet." });
+
+            if (userToRemove.Id != userId && !User.IsInRole(nameof(Roles.Admin)))
+                return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur der Eigentümer oder ein Admin darf den Benutzer löschen." });
+            
             _uow.UserRepository.SoftDelete(id);
-
             await _uow.SaveChangesAsync();
             return NoContent();
         }
+
+
     }
 }

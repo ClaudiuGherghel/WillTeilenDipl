@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Core.Validations.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Validations
+namespace Core.Validations.Annotations
 {
     // Das Attribut darf nur auf Klassen angewendet werden (nicht auf Methoden, Properties usw.).
     // Man darf das Attribut mehrmals auf derselben Klasse anwenden (z. B. für mehrere From/To-Paare).
@@ -33,11 +34,12 @@ namespace Core.Validations
             if (toProp == null)
                 return new ValidationResult($"Property '{ToPropertyName}' nicht gefunden.");
 
-            if (fromProp.PropertyType != typeof(DateTime) || toProp.PropertyType != typeof(DateTime))
+            if (fromProp.PropertyType != typeof(DateTime) ||
+                toProp.PropertyType != typeof(DateTime) && toProp.PropertyType != typeof(DateTime?))
                 return new ValidationResult("Beide Properties müssen vom Typ DateTime sein.");
 
             var fromValue = (DateTime)fromProp.GetValue(value)!;
-            var toValue = (DateTime)toProp.GetValue(value)!;
+            var toValue = (DateTime?)toProp.GetValue(value);
 
             var result = ValidationHelper.ValidateFromBeforeTo(fromValue, toValue, FromPropertyName, ToPropertyName);
             if (result != ValidationResult.Success)

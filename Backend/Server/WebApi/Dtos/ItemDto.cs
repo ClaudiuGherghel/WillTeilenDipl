@@ -1,5 +1,5 @@
 ﻿using Core.Enums;
-using Core.Validations;
+using Core.Validations.Annotations;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Dtos

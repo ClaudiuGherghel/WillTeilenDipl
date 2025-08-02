@@ -33,7 +33,7 @@ namespace Core.Entities
 
         // Navigation Property
         public Item Item { get; set; } = null!;
+        //Die Navigation-Property Item ist nullable, was bei ORM-Modellen üblich ist, weil das verknüpfte Objekt z. B. nicht immer mitgeladen wird.
     }
 }
 
-//Die Navigation-Property Item ist nullable, was bei ORM-Modellen üblich ist, weil das verknüpfte Objekt z. B. nicht immer mitgeladen wird.

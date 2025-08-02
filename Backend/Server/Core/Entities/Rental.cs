@@ -1,5 +1,5 @@
 ﻿using Core.Enums;
-using Core.Validations;
+using Core.Validations.Annotations;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -30,11 +30,15 @@ namespace Core.Entities
         [ForeignKey(nameof(RenterId))]
         public int RenterId { get; set; }
 
+        [ForeignKey(nameof(OwnerId))]
+        public int OwnerId { get; set; }
+
         [ForeignKey(nameof(ItemId))]
         public int ItemId { get; set; }
 
         // Navigation Properties
         public User Renter { get; set; } = null!;
+        public User Owner { get; set; } = null!;
         public Item Item { get; set; } = null!;
     }
 }

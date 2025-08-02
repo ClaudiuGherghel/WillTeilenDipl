@@ -1,5 +1,5 @@
 ﻿using Core.Contracts;
-using Core.Validations;
+using Core.Validations.Annotations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,7 +23,7 @@ namespace Core.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [DataType(DataType.Date)]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         public bool IsDeleted { get; set; } = false; // Soft-Delete
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Core.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
@@ -70,6 +71,25 @@ namespace WebApi.Middleware
                     problem.Title = "Database error";
                     problem.Detail = "Datenbankfehler beim Speichern oder Löschen.";
                     problem.Instance = context.Request.Path;
+                    break;
+
+                case UnauthorizedAccessException:
+                    problem.Status = StatusCodes.Status403Forbidden;
+                    problem.Title = "Zugriff verweigert";
+                    problem.Detail = "Sie haben keine Berechtigung für diese Aktion.";
+                    problem.Type = "https://tools.ietf.org/html/rfc7231#section-6.5.3";
+                    break;
+
+                case NotImplementedException:
+                    problem.Status = StatusCodes.Status501NotImplemented;
+                    problem.Title = "Nicht implementiert";
+                    problem.Detail = "Diese Funktion ist noch nicht implementiert.";
+                    break;
+
+                case ImageUploadException imageUploadEx:
+                    problem.Status = StatusCodes.Status500InternalServerError;
+                    problem.Title = "Bild-Upload-Fehler";
+                    problem.Detail = imageUploadEx.Message;
                     break;
 
                 default:

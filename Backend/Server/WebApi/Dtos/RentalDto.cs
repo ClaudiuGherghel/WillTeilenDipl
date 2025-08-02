@@ -1,5 +1,5 @@
 ﻿using Core.Enums;
-using Core.Validations;
+using Core.Validations.Annotations;
 using System.ComponentModel.DataAnnotations;
 
 namespace WebApi.Dtos
@@ -23,6 +23,9 @@ namespace WebApi.Dtos
             //Foreign Keys
             [Range(1, int.MaxValue, ErrorMessage = "RenterId (UserId) muss größer als 0 sein.")]
             int RenterId,
+
+            [Range(1, int.MaxValue, ErrorMessage = "OwnerId (UserId) muss größer als 0 sein.")]
+            int OwnerId,
 
             [Range(1, int.MaxValue, ErrorMessage = "ItemId muss größer als 0 sein.")]
             int ItemId
@@ -48,6 +51,9 @@ namespace WebApi.Dtos
             //Foreign Keys
             [Range(1, int.MaxValue, ErrorMessage = "RenterId (UserId) muss größer als 0 sein.")]
             int RenterId,
+
+            [Range(1, int.MaxValue, ErrorMessage = "OwnerId (UserId) muss größer als 0 sein.")]
+            int OwnerId,
 
             [Range(1, int.MaxValue, ErrorMessage = "ItemId muss größer als 0 sein.")]
             int ItemId

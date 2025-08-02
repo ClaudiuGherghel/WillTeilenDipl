@@ -1,12 +1,7 @@
 ﻿using Core.Enums;
-using Core.Validations;
-using System;
-using System.Collections.Generic;
+using Core.Validations.Annotations;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Core.Entities
 {

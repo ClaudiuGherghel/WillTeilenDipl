@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Xml.Linq;
 
-namespace Utils
+namespace Core.Helper
 {
     public static class FillDbHelper
     {
@@ -14,7 +14,7 @@ namespace Utils
                 return null;
             }
 
-            DirectoryInfo? dict = new DirectoryInfo(Directory.GetCurrentDirectory());
+            DirectoryInfo? dict = new (Directory.GetCurrentDirectory());
             FileInfo[] files = dict.GetFiles(fileName);
 
 
@@ -38,11 +38,7 @@ namespace Utils
         {
             int startLine = 0; // soll die Titelzeile überlesen werden startet der Zeilenzähler bei 1
             int subtractIndex = 0; // und eine Zeile ist zu überlesen
-            string? fullFileName = GetFullNameInApplicationTree(fileName); // csv-Datei liegt im Projektverzeichnis
-            if (fullFileName == null)
-            {
-                throw new FileNotFoundException("File " + fileName + " not found in applicationpath");
-            }
+            string? fullFileName = GetFullNameInApplicationTree(fileName) ?? throw new FileNotFoundException("File " + fileName + " not found in applicationpath"); // csv-Datei liegt im Projektverzeichnis
             string[] lines = await File.ReadAllLinesAsync(fullFileName, Encoding.UTF8);
             int lineCount = lines.Length;
             if (overreadTitleLine)

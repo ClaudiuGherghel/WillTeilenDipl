@@ -1,0 +1,19 @@
+SubCategoryName;ItemName;Description;Price;Stock;RentalType;ItemCondition;Deposit;Country;State;PostalCode;Place;Address;Owner
+Elektrowerkzeuge;Bohrmaschine;Leistungsstarke Bohrmaschine für alle Materialien;10;10;Privat;Used;10;Österreich;Oberösterreich;4600;Wels;;User5
+Gartenwerkzeuge;Rasenmäher;Robuster Rasenmäher für große Gärten;20;8;Privat;Good;25;Deutschland;Berlin;10115;Berlin;Hauptstraße 1;User1
+Baumaschinen;Betonmischer;Großer Betonmischer für Bauprojekte;10;3;Dealer;Used;50;Deutschland;Berlin;10115;Berlin;Hauptstraße 1;User1
+Fahrräder;Mountainbike;Robustes Mountainbike für anspruchsvolle Strecken;20;15;Privat;LikeNew;10;Deutschland;Hamburg;20095;Hamburg;;User2
+Wassersport;Kajak;Stabiles Kajak für ruhige Gewässer;45;5;Privat;Good;15;Österreich;Wien;1010;Wien;;User3
+Wintersport;Ski;Hochwertige Ski für den Winterurlaub;50;7;Privat;Good;20;Deutschland;Bayern;80331;München;;User4
+Motorisierte Freizeitfahrzeuge;E-Scooter;Schneller E-Scooter für den Stadtverkehr;10;10;Dealer;LikeNew;10;Österreich;Salzburg;5020;Salzburg;Stadtplatz 2;User5
+Zelte;Familienzelt;Großes Zelt für die ganze Familie;20;5;Privat;LikeNew;30;Deutschland;Berlin;10115;Berlin;Hauptstraße 1;User1
+Campingmöbel;Klappstuhl;Bequemer Klappstuhl für Camping und Garten;3;10;Privat;Used;5;Deutschland;Berlin;10115;Berlin;Hauptstraße 1;User1
+Campingkocher;Gaskocher;Kompakter Gaskocher für Outdoor-Aktivitäten;25;15;Privat;Good;10;Österreich;Wien;1010;Wien;Ringstraße 5;User3
+Tische und Stühle;Partytisch;Großer Tisch für Partys und Veranstaltungen;10;5;Dealer;Good;15;Österreich;Wien;1010;Wien;;User4
+Dekoration;Halloween-Deko;Gruselige Dekoration für Halloween;10;10;Privat;LikeNew;20;Österreich;Wien;1010;Wien;Ringstraße 5;User1
+Videoprojektoren;Beamer;Hochwertiger Beamer für Präsentationen;10;4;Dealer;Good;60;Österreich;Salzburg;5020;Salzburg;Stadtplatz 2;User5
+Büromöbel;Schreibtisch;Modernes Büromöbel für das Home Office;10;5;Dealer;LikeNew;40;Deutschland;Bayern;80331;München;;User2
+Wohnmobile und Wohnwagen;Caravan;Moderner Wohnwagen für Campingreisen;100;2;Dealer;Good;100;Deutschland;Bayern;80331;München;;User2
+Kinderwagen;Komfortabler Kinderwagen für alle Jahreszeiten;;2;5;Privat;LikeNew;20;Deutschland;Berlin;10115;Berlin;Hauptstraße 1;User4
+Weihnachtsdekoration;Weihnachtsbaum;Künstlicher Weihnachtsbaum für die Festtage;3;5;Privat;Good;15;Österreich;Wien;1010;Wien;;User1
+Reinigungsgeräte;Multitool;Vielseitiges Werkzeug für Reparaturen;2;5;Privat;LikeNew;10;Deutschland;Berlin;10115;Berlin;Hauptstraße 1;User2

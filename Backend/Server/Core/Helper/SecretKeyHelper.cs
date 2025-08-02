@@ -16,13 +16,14 @@ namespace Core.Helper
             [Convert]::ToBase64String($bytes)
         */
 
-        public static byte[]? GenerateSecretKeyGenerator()
+        /// <summary>
+        /// Generiert einen zufälligen 256-Bit (32 Byte) Secret Key für JWT, gibt ihn als Base64-String aus und liefert ihn als Byte-Array zurück.
+        /// </summary>
+        public static byte[] GenerateSecretKey()
         {
-            var key = new byte[32]; // 256 Bit
-            using var rng = RandomNumberGenerator.Create();
-            rng.GetBytes(key);
+            byte[] key = RandomNumberGenerator.GetBytes(32); // 256 Bit
             string base64Key = Convert.ToBase64String(key);
-            Console.WriteLine(base64Key);
+            Console.WriteLine("Generated Base64 Secret Key:\n" + base64Key);
             return key;
         }
     }

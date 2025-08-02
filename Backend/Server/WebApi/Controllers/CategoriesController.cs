@@ -4,6 +4,7 @@ using Core.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Dtos;
 using WebApi.Mappings;
 using static WebApi.Dtos.CategoryDto;
 
@@ -11,21 +12,17 @@ using static WebApi.Dtos.CategoryDto;
 namespace WebApi.Controllers
 {
 
-
     [Route("api/[controller]/[action]")]
-    //Kein if (ModelState.IsValid) mehr nötig, bei ApiController passiert das automatisch, (Fehlerausgabe ProblemDetails) 
     [ApiController]
 
-    public class CategoriesController(IUnitOfWork uow) : ControllerBase
+    public class CategoriesController(IUnitOfWork uow, ILogger<ItemsController> logger) : BaseController(uow, logger)
     {
-    // Bei Fehlern wird Middleware einspringen
-
-        private readonly IUnitOfWork _uow = uow;
 
 
         [HttpGet]
         [ProducesResponseType(typeof(Category[]), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetByAll()
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get()
         {
             ICollection<Category> categories = await _uow.CategoryRepository.GetAllAsync();
             return Ok(categories);
@@ -35,14 +32,15 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Category), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetByAll(int id)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get(int id)
         {
             Category? category = await _uow.CategoryRepository.GetByIdAsync(id);
 
-            if (category != null)
-                return Ok(category);
-            else
-                return NotFound();
+            if (category == null)
+                return NotFound(new { error = $"Keine Kategorie mit der ID {id} gefunden." });
+
+            return Ok(category);
         }
 
 
@@ -51,17 +49,16 @@ namespace WebApi.Controllers
         [Authorize(Roles = nameof(Roles.Admin))]
         [ProducesResponseType(typeof(Category), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PostByAdmin([FromBody] CategoryPostDto categoryDto)
         {
             Category categoryToPost = categoryDto.ToEntity();
 
             _uow.CategoryRepository.Insert(categoryToPost);
             await _uow.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetByAll), new { id = categoryToPost.Id }, categoryToPost);
+            return CreatedAtAction(nameof(Get), new { id = categoryToPost.Id }, categoryToPost);
         }
-
-
 
 
 
@@ -71,14 +68,16 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PutByAdmin(int id, [FromBody] CategoryPutDto categoryDto)
         {
             if (id != categoryDto.Id)
-                return BadRequest();
+                return BadRequest(new { error = "Die ID in der URL stimmt nicht mit der ID im Body überein." });
 
             Category? categoryToPut = await _uow.CategoryRepository.GetByIdAsync(id);
             if (categoryToPut == null)
-                return NotFound();
+                return NotFound(new { error = $"Keine Kategorie mit der ID {categoryDto.Id} gefunden." });
 
             categoryDto.UpdateEntity(categoryToPut);
 
@@ -92,13 +91,16 @@ namespace WebApi.Controllers
 
         [HttpDelete("{id}")]
         [Authorize(Roles = nameof(Roles.Admin))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteByAdmin(int id)
         {
             Category? categoryToRemove = await _uow.CategoryRepository.GetByIdAsync(id);
             if (categoryToRemove == null)
-                return NotFound();
-
-            //_uow.CategoryRepository.Delete(categoryToRemove);
+                return NotFound(new { error = $"Keine Kategorie mit der ID {id} gefunden." });
 
             _uow.CategoryRepository.SoftDelete(id);
             await _uow.SaveChangesAsync(); 

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Core.Validations.Helper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Validations
+namespace Core.Validations.Annotations
 {
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter, AllowMultiple = false)] //optional, dient als Einstränkung um Fehler zu reduzieren

@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using Core.Entities;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Core.Helper

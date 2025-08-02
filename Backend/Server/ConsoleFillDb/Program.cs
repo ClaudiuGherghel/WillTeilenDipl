@@ -11,7 +11,7 @@ namespace ConsoleFillDb
         static async Task Main()
         {
             //Generate Secret Key for apsettings.json
-            SecretKeyHelper.GenerateSecretKeyGenerator();
+            //SecretKeyHelper.GenerateSecretKey();
 
             //Fill Db with Mock data
             using UnitOfWork uow = new();
@@ -19,6 +19,9 @@ namespace ConsoleFillDb
             Console.WriteLine("Anzahl Kategorien: " + await uow.CategoryRepository.CountAsync());
             Console.WriteLine("Anzahl Subkategorien: " + await uow.SubCategoryRepository.CountAsync());
             Console.WriteLine("Anzahl User: " + await uow.UserRepository.CountAsync());
+            Console.WriteLine("Anzahl Items: " + await uow.ItemRepository.CountAsync());
+            Console.WriteLine("Anzahl Rentals: " + await uow.RentalRepository.CountAsync());
+
         }
 
 

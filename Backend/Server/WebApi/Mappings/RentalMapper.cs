@@ -18,6 +18,7 @@ namespace WebApi.Mappings
                 Status = rentalDto.Status,
                 RenterId = rentalDto.RenterId,
                 ItemId = rentalDto.ItemId,
+                OwnerId = rentalDto.OwnerId
             };
         }
 
@@ -31,7 +32,7 @@ namespace WebApi.Mappings
             rentalToPut.Status = rentalDto.Status;
             rentalToPut.RenterId = rentalDto.RenterId;
             rentalToPut.ItemId = rentalDto.ItemId;
-
+            // OwnderId sollte nicht verändert werden können
         }
     }
 }
