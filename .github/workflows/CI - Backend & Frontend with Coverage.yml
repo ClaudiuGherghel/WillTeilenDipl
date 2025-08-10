@@ -1,0 +1,93 @@
+name: CI - Backend & Frontend with Coverage
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  frontend-tests:
+    name: Frontend Tests (Angular)
+    runs-on: ubuntu-latest
+    outputs:
+      frontend_coverage: ${{ steps.get_coverage.outputs.coverage }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd Frontend
+          npm ci
+
+      - name: Run Angular tests with coverage
+        run: |
+          cd Frontend
+          npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+
+      - name: Get frontend coverage percentage
+        id: get_coverage
+        run: |
+          FILE=$(find Frontend/coverage -name lcov.info | head -n 1)
+          if [ -f "$FILE" ]; then
+            PERCENT=$(grep -m 1 -oP 'LF:\K[0-9]+' "$FILE")
+          else
+            PERCENT=0
+          fi
+          echo "Frontend Coverage: ${PERCENT}%"
+          echo "coverage=$PERCENT" >> $GITHUB_OUTPUT
+
+      - name: Upload frontend coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: Frontend/coverage
+
+  backend-tests:
+    name: Backend Tests (.NET)
+    runs-on: ubuntu-latest
+    needs: frontend-tests
+    outputs:
+      backend_coverage: ${{ steps.get_coverage.outputs.coverage }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ./Backend/Server/Server.sln
+
+      - name: Build
+        run: dotnet build ./Backend/Server/Server.sln --no-restore --configuration Release
+
+      - name: Run tests with coverage
+        run: dotnet test ./Backend/Server/Server.sln --no-build --configuration Release --collect:"XPlat Code Coverage" --results-directory ./Backend/Server/TestResults
+
+      - name: Report backend coverage
+        uses: danielpalme/ReportGenerator-GitHub-Action@v5
+        with:
+          reports: './Backend/Server/TestResults/**/coverage.cobertura.xml'
+          targetdir: './Backend/Server/TestResults/coverage-report'
+          reporttypes: 'HtmlInline;Cobertura'
+
+      - name: Get backend coverage percentage
+        id: get_coverage
+        run: |
+          PERCENT=$(grep -oP 'line-rate="\K[0-9.]+' ./Backend/Server/TestResults/**/coverage.cobertura.xml | awk '{sum+=$1} END {print int(sum*100)}')
+          echo "Backend Coverage: ${PERCENT}%"
+          echo "coverage=$PERCENT" >> $GITHUB_OUTPUT
+
+      - name: Upload backend coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage
+          path: ./Backend/Server/TestResults/coverage-report
