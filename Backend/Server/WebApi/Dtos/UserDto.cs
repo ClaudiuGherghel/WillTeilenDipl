@@ -9,7 +9,7 @@ namespace WebApi.Dtos
         public record UserPostDto(
             [Required(AllowEmptyStrings = false, ErrorMessage = "Benutzername muss eingegeben werden")]
             [StringLength(50, MinimumLength = 2, ErrorMessage = "Benutzername muss zwischen 2 und 50 Zeichen lang sein")]
-            string Username,
+            string UserName,
 
             [Required(AllowEmptyStrings = false, ErrorMessage = "Passwort muss eingegeben werden")]
             string Password,
@@ -27,8 +27,8 @@ namespace WebApi.Dtos
             [StringLength(50, MinimumLength = 2, ErrorMessage = "Nachname muss zwischen 2 und 50 Zeichen lang sein")]
             string LastName,
 
-            [DateNotMinValue(nameof(BirthDate))] // 1.
-            [DateNotInFuture(nameof(BirthDate))] // 2.
+            [DateNotMinValueAttribute(nameof(BirthDate))] // 1.
+            [DateNotInFutureAttribute(nameof(BirthDate))] // 2.
             DateTime BirthDate,
 
             Roles Role,
@@ -45,7 +45,7 @@ namespace WebApi.Dtos
             [StringLength(200, ErrorMessage = "Adresse darf maximal 200 Zeichen lang sein")]
             string Address,
 
-            [OptionalPhone]
+            [OptionalPhoneAttribute]
             string PhoneNumber
         );
 
@@ -57,7 +57,7 @@ namespace WebApi.Dtos
 
             [Required(AllowEmptyStrings = false, ErrorMessage = "Benutzername muss eingegeben werden")]
             [StringLength(50, MinimumLength = 2, ErrorMessage = "Benutzername muss zwischen 2 und 50 Zeichen lang sein")]
-            string Username,
+            string UserName,
 
             [Required(AllowEmptyStrings = false, ErrorMessage = "E-Mail muss eingegeben werden")]
             [StringLength(100, ErrorMessage = "E-Mail darf maximal 100 Zeichen lang sein")]
@@ -72,8 +72,8 @@ namespace WebApi.Dtos
             [StringLength(50, MinimumLength = 2, ErrorMessage = "Nachname muss zwischen 2 und 50 Zeichen lang sein")]
             string LastName,
 
-            [DateNotMinValue(nameof(BirthDate))] // 1.
-            [DateNotInFuture(nameof(BirthDate))] // 2.
+            [DateNotMinValueAttribute(nameof(BirthDate))] // 1.
+            [DateNotInFutureAttribute(nameof(BirthDate))] // 2.
             DateTime BirthDate,
 
             Roles Role,
@@ -90,7 +90,7 @@ namespace WebApi.Dtos
             [StringLength(200, ErrorMessage = "Adresse darf maximal 200 Zeichen lang sein")]
             string Address,
 
-            [OptionalPhone]
+            [OptionalPhoneAttribute]
             string PhoneNumber
         );
 

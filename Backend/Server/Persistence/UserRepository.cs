@@ -94,7 +94,7 @@ namespace Persistence
             return await DbContext.Users
                 .AsNoTracking()
                 .Where(u => !u.IsDeleted &&
-                            u.Username == username &&
+                            u.UserName == username &&
                             u.PasswordHash == hashedPassword)
                 .FirstOrDefaultAsync();
         }
@@ -103,7 +103,7 @@ namespace Persistence
         {
             var user = await DbContext.Users
                 .AsNoTracking()
-                .Where(u => !u.IsDeleted && u.Username == username)
+                .Where(u => !u.IsDeleted && u.UserName == username)
                 .FirstOrDefaultAsync();
 
             if (user is null)

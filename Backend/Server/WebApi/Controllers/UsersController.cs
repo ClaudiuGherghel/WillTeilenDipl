@@ -21,7 +21,7 @@ namespace WebApi.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
 
-    public class UsersController(IUnitOfWork uow, ILogger<ItemsController> logger, IConfiguration config, IWebHostEnvironment env) : BaseController(uow, logger)
+    public class UsersController(IUnitOfWork uow, ILogger<UsersController> logger, IConfiguration config, IWebHostEnvironment env) : BaseController<UsersController>(uow, logger)
     {
         private readonly IConfiguration _configuration = config;
         private readonly IWebHostEnvironment _env = env;
@@ -106,7 +106,7 @@ namespace WebApi.Controllers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.Username),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
             var token = new JwtSecurityToken(

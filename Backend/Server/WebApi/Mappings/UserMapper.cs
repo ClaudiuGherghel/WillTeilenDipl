@@ -15,7 +15,7 @@ namespace WebApi.Mappings
             return new User
             {
                 CreatedAt = DateTime.UtcNow,
-                Username = userDto.Username ?? string.Empty,
+                UserName = userDto.UserName ?? string.Empty,
                 PasswordHash = SecurityHelper.HashPassword(userDto.Password ?? string.Empty),
                 Email = userDto.Email ?? string.Empty,
                 FirstName = userDto.FirstName ?? string.Empty,
@@ -35,7 +35,7 @@ namespace WebApi.Mappings
         {
             userToPut.UpdatedAt = DateTime.UtcNow;
             userToPut.RowVersion = userDto.RowVersion;
-            userToPut.Username = userDto.Username ?? string.Empty;
+            userToPut.UserName = userDto.UserName ?? string.Empty;
             userToPut.Email = userDto.Email ?? string.Empty;
             userToPut.FirstName = userDto.FirstName ?? string.Empty;
             userToPut.LastName = userDto.LastName ?? string.Empty;

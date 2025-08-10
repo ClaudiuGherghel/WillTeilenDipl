@@ -19,7 +19,7 @@ namespace WebApi.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ItemsController(IUnitOfWork uow, ILogger<ItemsController> logger) : BaseController(uow, logger)
+    public class ItemsController(IUnitOfWork uow, ILogger<ItemsController> logger) : BaseController<ItemsController>(uow, logger)
     {
 
         [HttpGet]

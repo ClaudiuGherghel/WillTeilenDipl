@@ -2,6 +2,7 @@
 using Core.Entities;
 using Core.Enums;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using WebApi.Dtos;
@@ -15,7 +16,8 @@ namespace WebApi.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
 
-    public class CategoriesController(IUnitOfWork uow, ILogger<ItemsController> logger) : BaseController(uow, logger)
+    public class CategoriesController(IUnitOfWork uow, ILogger<CategoriesController> logger)
+    : BaseController<CategoriesController>(uow, logger)
     {
 
 

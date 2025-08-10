@@ -1,19 +1,16 @@
 ﻿using Core.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 
 namespace WebApi.Controllers
 {
-    //Kein if (ModelState.IsValid) mehr nötig, bei ApiController passiert das automatisch, (Fehlerausgabe ProblemDetails) 
-    [Route("api/[controller]")]
     [ApiController]
-    public class BaseController(IUnitOfWork uow, ILogger<ItemsController> logger) : ControllerBase
+    [Route("api/[controller]")]
+    public class BaseController<T>(IUnitOfWork uow, ILogger<T> logger) : ControllerBase
     {
-        // Bei Fehlern wird Middleware einspringen
-
-        internal readonly IUnitOfWork _uow = uow;
-        internal readonly ILogger<ItemsController> _logger = logger;
+        protected readonly IUnitOfWork _uow = uow;
+        protected readonly ILogger<T> _logger = logger;
 
         protected int? GetUserIdFromClaims()
         {

@@ -1,6 +1,4 @@
-﻿
-
-using Core.Contracts.Validations;
+﻿using Core.Contracts.Validations;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
@@ -23,17 +21,17 @@ namespace Persistence.Validations.ValidationRules
                     .Entries<User>()
                     .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
                     .Select(e => e.Entity)
-                    .Any(u => u != user && string.Equals(u.Username, user.Username, StringComparison.OrdinalIgnoreCase));
+                    .Any(u => u != user && string.Equals(u.UserName, user.UserName, StringComparison.OrdinalIgnoreCase));
             }
 
             bool usernameExistsInDb = await DbContext.Users
-                    .AnyAsync(u => u != user && EF.Functions.Like(u.Username, user.Username));
+                    .AnyAsync(u => u != user && EF.Functions.Like(u.UserName, user.UserName));
 
 
             if (usernameExistsInMemory || usernameExistsInDb)
             {
                 throw new ValidationException(
-                    new ValidationResult("Benutzername existiert bereits", [nameof(User.Username)]), null, user);
+                    new ValidationResult("Benutzername existiert bereits", [nameof(User.UserName)]), null, user);
             }
 
         }

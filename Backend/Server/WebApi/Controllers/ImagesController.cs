@@ -16,7 +16,7 @@ namespace WebApi.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ImagesController(IUnitOfWork uow, ILogger<ItemsController> logger, IWebHostEnvironment env) : BaseController(uow, logger)
+    public class ImagesController(IUnitOfWork uow, ILogger<ImagesController> logger, IWebHostEnvironment env) : BaseController<ImagesController>(uow, logger)
     {
         private readonly IWebHostEnvironment _env = env;
 

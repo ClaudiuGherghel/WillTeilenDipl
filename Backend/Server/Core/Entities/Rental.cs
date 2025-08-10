@@ -11,13 +11,13 @@ namespace Core.Entities
     {
 
         [DataType(DataType.Date)] // macht keine Validierung, für API kein nutzen
-        [DateNotMinValue(nameof(From))] // 1.
-        [DateNotInFuture(nameof(From))] // 2.
+        [DateNotMinValueAttribute(nameof(From))] // 1.
+        [DateNotInFutureAttribute(nameof(From))] // 2.
         public DateTime From { get; set; }
 
         [DataType(DataType.Date)] 
-        [DateNotMinValue(nameof(To))] // 3.
-        [DateNotInFuture(nameof(To))] // 4.
+        [DateNotMinValueAttribute(nameof(To))] // 3.
+        [DateNotInFutureAttribute(nameof(To))] // 4.
         public DateTime To { get; set; }
 
         [StringLength(1000, ErrorMessage = "Notiz darf maximal 1000 Zeichen lang sein")]

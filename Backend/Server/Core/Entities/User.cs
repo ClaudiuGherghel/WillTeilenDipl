@@ -10,7 +10,7 @@ namespace Core.Entities
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Benutzername muss eingegeben werden")]
         [StringLength(50, MinimumLength = 2, ErrorMessage = "Benutzername muss zwischen 2 und 50 Zeichen lang sein")]
-        public string Username { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Passwort muss eingegeben werden")]
         public string PasswordHash { get; set; } = string.Empty;
@@ -30,8 +30,8 @@ namespace Core.Entities
         public string LastName { get; set; } = string.Empty;
 
         [DataType(DataType.Date)] // macht keine Validierung, für API kein nutzen
-        [DateNotMinValue(nameof(BirthDate))] // 1.
-        [DateNotInFuture(nameof(BirthDate))] // 2.
+        [DateNotMinValueAttribute(nameof(BirthDate))] // 1.
+        [DateNotInFutureAttribute(nameof(BirthDate))] // 2.
         public DateTime BirthDate { get; set; }
 
 
@@ -49,7 +49,7 @@ namespace Core.Entities
 
 
         // [Phone] Fehlermeldung bei leerer Eingabe aber nicht bei null
-        [OptionalPhone]
+        [OptionalPhoneAttribute]
         public string PhoneNumber { get; set; } = string.Empty;
 
 

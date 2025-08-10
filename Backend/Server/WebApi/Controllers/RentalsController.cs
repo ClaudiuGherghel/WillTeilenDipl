@@ -18,7 +18,7 @@ namespace WebApi.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class RentalsController(IUnitOfWork uow, ILogger<ItemsController> logger) : BaseController(uow, logger)
+    public class RentalsController(IUnitOfWork uow, ILogger<RentalsController> logger) : BaseController<RentalsController>(uow, logger)
     {
 
         [HttpGet]

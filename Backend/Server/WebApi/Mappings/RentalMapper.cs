@@ -28,7 +28,7 @@ namespace WebApi.Mappings
             rentalToPut.RowVersion = rentalDto.RowVersion;
             rentalToPut.From = rentalDto.From;
             rentalToPut.To = rentalDto.To;
-            rentalToPut.Note = rentalDto.Note;
+            rentalToPut.Note = rentalDto.Note??string.Empty;
             rentalToPut.Status = rentalDto.Status;
             rentalToPut.RenterId = rentalDto.RenterId;
             rentalToPut.ItemId = rentalDto.ItemId;

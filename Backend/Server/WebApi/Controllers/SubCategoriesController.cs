@@ -16,7 +16,7 @@ namespace WebApi.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class SubCategoriesController(IUnitOfWork uow, ILogger<ItemsController> logger) : BaseController(uow, logger)
+    public class SubCategoriesController(IUnitOfWork uow, ILogger<SubCategoriesController> logger) : BaseController<SubCategoriesController>(uow, logger)
         {
 
 

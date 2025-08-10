@@ -30,7 +30,7 @@ namespace Persistence
 
         public UnitOfWork() : this(new ApplicationDbContext()) { }
 
-        private UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(ApplicationDbContext context)
         {
             _dbContext = context;
 
@@ -240,13 +240,13 @@ namespace Persistence
 
             var users = new List<User>
             {
-                new() { Username = "Admin1", PasswordHash = SecurityHelper.HashPassword("admin1"), Email = "admin1@gmail.com", FirstName = "Claudiu", LastName = "Gherghel", BirthDate = DateTime.ParseExact("29.01.1994", "dd.MM.yyyy", CultureInfo.InvariantCulture), Role = Roles.Admin, PhoneNumber = "+436601234123" },
-                new() { Username = "Admin1", PasswordHash = SecurityHelper.HashPassword("admin2"), Email = "admin1@gmail.com", FirstName = "Claudiu", LastName = "Gherghel", BirthDate = DateTime.ParseExact("22.04.1994", "dd.MM.yyyy", CultureInfo.InvariantCulture), Role = Roles.Admin },
-                new() { Username = "User1", PasswordHash = SecurityHelper.HashPassword("user1"), Email = "user1@gmail.com", FirstName = "Tomislav", LastName = "Laus", BirthDate = DateTime.ParseExact("22.07.1995", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Österreich", PostalCode = "4600", Place = "Wels", Address = "Stelzhammerstraße 1", PhoneNumber = "+43697331674" },
-                new() { Username = "User2", PasswordHash = SecurityHelper.HashPassword("user2"), Email = "user2@gmail.com", FirstName = "Engin", LastName = "Caliskan", BirthDate = DateTime.ParseExact("11.04.1995", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Österreich", PostalCode = "4030", Place = "Linz", PhoneNumber = "+43699338503" },
-                new() { Username = "User3", PasswordHash = SecurityHelper.HashPassword("user3"), Email = "user3@gmail.com", FirstName = "Alex", LastName = "Mayer", BirthDate = DateTime.ParseExact("10.01.1988", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Österreich", PostalCode = "4030", Place = "Linz", PhoneNumber = "+4313456789" },
-                new() { Username = "User4", PasswordHash = SecurityHelper.HashPassword("user4"), Email = "user4@gmail.com", FirstName = "Marie", LastName = "Schmidt", BirthDate = DateTime.ParseExact("15.09.1982", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Deutschland", PostalCode = "80331", Place = "München", PhoneNumber = "+49894567890" },
-                new() { Username = "User5", PasswordHash = SecurityHelper.HashPassword("user5"), Email = "user5@gmail.com", FirstName = "Anna", LastName = "Bauer", BirthDate = DateTime.ParseExact("05.06.2000", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Deutschland", PostalCode = "20095", Place = "Hamburg", Address = "Bahnhofstraße 23", PhoneNumber = "+49301234567" },
+                new() { UserName = "Admin1", PasswordHash = SecurityHelper.HashPassword("admin1"), Email = "admin1@gmail.com", FirstName = "Claudiu", LastName = "Gherghel", BirthDate = DateTime.ParseExact("29.01.1994", "dd.MM.yyyy", CultureInfo.InvariantCulture), Role = Roles.Admin, PhoneNumber = "+436601234123" },
+                new() { UserName = "Admin2", PasswordHash = SecurityHelper.HashPassword("admin2"), Email = "admin2@gmail.com", FirstName = "Manoel", LastName = "Gherghel", BirthDate = DateTime.ParseExact("22.04.1994", "dd.MM.yyyy", CultureInfo.InvariantCulture), Role = Roles.Admin },
+                new() { UserName = "User1", PasswordHash = SecurityHelper.HashPassword("user1"), Email = "user1@gmail.com", FirstName = "Tomislav", LastName = "Laus", BirthDate = DateTime.ParseExact("22.07.1995", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Österreich", PostalCode = "4600", Place = "Wels", Address = "Stelzhammerstraße 1", PhoneNumber = "+43697331674" },
+                new() { UserName = "User2", PasswordHash = SecurityHelper.HashPassword("user2"), Email = "user2@gmail.com", FirstName = "Engin", LastName = "Caliskan", BirthDate = DateTime.ParseExact("11.04.1995", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Österreich", PostalCode = "4030", Place = "Linz", PhoneNumber = "+43699338503" },
+                new() { UserName = "User3", PasswordHash = SecurityHelper.HashPassword("user3"), Email = "user3@gmail.com", FirstName = "Alex", LastName = "Mayer", BirthDate = DateTime.ParseExact("10.01.1988", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Österreich", PostalCode = "4030", Place = "Linz", PhoneNumber = "+4313456789" },
+                new() { UserName = "User4", PasswordHash = SecurityHelper.HashPassword("user4"), Email = "user4@gmail.com", FirstName = "Marie", LastName = "Schmidt", BirthDate = DateTime.ParseExact("15.09.1982", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Deutschland", PostalCode = "80331", Place = "München", PhoneNumber = "+49894567890" },
+                new() { UserName = "User5", PasswordHash = SecurityHelper.HashPassword("user5"), Email = "user5@gmail.com", FirstName = "Anna", LastName = "Bauer", BirthDate = DateTime.ParseExact("05.06.2000", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Deutschland", PostalCode = "20095", Place = "Hamburg", Address = "Bahnhofstraße 23", PhoneNumber = "+49301234567" },
 
             };
 
@@ -265,14 +265,14 @@ namespace Persistence
                 PostalCode = i[10],
                 Place = i[11],
                 Address = i[12],
-                Owner = users.Single(u => string.Equals(u.Username, i[13], StringComparison.OrdinalIgnoreCase))
+                Owner = users.Single(u => string.Equals(u.UserName, i[13], StringComparison.OrdinalIgnoreCase))
             }).ToList();
 
             var rentals = rentalCsv
                 .GroupBy(r=> new
                 {
-                    Owner = users.Single(u => string.Equals(u.Username, r[0], StringComparison.OrdinalIgnoreCase)),
-                    Renter = users.Single(u => string.Equals(u.Username, r[1], StringComparison.OrdinalIgnoreCase)),
+                    Owner = users.Single(u => string.Equals(u.UserName, r[0], StringComparison.OrdinalIgnoreCase)),
+                    Renter = users.Single(u => string.Equals(u.UserName, r[1], StringComparison.OrdinalIgnoreCase)),
                     SubCategoryName = r[2],
                     ItemName = r[3],
                     From = DateTime.Parse(r[4], CultureInfo.InvariantCulture),

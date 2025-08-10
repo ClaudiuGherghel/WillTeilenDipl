@@ -21,6 +21,13 @@ namespace Persistence
 
 
         private readonly IConfiguration _config;
+        private readonly DbContextOptions<ApplicationDbContext>? _options;
+
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
+        {
+            _options = options;
+        }
 
         /// <summary>
         /// Parameterloser Konstruktor liest Connection String aus appsettings.json (zur Designzeit)
@@ -44,8 +51,14 @@ namespace Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string? connectionString = _config["ConnectionStrings:DefaultConnection"];
-            optionsBuilder.UseSqlServer(connectionString);
+            if (_config is null || optionsBuilder.IsConfigured)
+                return;
+
+            var connectionString = _config["ConnectionStrings:DefaultConnection"];
+            if (!string.IsNullOrWhiteSpace(connectionString))
+            {
+                optionsBuilder.UseSqlServer(connectionString);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

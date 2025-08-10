@@ -54,7 +54,7 @@ namespace Core.Entities
         [Range(0, double.MaxValue, ErrorMessage = "Kaution muss 0 oder höher sein")]
         public decimal Deposit { get; set; }
 
-        [NotUnknownEnum(RentalType.Unknown, ErrorMessage = "Miettyp darf nicht Unknown sein.")]
+        [NotUnknownEnumAttribute(RentalType.Unknown, ErrorMessage = "Miettyp darf nicht Unknown sein.")]
         public RentalType RentalType { get; set; } = RentalType.Unknown; // Required funktioniert nur mit null, deshalb Custom Validator
 
         public ItemCondition ItemCondition { get; set; } = ItemCondition.Unknown;

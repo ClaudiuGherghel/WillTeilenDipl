@@ -46,7 +46,7 @@ namespace WebApi.Dtos
             [Range(0, double.MaxValue, ErrorMessage = "Kaution muss 0 oder höher sein")]
             decimal Deposit,
 
-            [NotUnknownEnum(RentalType.Unknown, ErrorMessage = "Miettyp darf nicht Unknown sein.")]
+            [NotUnknownEnumAttribute(RentalType.Unknown, ErrorMessage = "Miettyp darf nicht Unknown sein.")]
             RentalType RentalType, // Required funktioniert nur mit null, deshalb Custom Validator
 
             ItemCondition ItemCondition,
@@ -101,7 +101,7 @@ namespace WebApi.Dtos
             [Range(0, double.MaxValue, ErrorMessage = "Kaution muss 0 oder höher sein")]
             decimal Deposit,
 
-            [NotUnknownEnum(RentalType.Unknown, ErrorMessage = "Miettyp darf nicht Unknown sein.")]
+            [NotUnknownEnumAttribute(RentalType.Unknown, ErrorMessage = "Miettyp darf nicht Unknown sein.")]
             RentalType RentalType, // Required funktioniert nur mit null, deshalb Custom Validator
 
             ItemCondition ItemCondition,
