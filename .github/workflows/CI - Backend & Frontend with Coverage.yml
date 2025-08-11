@@ -23,12 +23,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd Frontend
+          cd Frontend/WebApp
           npm ci
 
       - name: Run Angular tests with coverage
         run: |
-          cd Frontend
+          cd Frontend/WebApp
           npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
       - name: Get frontend coverage percentage
