@@ -32,7 +32,7 @@ namespace Persistence
             return await DbContext.SubCategories
                 .AsNoTracking()
                 //.Include(i => i.Category)
-                //.Include(i => i.Items) 
+                .Include(i => i.Items)
                 .Where(w => w.IsDeleted == false)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }

@@ -89,7 +89,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PostByUser_SubCategoryNotFound_Returns404()
         {
-            var dto = new ItemPostDto("Name", "Desc", true, "DE", "BY", "12345", "Munich", "Street", 10, 5, 1, 0, 0, 1, 2);
+            var dto = new ItemPostDto("Name", "Desc", true, "Street", 10, 5, 1, 0, 0, 1, 2, 1);
             _mockSubCategoryRepo.Setup(r => r.GetByIdAsync(dto.SubCategoryId)).ReturnsAsync((SubCategory?)null);
 
             var result = await _controller.PostByUser(dto);
@@ -100,7 +100,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PostByUser_UserNotFound_Returns404()
         {
-            var dto = new ItemPostDto("Name", "Desc", true, "DE", "BY", "12345", "Munich", "Street", 10, 5, 1, 0, 0, 1, 2);
+            var dto = new ItemPostDto("Name", "Desc", true, "Street", 10, 5, 1, 0, 0, 1, 2, 1);
             _mockSubCategoryRepo.Setup(r => r.GetByIdAsync(dto.SubCategoryId)).ReturnsAsync(new SubCategory { Id = 1 });
             _mockUserRepo.Setup(r => r.GetByIdAsync(dto.OwnerId)).ReturnsAsync((User?)null);
 
@@ -112,10 +112,8 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PostByUser_Unauthorized_Returns401()
         {
-            var dto = new ItemPostDto(
-                "Item", "Desc", true, "DE", "BY", "12345", "Munich", "Street",
-                100, 10, 50, 0, 0, 1, 2
-            );
+            var dto = new ItemPostDto("Name", "Desc", true, "Street", 10, 5, 1, 0, 0, 1, 2, 1);
+
 
             _mockSubCategoryRepo.Setup(r => r.GetByIdAsync(dto.SubCategoryId))
                 .ReturnsAsync(new SubCategory { Id = dto.SubCategoryId });
@@ -139,7 +137,7 @@ namespace WebApiTests.Controllers
             [Fact]
         public async Task PutByUser_IdMismatch_ReturnsBadRequest()
         {
-            var dto = new ItemPutDto(2, null, "Name", "Desc", true, "DE", "BY", "12345", "Munich", "Street", 10, 5, 1, 0, 0, 1, 2);
+            var dto = new ItemPutDto(2, null, "Name", "Desc", true, "Street", 10, 5, 1, 0, 0, 1, 2, 1);
 
             var result = await _controller.PutByUser(1, dto);
 
@@ -149,21 +147,20 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PutByUser_ItemNotFound_Returns404()
         {
-            var dto = new ItemPutDto(1, null, "Name", "Desc", true, "DE", "BY", "12345", "Munich", "Street", 10, 5, 1, 0, 0, 1, 2);
+            var dto = new ItemPutDto(1, null, "Name", "Desc", true, "Street", 10, 5, 1, 0, 0, 1, 2, 1);
             _mockItemRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Item?)null);
 
             var result = await _controller.PutByUser(1, dto);
 
             Assert.IsType<NotFoundObjectResult>(result);
+
         }
 
         [Fact]
         public async Task PutByUser_Unauthorized_Returns401()
         {
-            var dto = new ItemPutDto(
-                1, [1, 2], "Item", "Desc", true, "DE", "BY", "12345", "Munich", "Street",
-                100, 10, 50, 0, 0, 1, 2
-            );
+            var dto = new ItemPutDto(2, null, "Name", "Desc", true, "Street", 10, 5, 1, 0, 0, 1, 2, 1);
+
 
             var existingItem = new Item { Id = dto.Id };
 
@@ -244,10 +241,8 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PostByUser_OwnerCanAdd_ReturnsCreated()
         {
-            var dto = new ItemPostDto(
-                "Name", "Desc", true, "DE", "BY", "12345", "Munich", "Street",
-                10, 5, 1, 0, 0, 1, 2 // OwnerId = 2
-            );
+            var dto = new ItemPostDto("Name", "Desc", true, "Street", 10, 5, 1, 0, 0, 1, 2, 1);
+
 
             _mockSubCategoryRepo.Setup(r => r.GetByIdAsync(dto.SubCategoryId))
                 .ReturnsAsync(new SubCategory { Id = dto.SubCategoryId });
@@ -274,10 +269,8 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PutByUser_OwnerCanUpdate_ReturnsOk()
         {
-            var dto = new ItemPutDto(
-                1, null, "UpdatedName", "UpdatedDesc", true, "DE", "BY", "12345", "Munich", "Street",
-                10, 5, 1, 0, 0, 1, 2 // OwnerId = 2
-            );
+            var dto = new ItemPutDto(2, null, "Name", "Desc", true, "Street", 10, 5, 1, 0, 0, 1, 2, 1);
+
 
             var existingItem = new Item { Id = 1, OwnerId = 2 };
             _mockItemRepo.Setup(r => r.GetByIdAsync(dto.Id)).ReturnsAsync(existingItem);

@@ -85,7 +85,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PostByAdmin_ReturnsCreated()
         {
-            var dto = new UserPostDto("User1", "pass", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "DE", "12345", "Place", "Street", "123456");
+            var dto = new UserPostDto("User1", "pass", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "Street", "123456", 1);
             _mockUow.Setup(u => u.SaveChangesAsync(It.IsAny<bool>())).ReturnsAsync(1);
 
             var result = await _controller.PostByAdmin(dto);
@@ -98,7 +98,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task Register_ReturnsToken()
         {
-            var dto = new UserPostDto("User1", "pass", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "DE", "12345", "Place", "Street", "123456");
+            var dto = new UserPostDto("User1", "pass", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "Street", "123456", 1);
 
             // Insert + SaveChanges werden vom Controller aufgerufen -> Insert setzt Id für besseren Token-Inhalt
             _mockUserRepo.Setup(r => r.Insert(It.IsAny<User>()))
@@ -143,7 +143,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task UpdateByUser_IdMismatch_ReturnsBadRequest()
         {
-            var dto = new UserPutDto(2, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "DE", "12345", "Place", "Street", "123456");
+            var dto = new UserPutDto(2, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "Street", "123456", 1);
 
             var result = await _controller.UpdateByUser(1, dto);
 
@@ -153,7 +153,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task UpdateByUser_UserNotFound_Returns404()
         {
-            var dto = new UserPutDto(1, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "DE", "12345", "Place", "Street", "123456");
+            var dto = new UserPutDto(1, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "Street", "123456", 1);
             _mockUserRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((User?)null);
 
             var result = await _controller.UpdateByUser(1, dto);
@@ -164,7 +164,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task UpdateByUser_Unauthorized_Returns401()
         {
-            var dto = new UserPutDto(1, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "DE", "12345", "Place", "Street", "123456");
+            var dto = new UserPutDto(1, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "Street", "123456", 1);
             _mockUserRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(new User { Id = 1 });
 
             _controller.ControllerContext = new ControllerContext
@@ -183,7 +183,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task UpdateByUser_Forbidden_Returns403()
         {
-            var dto = new UserPutDto(1, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "DE", "12345", "Place", "Street", "123456");
+            var dto = new UserPutDto(1, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "Street", "123456", 1);
             _mockUserRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(new User { Id = 1 });
 
             // Eingeloggt als anderer User
@@ -203,7 +203,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task UpdateByUser_OwnerCanUpdate_ReturnsOk()
         {
-            var dto = new UserPutDto(1, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "DE", "12345", "Place", "Street", "123456");
+            var dto = new UserPutDto(1, null, "User", "mail@mail.com", "First", "Last", DateTime.Now.AddYears(-20), Roles.User, "Street", "123456", 1);
             var user = new User { Id = 1 };
             _mockUserRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(user);
 

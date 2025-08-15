@@ -18,6 +18,8 @@ namespace Persistence
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<GeoPostal> GeoPostals { get; set; }
+
 
 
         private readonly IConfiguration _config;

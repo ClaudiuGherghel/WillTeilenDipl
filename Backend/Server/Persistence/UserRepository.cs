@@ -20,8 +20,9 @@ namespace Persistence
         {
             return await DbContext.Users
                 .AsNoTracking()
-                //.Include(i => i.Rentals) // ICollection
-                //.Include(i => i.OwnedItems) // ICollection
+                //.Include(u => i.Rentals) // ICollection
+                //.Include(u => i.OwnedItems) // ICollection
+                .Include(u=> u.GeoPostal)
                 .Where(w=> w.IsDeleted == false)
                 .OrderBy(o=> o.LastName)
                 .ThenBy(t=> t.FirstName)
@@ -32,8 +33,9 @@ namespace Persistence
         {
             return await DbContext.Users
                 .AsNoTracking()
-                //.Include(i=> i.Rentals) // ICollection
-                //.Include(i=> i.OwnedItems) // ICollection
+                //.Include(u => i.Rentals) // ICollection
+                //.Include(u => i.OwnedItems) // ICollection
+                .Include(u => u.GeoPostal)
                 .Where(w=> w.IsDeleted == false)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }

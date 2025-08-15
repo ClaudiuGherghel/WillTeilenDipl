@@ -2901,6 +2901,59 @@
         },
         "additionalProperties": false
       },
+      "GeoPostal": {
+        "required": [
+          "country",
+          "place",
+          "postalCode",
+          "state"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rowVersion": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "country": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "state": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "postalCode": {
+            "maxLength": 10,
+            "minLength": 0,
+            "type": "string"
+          },
+          "place": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "Image": {
         "required": [
           "imageUrl"
@@ -3032,13 +3085,9 @@
       },
       "Item": {
         "required": [
-          "country",
           "deposit",
           "name",
-          "place",
-          "postalCode",
-          "price",
-          "state"
+          "price"
         ],
         "type": "object",
         "properties": {
@@ -3077,26 +3126,6 @@
           "isAvailable": {
             "type": "boolean"
           },
-          "country": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string"
-          },
-          "state": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string"
-          },
-          "postalCode": {
-            "maxLength": 20,
-            "minLength": 0,
-            "type": "string"
-          },
-          "place": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
           "address": {
             "maxLength": 200,
             "minLength": 0,
@@ -3133,11 +3162,18 @@
             "type": "integer",
             "format": "int32"
           },
+          "geoPostalId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "subCategory": {
             "$ref": "#/components/schemas/SubCategory"
           },
           "owner": {
             "$ref": "#/components/schemas/User"
+          },
+          "geoPostal": {
+            "$ref": "#/components/schemas/GeoPostal"
           },
           "rentals": {
             "type": "array",
@@ -3179,22 +3215,6 @@
           "isAvailable": {
             "type": "boolean"
           },
-          "country": {
-            "type": "string",
-            "nullable": true
-          },
-          "state": {
-            "type": "string",
-            "nullable": true
-          },
-          "postalCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "place": {
-            "type": "string",
-            "nullable": true
-          },
           "address": {
             "type": "string",
             "nullable": true
@@ -3222,6 +3242,10 @@
             "format": "int32"
           },
           "ownerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "geoPostaldId": {
             "type": "integer",
             "format": "int32"
           }
@@ -3251,22 +3275,6 @@
           "isAvailable": {
             "type": "boolean"
           },
-          "country": {
-            "type": "string",
-            "nullable": true
-          },
-          "state": {
-            "type": "string",
-            "nullable": true
-          },
-          "postalCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "place": {
-            "type": "string",
-            "nullable": true
-          },
           "address": {
             "type": "string",
             "nullable": true
@@ -3294,6 +3302,10 @@
             "format": "int32"
           },
           "ownerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "geoPostaldId": {
             "type": "integer",
             "format": "int32"
           }
@@ -3653,24 +3665,6 @@
             "type": "string",
             "format": "date"
           },
-          "country": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "postalCode": {
-            "maxLength": 20,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "place": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
           "address": {
             "maxLength": 200,
             "minLength": 0,
@@ -3680,6 +3674,13 @@
           "phoneNumber": {
             "type": "string",
             "nullable": true
+          },
+          "geoPostalId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "geoPostal": {
+            "$ref": "#/components/schemas/GeoPostal"
           },
           "rentals": {
             "type": "array",
@@ -3747,18 +3748,6 @@
           "role": {
             "$ref": "#/components/schemas/Roles"
           },
-          "country": {
-            "type": "string",
-            "nullable": true
-          },
-          "postalCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "place": {
-            "type": "string",
-            "nullable": true
-          },
           "address": {
             "type": "string",
             "nullable": true
@@ -3766,6 +3755,10 @@
           "phoneNumber": {
             "type": "string",
             "nullable": true
+          },
+          "geoPostaldId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -3805,18 +3798,6 @@
           "role": {
             "$ref": "#/components/schemas/Roles"
           },
-          "country": {
-            "type": "string",
-            "nullable": true
-          },
-          "postalCode": {
-            "type": "string",
-            "nullable": true
-          },
-          "place": {
-            "type": "string",
-            "nullable": true
-          },
           "address": {
             "type": "string",
             "nullable": true
@@ -3824,6 +3805,10 @@
           "phoneNumber": {
             "type": "string",
             "nullable": true
+          },
+          "geoPostaldId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

@@ -21,8 +21,8 @@ namespace Persistence
         {
             return await DbContext.Rentals
                 .AsNoTracking()
-                //.Include(i => i.Item)
-                //.Include(i => i.Renter)
+                .Include(i => i.Item)
+                .Include(i => i.Renter)
                 .Where(w=> w.IsDeleted == false)
                 .OrderBy(o => o.From)
                 .ThenBy(t=> t.To)
@@ -33,8 +33,8 @@ namespace Persistence
         {
             return await DbContext.Rentals
                 .AsNoTracking()
-                //.Include(i => i.Item)
-                //.Include(i => i.Renter)
+                .Include(i => i.Item)
+                .Include(i => i.Renter)
                 .Where(w=> w.IsDeleted == false)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }

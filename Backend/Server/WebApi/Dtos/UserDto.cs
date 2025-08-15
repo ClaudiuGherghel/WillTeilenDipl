@@ -33,20 +33,15 @@ namespace WebApi.Dtos
 
             Roles Role,
 
-            [StringLength(100, ErrorMessage = "Land darf maximal 100 Zeichen lang sein")]
-            string Country,
-
-            [StringLength(20, ErrorMessage = "Postleitzahl darf maximal 20 Zeichen lang sein")]
-            string PostalCode,
-
-            [StringLength(100, ErrorMessage = "Ort darf maximal 100 Zeichen lang sein")]
-            string Place,
-
             [StringLength(200, ErrorMessage = "Adresse darf maximal 200 Zeichen lang sein")]
             string Address,
 
             [OptionalPhoneAttribute]
-            string PhoneNumber
+            string PhoneNumber,
+
+            [Range(1, int.MaxValue, ErrorMessage = "GeoPostalId muss größer als 0 sein.")]
+            int GeoPostaldId
+
         );
 
 
@@ -78,20 +73,14 @@ namespace WebApi.Dtos
 
             Roles Role,
 
-            [StringLength(100, ErrorMessage = "Land darf maximal 100 Zeichen lang sein")]
-            string Country,
-
-            [StringLength(20, ErrorMessage = "Postleitzahl darf maximal 20 Zeichen lang sein")]
-            string PostalCode,
-
-            [StringLength(100, ErrorMessage = "Ort darf maximal 100 Zeichen lang sein")]
-            string Place,
-
             [StringLength(200, ErrorMessage = "Adresse darf maximal 200 Zeichen lang sein")]
             string Address,
 
             [OptionalPhoneAttribute]
-            string PhoneNumber
+            string PhoneNumber,
+            
+            [Range(1, int.MaxValue, ErrorMessage = "GeoPostalId muss größer als 0 sein.")]
+            int GeoPostaldId
         );
 
         public record UserChangePasswordDto(

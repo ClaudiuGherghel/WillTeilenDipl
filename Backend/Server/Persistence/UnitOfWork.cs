@@ -19,6 +19,7 @@ namespace Persistence
         public IRentalRepository RentalRepository { get; }
         public IImageRepository ImageRepository { get; }
         public IUserRepository UserRepository { get; }
+        public IGeoPostalRepository GeoPostalRepository { get; }
 
         private readonly ApplicationDbContext _dbContext;
 
@@ -45,6 +46,7 @@ namespace Persistence
             RentalRepository = new RentalRepository(_dbContext);
             ImageRepository = new ImageRepository(_dbContext);
             UserRepository = new UserRepository(_dbContext);
+            GeoPostalRepository = new GeoPostalRepository(_dbContext);
         }
 
         public UnitOfWork(IConfiguration configuration) : this(new ApplicationDbContext(configuration)) { }
@@ -220,6 +222,18 @@ namespace Persistence
             string[][]? subCategoryCsv = await FillDbHelper.ReadStringMatrixFromCsvAsync("subCategories.csv", true);
             string[][]? itemCsv = await FillDbHelper.ReadStringMatrixFromCsvAsync("items.csv", true);
             string[][]? rentalCsv = await FillDbHelper.ReadStringMatrixFromCsvAsync("rentals.csv", true);
+            string[][]? plzCsv = await FillDbHelper.ReadStringMatrixFromCsvAsync("plz.csv", true);
+            string[][]? userCsv = await FillDbHelper.ReadStringMatrixFromCsvAsync("users.csv", true);
+
+            var geoPostals = plzCsv
+                .Select(g => new GeoPostal()
+                {
+                    Country = g[0],
+                    State = g[1],
+                    PostalCode = g[2],
+                    Place = g[3]
+                })
+                .ToList();
 
             var categories = subCategoryCsv
                 .GroupBy(c => c[0])
@@ -237,18 +251,25 @@ namespace Persistence
                 })
                 .ToList();
 
-
-            var users = new List<User>
+            var users = userCsv.Select(u => new User()
             {
-                new() { UserName = "Admin1", PasswordHash = SecurityHelper.HashPassword("admin1"), Email = "admin1@gmail.com", FirstName = "Claudiu", LastName = "Gherghel", BirthDate = DateTime.ParseExact("29.01.1994", "dd.MM.yyyy", CultureInfo.InvariantCulture), Role = Roles.Admin, PhoneNumber = "+436601234123" },
-                new() { UserName = "Admin2", PasswordHash = SecurityHelper.HashPassword("admin2"), Email = "admin2@gmail.com", FirstName = "Manoel", LastName = "Gherghel", BirthDate = DateTime.ParseExact("22.04.1994", "dd.MM.yyyy", CultureInfo.InvariantCulture), Role = Roles.Admin },
-                new() { UserName = "User1", PasswordHash = SecurityHelper.HashPassword("user1"), Email = "user1@gmail.com", FirstName = "Tomislav", LastName = "Laus", BirthDate = DateTime.ParseExact("22.07.1995", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Österreich", PostalCode = "4600", Place = "Wels", Address = "Stelzhammerstraße 1", PhoneNumber = "+43697331674" },
-                new() { UserName = "User2", PasswordHash = SecurityHelper.HashPassword("user2"), Email = "user2@gmail.com", FirstName = "Engin", LastName = "Caliskan", BirthDate = DateTime.ParseExact("11.04.1995", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Österreich", PostalCode = "4030", Place = "Linz", PhoneNumber = "+43699338503" },
-                new() { UserName = "User3", PasswordHash = SecurityHelper.HashPassword("user3"), Email = "user3@gmail.com", FirstName = "Alex", LastName = "Mayer", BirthDate = DateTime.ParseExact("10.01.1988", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Österreich", PostalCode = "4030", Place = "Linz", PhoneNumber = "+4313456789" },
-                new() { UserName = "User4", PasswordHash = SecurityHelper.HashPassword("user4"), Email = "user4@gmail.com", FirstName = "Marie", LastName = "Schmidt", BirthDate = DateTime.ParseExact("15.09.1982", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Deutschland", PostalCode = "80331", Place = "München", PhoneNumber = "+49894567890" },
-                new() { UserName = "User5", PasswordHash = SecurityHelper.HashPassword("user5"), Email = "user5@gmail.com", FirstName = "Anna", LastName = "Bauer", BirthDate = DateTime.ParseExact("05.06.2000", "dd.MM.yyyy", CultureInfo.InvariantCulture), Country = "Deutschland", PostalCode = "20095", Place = "Hamburg", Address = "Bahnhofstraße 23", PhoneNumber = "+49301234567" },
+                UserName = u[0],
+                PasswordHash = SecurityHelper.HashPassword(u[1]),
+                Email = u[2],
+                FirstName = u[3],
+                LastName = u[4],
+                BirthDate = DateTime.ParseExact(u[5], "dd.MM.yyyy", CultureInfo.InvariantCulture),
+                Role = Enum.Parse<Roles>(u[6]),
+                GeoPostal = geoPostals.Single(g => string.Equals(g.Country, u[7], StringComparison.OrdinalIgnoreCase) &&
+                                        string.Equals(g.State, u[8], StringComparison.OrdinalIgnoreCase) &&
+                                        string.Equals(g.PostalCode, u[9], StringComparison.OrdinalIgnoreCase) &&
+                                        string.Equals(g.Place, u[10], StringComparison.OrdinalIgnoreCase)),
+                Address = u[11],
+                PhoneNumber = u[12],
+            })
+                .ToList();
 
-            };
+
 
             var items = itemCsv.Select(i => new Item
             {
@@ -260,10 +281,10 @@ namespace Persistence
                 RentalType = Enum.Parse<RentalType>(i[5]),
                 ItemCondition = Enum.Parse<ItemCondition>(i[6]),
                 Deposit = decimal.Parse(i[7]),
-                Country = i[8],
-                State = i[9],
-                PostalCode = i[10],
-                Place = i[11],
+                GeoPostal = geoPostals.Single(g=> string.Equals(g.Country, i[8], StringComparison.OrdinalIgnoreCase) &&
+                                        string.Equals(g.State, i[9], StringComparison.OrdinalIgnoreCase) &&
+                                        string.Equals(g.PostalCode, i[10], StringComparison.OrdinalIgnoreCase) &&
+                                        string.Equals(g.Place, i[11], StringComparison.OrdinalIgnoreCase)),
                 Address = i[12],
                 Owner = users.Single(u => string.Equals(u.UserName, i[13], StringComparison.OrdinalIgnoreCase))
             }).ToList();
@@ -293,7 +314,8 @@ namespace Persistence
             _dbContext.AddRange(users);
             _dbContext.AddRange(items);
             _dbContext.AddRange(rentals);
-            await SaveChangesAsync(true);
+            await SaveChangesAsync(checkMemory: true);
+
 
             Console.WriteLine("Datenbank wurde erfolgreich gelöscht, migriert und befüllt.");
         }

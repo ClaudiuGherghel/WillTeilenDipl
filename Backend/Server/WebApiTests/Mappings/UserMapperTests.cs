@@ -15,20 +15,21 @@ namespace WebApiTests.Mappings
         [Fact]
         public void User_ToEntity_MapsCorrectly()
         {
-            var dto = new UserPostDto("user", "pw", "email", "fn", "ln", DateTime.UtcNow, 0, "DE", "12345", "Place", "Addr", "");
+            var dto = new UserPostDto("user", "pw", "email", "fn", "ln", DateTime.UtcNow, 0, "Addr", "", 1);
             var entity = dto.ToEntity();
 
             Assert.Equal(dto.UserName, entity.UserName);
             Assert.True(SecurityHelper.VerifyPassword(dto.Password, entity.PasswordHash));
             Assert.Equal(dto.Email, entity.Email);
             Assert.Equal(dto.Role, entity.Role);
+            Assert.Equal(dto.GeoPostaldId, entity.GeoPostalId);
         }
 
         [Fact]
         public void User_UpdateEntity_MapsCorrectly()
         {
             var entity = new User();
-            var dto = new UserPutDto(1, [1, 2], "user", "email", "fn", "ln", DateTime.UtcNow, 0, "DE", "12345", "Place", "Addr", "");
+            var dto = new UserPutDto(1, [1, 2], "user", "email", "fn", "ln", DateTime.UtcNow, 0, "Addr", "", 1);
             dto.UpdateEntity(entity);
 
             Assert.Equal(dto.UserName, entity.UserName);
@@ -37,12 +38,10 @@ namespace WebApiTests.Mappings
             Assert.Equal(dto.LastName, entity.LastName);
             Assert.Equal(dto.BirthDate, entity.BirthDate);
             Assert.Equal(dto.PhoneNumber, entity.PhoneNumber);
-            Assert.Equal(dto.Country, entity.Country);
-            Assert.Equal(dto.PostalCode, entity.PostalCode);
-            Assert.Equal(dto.Place, entity.Place);
             Assert.Equal(dto.Address, entity.Address);
             Assert.Equal(dto.Role, entity.Role);
             Assert.Equal(dto.RowVersion, entity.RowVersion);
+            Assert.Equal(dto.GeoPostaldId, entity.GeoPostalId);
         }
 
         [Fact]

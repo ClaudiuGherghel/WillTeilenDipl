@@ -1,6 +1,7 @@
 ﻿using Core.Enums;
 using Core.Validations.Annotations;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Core.Entities
@@ -34,26 +35,21 @@ namespace Core.Entities
         [DateNotInFutureAttribute(nameof(BirthDate))] // 2.
         public DateTime BirthDate { get; set; }
 
-
-        [StringLength(100, ErrorMessage = "Land darf maximal 100 Zeichen lang sein")]
-        public string Country { get; set; } = string.Empty;
-
-        [StringLength(20, ErrorMessage = "Postleitzahl darf maximal 20 Zeichen lang sein")]
-        public string PostalCode { get; set; } = string.Empty;
-
-        [StringLength(100, ErrorMessage = "Ort darf maximal 100 Zeichen lang sein")]
-        public string Place { get; set; } = string.Empty;
-
         [StringLength(200, ErrorMessage = "Adresse darf maximal 200 Zeichen lang sein")]
         public string Address { get; set; } = string.Empty;
-
 
         // [Phone] Fehlermeldung bei leerer Eingabe aber nicht bei null
         [OptionalPhoneAttribute]
         public string PhoneNumber { get; set; } = string.Empty;
 
 
+        //Foreign Key
+
+        [ForeignKey(nameof(GeoPostalId))]
+        public int GeoPostalId { get; set; }
+
         // Navigation Properties
+        public GeoPostal GeoPostal { get; set; } = null!;
         public ICollection<Rental> Rentals { get; set; } = [];
         public ICollection<Item> OwnedItems { get; set; } = [];
     }

@@ -22,6 +22,7 @@ namespace Persistence
                 //.Include(i=> i.Rentals)
                 //.Include(i => i.Images) //ICollection
                 //.Include(i => i.Images) //ICollection
+                .Include(i=> i.GeoPostal)
                 .Where(w => w.IsDeleted == false)
                 .OrderBy(o => o.Name)
                 .ToListAsync();
@@ -35,6 +36,7 @@ namespace Persistence
                 //.Include(i=> i.Rentals)
                 //.Include(i => i.Images) //ICollection
                 //.Include(i => i.Images) //ICollection
+                .Include(i => i.GeoPostal)
                 .Where(w => w.IsDeleted == false)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
@@ -72,12 +74,9 @@ namespace Persistence
             // Filterbedingungen aufbauen
             query = query.Where(w =>
                 w.IsDeleted == false &&
-                (EF.Functions.Like(w.Country.ToUpper(), $"%{filter}%") ||
-                EF.Functions.Like(w.State.ToUpper(), $"%{filter}%") ||
-                EF.Functions.Like(w.Place.ToUpper(), $"%{filter}%") ||
+                (
                 EF.Functions.Like(w.Name.ToUpper(), $"{filter}%") ||
                 EF.Functions.Like(w.Description.ToUpper(), $"%{filter}%") ||
-                w.PostalCode.StartsWith(filter) ||
                 (w.SubCategory != null && EF.Functions.Like(w.SubCategory.Name.ToUpper(), $"{filter}%")))
             );
 

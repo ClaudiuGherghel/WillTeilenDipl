@@ -19,8 +19,9 @@ namespace Persistence.Validations.ValidationRules
             {
                 usernameExistsInMemory = DbContext.ChangeTracker
                     .Entries<User>()
-                    .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
+                    .Where(e => e.State == EntityState.Added )
                     .Select(e => e.Entity)
+                    .Distinct()
                     .Any(u => u != user && string.Equals(u.UserName, user.UserName, StringComparison.OrdinalIgnoreCase));
             }
 

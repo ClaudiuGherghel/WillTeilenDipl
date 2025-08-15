@@ -15,7 +15,7 @@ namespace WebApiTests.Mappings
         public void Item_ToEntity_MapsCorrectly()
         {
             // Arrange
-            var dto = new ItemPostDto("Item", "Desc", true, "DE", "BY", "12345", "Munich", "Street", 100, 10, 50, 0, 0, 1, 2);
+            var dto = new ItemPostDto("Item", "Desc", true,"Street", 100, 10, 50, 0, 0, 1, 2,1);
             
             // Act
             var entity = dto.ToEntity();
@@ -24,10 +24,6 @@ namespace WebApiTests.Mappings
             Assert.Equal(dto.Name, entity.Name);
             Assert.Equal(dto.Description, entity.Description);
             Assert.Equal(dto.IsAvailable, entity.IsAvailable);
-            Assert.Equal(dto.Country, entity.Country);
-            Assert.Equal(dto.State, entity.State);
-            Assert.Equal(dto.PostalCode, entity.PostalCode);
-            Assert.Equal(dto.Place, entity.Place);
             Assert.Equal(dto.Address, entity.Address);
             Assert.Equal(dto.Price, entity.Price);
             Assert.Equal(dto.Stock, entity.Stock);
@@ -36,6 +32,7 @@ namespace WebApiTests.Mappings
             Assert.Equal(dto.ItemCondition, entity.ItemCondition);
             Assert.Equal(dto.SubCategoryId, entity.SubCategoryId);
             Assert.Equal(dto.OwnerId, entity.OwnerId);
+            Assert.Equal(dto.GeoPostaldId, entity.GeoPostalId);
             Assert.True((DateTime.UtcNow - entity.CreatedAt).TotalSeconds < 2);
         }
 
@@ -47,10 +44,6 @@ namespace WebApiTests.Mappings
                 null!, // Name
                 null!, // Description
                 true,
-                null!, // Country
-                null!, // State
-                null!, // PostalCode
-                null!, // Place
                 null!, // Address
                 100,
                 10,
@@ -58,7 +51,8 @@ namespace WebApiTests.Mappings
                 0,
                 0,
                 1,
-                2
+                2,
+                1
             );
 
             // Act
@@ -67,10 +61,6 @@ namespace WebApiTests.Mappings
             // Assert
             Assert.Equal(string.Empty, entity.Name);
             Assert.Equal(string.Empty, entity.Description);
-            Assert.Equal(string.Empty, entity.Country);
-            Assert.Equal(string.Empty, entity.State);
-            Assert.Equal(string.Empty, entity.PostalCode);
-            Assert.Equal(string.Empty, entity.Place);
             Assert.Equal(string.Empty, entity.Address);
         }
 
@@ -81,7 +71,7 @@ namespace WebApiTests.Mappings
         {
             // Arrange
             var entity = new Item();
-            var dto = new ItemPutDto(1, [1, 2], "Item", "Desc", true, "DE", "BY", "12345", "Munich", "Street", 100, 10, 50, 0, 0, 1, 2);
+            var dto = new ItemPutDto(1, [1, 2], "Item", "Desc", true, "Street", 100, 10, 50, 0, 0, 1, 2, 1);
             
             // Act
             dto.UpdateEntity(entity);
@@ -90,10 +80,6 @@ namespace WebApiTests.Mappings
             Assert.Equal(dto.Name, entity.Name);
             Assert.Equal(dto.Description, entity.Description);
             Assert.Equal(dto.IsAvailable, entity.IsAvailable);
-            Assert.Equal(dto.Country, entity.Country);
-            Assert.Equal(dto.State, entity.State);
-            Assert.Equal(dto.PostalCode, entity.PostalCode);
-            Assert.Equal(dto.Place, entity.Place);
             Assert.Equal(dto.Address, entity.Address);
             Assert.Equal(dto.Price, entity.Price);
             Assert.Equal(dto.Stock, entity.Stock);
@@ -105,6 +91,7 @@ namespace WebApiTests.Mappings
             Assert.Equal(dto.RowVersion, entity.RowVersion);
             Assert.NotNull(entity.UpdatedAt);
             Assert.True((DateTime.UtcNow - entity.UpdatedAt!.Value).TotalSeconds < 2);
+            Assert.Equal(dto.GeoPostaldId, entity.GeoPostalId);
         }
 
 
@@ -117,10 +104,6 @@ namespace WebApiTests.Mappings
             {
                 Name = "Old",
                 Description = "Old",
-                Country = "Old",
-                State = "Old",
-                PostalCode = "Old",
-                Place = "Old",
                 Address = "Old"
             };
 
@@ -130,10 +113,6 @@ namespace WebApiTests.Mappings
                 null!, // Name
                 null!, // Description
                 true,
-                null!, // Country
-                null!, // State
-                null!, // PostalCode
-                null!, // Place
                 null!, // Address
                 100,
                 10,
@@ -141,7 +120,8 @@ namespace WebApiTests.Mappings
                 0,
                 0,
                 1,
-                2
+                2,
+                1
             );
 
             // Act
@@ -150,10 +130,6 @@ namespace WebApiTests.Mappings
             // Assert
             Assert.Equal(string.Empty, entity.Name);
             Assert.Equal(string.Empty, entity.Description);
-            Assert.Equal(string.Empty, entity.Country);
-            Assert.Equal(string.Empty, entity.State);
-            Assert.Equal(string.Empty, entity.PostalCode);
-            Assert.Equal(string.Empty, entity.Place);
             Assert.Equal(string.Empty, entity.Address);
         }
 

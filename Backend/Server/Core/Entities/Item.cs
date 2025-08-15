@@ -22,22 +22,6 @@ namespace Core.Entities
 
         public bool IsAvailable { get; set; } = false;
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Land muss eingegeben werden")]
-        [StringLength(50, ErrorMessage = "Land darf maximal 50 Zeichen lang sein")]
-        public string Country { get; set; } = string.Empty;
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Bundesland muss eingegeben werden")]
-        [StringLength(50, ErrorMessage = "Bundesland darf maximal 50 Zeichen lang sein")]
-        public string State { get; set; } = string.Empty;
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Postleitzahl muss eingegeben werden")]
-        [StringLength(20, ErrorMessage = "Postleitzahl darf maximal 20 Zeichen lang sein")]
-        public string PostalCode { get; set; } = string.Empty;
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Ort muss eingegeben werden")]
-        [StringLength(100, ErrorMessage = "Ort darf maximal 100 Zeichen lang sein")]
-        public string Place { get; set; } = string.Empty;
-
         [StringLength(200, ErrorMessage = "Adresse darf maximal 200 Zeichen lang sein")]
         public string Address { get; set; } = string.Empty;
 
@@ -67,10 +51,15 @@ namespace Core.Entities
         [ForeignKey(nameof(OwnerId))]
         public int OwnerId { get; set; }
 
+        [ForeignKey(nameof(GeoPostalId))]
+        public int GeoPostalId { get; set; }
+
+
 
         // Navigation Properties
-        public SubCategory? SubCategory { get; set; }
-        public User? Owner { get; set; }
+        public SubCategory SubCategory { get; set; } = null!;
+        public User Owner { get; set; } = null!;
+        public GeoPostal GeoPostal { get; set; } = null!;
         public ICollection<Rental> Rentals { get; set; } = [];
         public ICollection<Image> Images { get; set; } = [];
     }

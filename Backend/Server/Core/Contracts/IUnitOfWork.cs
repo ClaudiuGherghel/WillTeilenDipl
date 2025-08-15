@@ -14,6 +14,7 @@ namespace Core.Contracts
         IImageRepository ImageRepository { get; }
         IItemRepository ItemRepository { get; }
         IUserRepository UserRepository { get; }
+        IGeoPostalRepository GeoPostalRepository { get; }
 
         Task DeleteDatabaseAsync();
         Task MigrateDatabaseAsync();

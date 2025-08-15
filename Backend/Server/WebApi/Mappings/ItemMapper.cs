@@ -18,10 +18,6 @@ namespace WebApi.Mappings
                 Name = itemToPost.Name ?? string.Empty,
                 Description = itemToPost.Description ?? string.Empty,
                 IsAvailable = itemToPost.IsAvailable,
-                Country = itemToPost.Country ?? string.Empty,
-                State = itemToPost.State ?? string.Empty,
-                PostalCode = itemToPost.PostalCode ?? string.Empty,
-                Place = itemToPost.Place ?? string.Empty,
                 Address = itemToPost.Address ?? string.Empty,
                 Price = itemToPost.Price,
                 Stock = itemToPost.Stock,
@@ -29,6 +25,7 @@ namespace WebApi.Mappings
                 RentalType = itemToPost.RentalType, // Standart Unknown
                 ItemCondition = itemToPost.ItemCondition, // Standart Unknown
                 SubCategoryId = itemToPost.SubCategoryId,
+                GeoPostalId = itemToPost.GeoPostaldId,
                 OwnerId = itemToPost.OwnerId
             };
         }
@@ -41,10 +38,6 @@ namespace WebApi.Mappings
             itemToPut.Name = itemDto.Name ?? string.Empty;
             itemToPut.Description = itemDto.Description ?? string.Empty;
             itemToPut.IsAvailable = itemDto.IsAvailable;
-            itemToPut.Country = itemDto.Country ?? string.Empty;
-            itemToPut.State = itemDto.State ?? string.Empty;
-            itemToPut.PostalCode = itemDto.PostalCode ?? string.Empty;
-            itemToPut.Place = itemDto.Place ?? string.Empty;
             itemToPut.Address = itemDto.Address ?? string.Empty;
             itemToPut.Price = itemDto.Price;
             itemToPut.Stock = itemDto.Stock;
@@ -52,6 +45,7 @@ namespace WebApi.Mappings
             itemToPut.RentalType = itemDto.RentalType; // Standart Unknown
             itemToPut.ItemCondition = itemDto.ItemCondition; // Standart Unknown
             itemToPut.SubCategoryId = itemDto.SubCategoryId;
+            itemToPut.GeoPostalId = itemDto.GeoPostaldId;
             itemToPut.OwnerId = itemDto.OwnerId;
         }
     }

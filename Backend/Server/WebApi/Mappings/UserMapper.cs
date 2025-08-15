@@ -22,11 +22,9 @@ namespace WebApi.Mappings
                 LastName = userDto.LastName ?? string.Empty,
                 BirthDate = userDto.BirthDate,
                 PhoneNumber = userDto.PhoneNumber ?? string.Empty,
-                Country = userDto.Country ?? string.Empty,
-                PostalCode = userDto.PostalCode ?? string.Empty,
-                Place = userDto.Place ?? string.Empty,
                 Address = userDto.Address ?? string.Empty,
-                Role = userDto.Role
+                Role = userDto.Role,
+                GeoPostalId = userDto.GeoPostaldId,
             };
         }
 
@@ -41,11 +39,9 @@ namespace WebApi.Mappings
             userToPut.LastName = userDto.LastName ?? string.Empty;
             userToPut.BirthDate = userDto.BirthDate;
             userToPut.PhoneNumber = userDto.PhoneNumber ?? string.Empty;
-            userToPut.Country = userDto.Country ?? string.Empty;
-            userToPut.PostalCode = userDto.PostalCode ?? string.Empty;
-            userToPut.Place = userDto.Place ?? string.Empty;
             userToPut.Address = userDto.Address ?? string.Empty;
             userToPut.Role = userDto.Role;
+            userToPut.GeoPostalId = userDto.GeoPostaldId;
         }
 
         public static void ChangePassword(this UserChangePasswordDto userDto, User userToPut)

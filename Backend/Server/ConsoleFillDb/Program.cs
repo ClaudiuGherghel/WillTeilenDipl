@@ -21,7 +21,6 @@ namespace ConsoleFillDb
             Console.WriteLine("Anzahl User: " + await uow.UserRepository.CountAsync());
             Console.WriteLine("Anzahl Items: " + await uow.ItemRepository.CountAsync());
             Console.WriteLine("Anzahl Rentals: " + await uow.RentalRepository.CountAsync());
-
         }
 
 
