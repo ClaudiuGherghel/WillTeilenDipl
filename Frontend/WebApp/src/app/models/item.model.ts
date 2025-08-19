@@ -1,5 +1,6 @@
 import { ItemCondition } from "../enums/item-condition";
 import { RentalType } from "../enums/rental-type";
+import { GeoPostal } from "./geo-postal.model";
 import { Image } from "./image.model";
 import { Rental } from "./rental.model";
 import { SubCategory } from "./sub-category.model";
@@ -11,10 +12,6 @@ export interface Item {
     name: string,
     description: string,
     isAvailable: boolean,
-    country: string,
-    state: string,
-    postalCode: string,
-    place: string,
     address: string,
     price: number,
     stock: number,
@@ -23,8 +20,10 @@ export interface Item {
     itemCondition: ItemCondition,
     subCategoryId: number,
     ownerId: number,
-    subCategory: SubCategory | null,
-    owern: User | null,
+    geoPostalId: number,
+    // subCategory: SubCategory | null,
+    // owern: User | null,
+    geoPostal: GeoPostal,
     rentals: Rental[],
     images: Image[]
 }

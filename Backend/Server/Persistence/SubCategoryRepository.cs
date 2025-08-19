@@ -21,7 +21,8 @@ namespace Persistence
             return await DbContext.SubCategories
                 .AsNoTracking()
                 //.Include(i => i.Category)
-                //.Include(i => i.Items) //ICollection
+                .Include(i => i.Items) //ICollection
+                    .ThenInclude(i => i.GeoPostal)
                 .Where(w => w.IsDeleted == false)
                 .OrderBy(o => o.Name)
                 .ToListAsync();
@@ -33,6 +34,7 @@ namespace Persistence
                 .AsNoTracking()
                 //.Include(i => i.Category)
                 .Include(i => i.Items)
+                    .ThenInclude(i=> i.GeoPostal)
                 .Where(w => w.IsDeleted == false)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }

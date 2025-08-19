@@ -5,7 +5,7 @@ export interface SubCategory {
     id: number,
     rowVersoin: any,
     name: string,
-    category: Category,
+    // category: Category,
     categoryId: number,
     items: Item[],
 }

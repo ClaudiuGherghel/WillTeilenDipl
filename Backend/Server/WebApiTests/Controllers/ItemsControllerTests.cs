@@ -77,7 +77,7 @@ namespace WebApiTests.Controllers
         public async Task GetByFilter_ReturnsOk()
         {
             var items = new List<Item> { new() { Id = 1 } };
-            _mockItemRepo.Setup(r => r.GetItemsByFilterAsync("filter")).ReturnsAsync(items);
+            _mockItemRepo.Setup(r => r.GetFilteredAsync("filter")).ReturnsAsync(items);
 
             var result = await _controller.GetByFilter("filter");
 

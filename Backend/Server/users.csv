@@ -1,8 +1,8 @@
 UserName;PasswordHash;Email;FirstName;LastName;BirthDate;Role;Country;State;PostalCode;Place;Address;PhoneNumber
-Admin1;"SecurityHelper.HashPassword(""admin1"")";admin1@gmail.com;Claudiu;Gherghel;29.01.1994;Admin;Österreich;Oberösterreich;4600;Wels;;+436601234123
-Admin2;"SecurityHelper.HashPassword(""admin2"")";admin2@gmail.com;Manoel;Gherghel;22.04.1994;Admin;Deutschland;Sachsen;1067;Dresden;;
-User1;"SecurityHelper.HashPassword(""user1"")";user1@gmail.com;Tomislav;Laus;22.07.1995;User;Deutschland;Brandenburg;14772;Brandenburg an der Havel;Hammerlingerstraße 1;+43697331674
-User2;"SecurityHelper.HashPassword(""user2"")";user2@gmail.com;Engin;Caliskan;11.04.1995;User;Österreich;Oberösterreich;4030;Linz;Linzerstraße 12;+43699338503
-User3;"SecurityHelper.HashPassword(""user3"")";user3@gmail.com;Alex;Mayer;10.01.1988;User;Österreich;Wien;1170;Wien;;+4313456789
-User4;"SecurityHelper.HashPassword(""user4"")";user4@gmail.com;Marie;Schmidt;15.09.1982;User;Schweiz;Bern;3232;Ins;;+41894567890
-User5;"SecurityHelper.HashPassword(""user5"")";user5@gmail.com;Anna;Bauer;05.06.2000;User;Schweiz;Zürich;8616;Uster;Bahnhofstraße 23;+41301234567
+Admin1;admin1;admin1@gmail.com;Claudiu;Gherghel;29.01.1994;Admin;Österreich;Oberösterreich;4600;Wels;;+436601234123
+Admin2;admin2;admin2@gmail.com;Manoel;Gherghel;22.04.1994;Admin;Deutschland;Sachsen;1067;Dresden;;
+User1;user1;user1@gmail.com;Tomislav;Laus;22.07.1995;User;Deutschland;Brandenburg;14772;Brandenburg an der Havel;Hammerlingerstraße 1;+43697331674
+User2;user2;user2@gmail.com;Engin;Caliskan;11.04.1995;User;Österreich;Oberösterreich;4030;Linz;Linzerstraße 12;+43699338503
+User3;user3;user3@gmail.com;Alex;Mayer;10.01.1988;User;Österreich;Wien;1170;Wien;;+4313456789
+User4;user4;user4@gmail.com;Marie;Schmidt;15.09.1982;User;Schweiz;Bern;3232;Ins;;+41894567890
+User5;user5;user5@gmail.com;Anna;Bauer;05.06.2000;User;Schweiz;Zürich;8616;Uster;Bahnhofstraße 23;+41301234567

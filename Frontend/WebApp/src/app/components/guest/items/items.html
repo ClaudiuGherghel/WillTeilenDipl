@@ -1,0 +1,41 @@
+<app-side-bar (filterEmitter)="onSideBarFilter($event)"></app-side-bar>
+@if(isSubCategoryForm()){
+<div>
+    <div class="itemGrid">
+        @for (item of subCategory()?.items; track $index) {
+        @if(onFilterUseOnItem(item)){
+        <div class="item" [routerLink]="'/item/'+ item.id">
+            <img src="" />
+            <p>{{ item.name }}</p>
+            <p>€ {{ item.price }}/h</p>
+            <p>
+                <span>{{ item.geoPostal.postalCode }} </span>
+                <span>{{ item.geoPostal.place }}</span>
+            </p>
+        </div>
+        }
+        }
+
+    </div>
+</div>
+}
+@else {
+<div>
+    <div class="itemGrid">
+        @for (item of items(); track $index) {
+        @if(onFilterUseOnItem(item)){
+        <div class="item" [routerLink]="'/item/'+ item.id">
+            <img src="anhänger.png" />
+            <p>{{ item.name }}</p>
+            <p>€ {{ item.price }}/h</p>
+            <p>
+                <span>{{ item.geoPostal.postalCode }} </span>
+                <span>{{ item.geoPostal.place }}</span>
+            </p>
+        </div>
+        }
+        }
+
+    </div>
+</div>
+}

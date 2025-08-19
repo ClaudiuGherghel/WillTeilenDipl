@@ -1,0 +1,46 @@
+<article class="container mx-2">
+    <div class="item-detail-view">
+        <!-- Linker Bereich: Image-Gallery -->
+        <div class="image-gallery">
+            <!-- Großes Bild -->
+            <div class="main-image" (click)="onMainImageClick()">
+                <img [src]="mainImage" alt="Großes Fahrzeugbild" />
+            </div>
+
+            <!-- Horizontale Liste kleiner Bilder -->
+            <div class="thumbnail-gallery">
+                @for (thumbnail of thumbnails; track $index) {
+                <img [src]="thumbnail" [alt]="thumbnail" [class.active]="thumbnail === activeThumbnail"
+                    class="thumbnail" (click)="onThumbnailClick(thumbnail)" />
+                }
+            </div>
+        </div>
+
+        <!-- Rechter Bereich: Item Details -->
+        <div class="item-details">
+            <h2>Fahrzeugdetails</h2>
+            <p><strong>Name:</strong> {{item()?.name}}</p>
+            <p><strong>Land:</strong> {{item()?.geoPostal?.country}}</p>
+            <p><strong>Bundesland:</strong> {{item()?.geoPostal?.state}}</p>
+            <p><strong>Postleitzahl:</strong> {{item()?.geoPostal?.postalCode}}</p>
+            <p><strong>Ort:</strong> {{item()?.geoPostal?.place}}</p>
+            <p><strong>Adresse:</strong> {{item()?.address}}</p>
+            <p><strong>Miete:</strong> {{item()?.price}}</p>
+            <p><strong>Stock:</strong> {{item()?.stock}}</p>
+            <p><strong>Rental Type:</strong> {{item()?.rentalType}}</p>
+            <p><strong>Zustand des Gegenstandes:</strong> {{item()?.itemCondition}}</p>
+        </div>
+    </div>
+
+    <!-- Beschreibung unten -->
+    <div class="item-description">
+        <h3>Beschreibung</h3>
+        <p>{{item()?.description}}</p>
+    </div>
+
+    <!-- Vollbildansicht -->
+    <div id="fullscreenModal" class="modal">
+        <span class="close" (click)="closeFullscreen()">&times;</span>
+        <img class="modal-content" id="fullImage" />
+    </div>
+</article>

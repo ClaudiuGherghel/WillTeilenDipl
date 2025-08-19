@@ -54,7 +54,7 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetByFilter([FromQuery] string filter)
         {
-            ICollection<Item> items = await _uow.ItemRepository.GetItemsByFilterAsync(filter);
+            ICollection<Item> items = await _uow.ItemRepository.GetFilteredAsync(filter);
             return Ok(items);
         }
 

@@ -1,0 +1,73 @@
+/* Container for main content */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    /* max-width: 1200px; */
+}
+
+/* Main header styling */
+h1 {
+    text-align: center;
+    margin: 0px;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #043972;
+    letter-spacing: 1.5px;
+}
+
+/* Category container styling */
+.category {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Category headers */
+h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    color: #043972;
+    /* Slightly stronger color */
+}
+
+/* Subcategory grid layout */
+.subcategory-grid {
+    display: grid;
+    /* Auto-responsive grid */
+    grid-template-columns: repeat(auto-fill,
+            minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Styling for subcategory items */
+.subcategory {
+    background-color: #f7f7f7;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 12px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* Subcategory headers */
+.subcategory p {
+    margin: 0px;
+    font-size: 1.4rem;
+    color: #333;
+    text-decoration: none;
+}
+
+/* Hover effect for subcategories */
+.subcategory:hover {
+    background-color: #e6f7ff;
+    transform: scale(1.05);
+    cursor: pointer;
+
+}

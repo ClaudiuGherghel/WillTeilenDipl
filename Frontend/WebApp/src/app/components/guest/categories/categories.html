@@ -1,0 +1,15 @@
+<div class="container">
+    <h1>Alle Kategorien</h1>
+    @for (category of categories(); track $index) {
+    <div class="category">
+        <h2>{{ category.name }}</h2>
+        <div class="subcategory-grid">
+            @for (subCategory of category.subCategories; track $index) {
+            <div class="subcategory" [routerLink]="'/items/'+ subCategory.id">
+                <p>{{ subCategory.name }} </p>
+            </div>
+            }
+        </div>
+    </div>
+    }
+</div>

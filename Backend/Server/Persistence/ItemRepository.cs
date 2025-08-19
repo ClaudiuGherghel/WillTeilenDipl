@@ -56,35 +56,29 @@ namespace Persistence
             DbContext.Items.Remove(itemToRemove);
         }
 
-        public async Task<ICollection<Item>> GetItemsByFilterAsync(string filter)
+        public async Task<ICollection<Item>> GetFilteredAsync(string filter)
         {
-            if (string.IsNullOrWhiteSpace(filter))
-            {
-                return [];
-            }
+
+            IQueryable<Item> query = DbContext.Items
+                .AsNoTracking()
+                .Include(i => i.GeoPostal)
+                .Include(i => i.SubCategory)
+                .Include(i => i.SubCategory).ThenInclude(i => i.Category);
 
             filter = filter.ToUpper();
 
-            var query = DbContext.Items.AsQueryable();
+            query = query.Where(i => 
+                EF.Functions.Like(i.Name.ToUpper(), $"{filter}%") ||
+                EF.Functions.Like(i.Description.ToUpper(), $"%{filter}%") ||
+                i.SubCategory != null && EF.Functions.Like(i.SubCategory.Name.ToUpper(), $"{filter}%") ||
+                i.SubCategory != null && i.SubCategory.Category != null && EF.Functions.Like(i.SubCategory.Category.Name.ToUpper(), $"{filter}%") ||
+                i.GeoPostal!= null && EF.Functions.Like(i.GeoPostal.Country.ToUpper(), $"{filter}%") ||
+                i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.Place.ToUpper(), $"{filter}%") ||
+                i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.PostalCode.ToUpper(), $"{filter}%") ||
+                i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.State.ToUpper(), $"{filter}%")
+                );
 
-            // Nur bei Bedarf Includes laden
-            //query = query.Include(i => i.SubCategory)
-            //             .ThenInclude(sc => sc.Category);
-
-            // Filterbedingungen aufbauen
-            query = query.Where(w =>
-                w.IsDeleted == false &&
-                (
-                EF.Functions.Like(w.Name.ToUpper(), $"{filter}%") ||
-                EF.Functions.Like(w.Description.ToUpper(), $"%{filter}%") ||
-                (w.SubCategory != null && EF.Functions.Like(w.SubCategory.Name.ToUpper(), $"{filter}%")))
-            );
-
-            return await query
-                .AsNoTracking()
-                .IgnoreAutoIncludes()
-                .OrderBy(o => o.Name)
-                .ToListAsync();
+            return await query.ToListAsync();
         }
 
         public void SoftDelete(int id)

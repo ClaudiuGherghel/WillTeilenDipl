@@ -1,0 +1,66 @@
+<section>
+    <div>
+        <label for="country">Land:</label>
+        <select [(ngModel)]="selectedCountry" (change)="onCountryChanged()" id="country" class="form-select">
+            <option value="" disabled selected>Bitte Land auswählen</option>
+            @for (country of countries(); track $index) {
+            <option [value]="country">{{ country }}</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="state">Bundesland:</label>
+        <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" class="form-select">
+            <option value="" disabled selected>Bitte Bundesland auswählen</option>
+            @for (state of states(); track $index) {
+            <option [value]="state">{{state}}</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="postalCode">Postleitzahl:</label>
+        <select [(ngModel)]="selectedPostalCode" (change)="onPostalCodeChanged()" id="postalCode" class="form-select">
+            <option value="" disabled selected>Bitte Postleitzahl auswählen</option>
+            @for (item of postalCodesAndPlaces(); track $index) {
+            <option [value]="item.postalCode">{{ item.postalCode }}</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="place">Ort:</label>
+        <select [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" class="form-select">
+            <option value="" disabled selected>Bitte Ort auswählen</option>
+            @for (item of postalCodesAndPlaces(); track $index) {
+            <option [value]="item.place">{{ item.place }}</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="price"> Miete:</label>
+        <input [(ngModel)]="price" type="number" name="price" id="price" class="form-control" />
+    </div>
+    <div>
+        <label for="deposit">Deposit:</label>
+        <input [(ngModel)]="deposit" type="number" name="deposit" id="deposit" class="form-control" />
+    </div>
+    <div>
+        <label for="itemCondition">Zustand des Gegenstandes: </label>
+        <select [(ngModel)]="selectedItemCondition" class="form-select" name="itemCondition" id="itemCondition">
+            @for (itemCondition of itemConditions(); track $index) {
+            <option [ngValue]="itemCondition">{{commonDataService.getItemConditionLabel(itemCondition)}}
+            </option>
+            }
+        </select>
+    </div>
+    <div>
+        <label for="rentalType">Vermietung durch: </label>
+        <select [(ngModel)]="selectedRentalType" class="form-select" name="rentalType" id="rentalType">
+            @for (rentalType of rentalTypes(); track $index) {
+            <option [ngValue]="rentalType">{{commonDataService.getRentalTypeLabel(rentalType)}}
+            </option>
+            }
+        </select>
+    </div>
+
+    <button (click)="onEmitFilter()" class="form-control">Suchen</button>
+</section>

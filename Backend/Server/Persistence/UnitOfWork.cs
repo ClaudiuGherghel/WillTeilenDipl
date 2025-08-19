@@ -309,6 +309,7 @@ namespace Persistence
                 To = grp.Key.To
             }).ToList();
 
+            _dbContext.AddRange(geoPostals);
             _dbContext.AddRange(categories);
             _dbContext.AddRange(subCategories);
             _dbContext.AddRange(users);
