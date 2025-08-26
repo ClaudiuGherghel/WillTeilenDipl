@@ -22,7 +22,7 @@ namespace WebApiTests.Mappings
             Assert.True(SecurityHelper.VerifyPassword(dto.Password, entity.PasswordHash));
             Assert.Equal(dto.Email, entity.Email);
             Assert.Equal(dto.Role, entity.Role);
-            Assert.Equal(dto.GeoPostaldId, entity.GeoPostalId);
+            Assert.Equal(dto.GeoPostalId, entity.GeoPostalId);
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace WebApiTests.Mappings
             Assert.Equal(dto.Address, entity.Address);
             Assert.Equal(dto.Role, entity.Role);
             Assert.Equal(dto.RowVersion, entity.RowVersion);
-            Assert.Equal(dto.GeoPostaldId, entity.GeoPostalId);
+            Assert.Equal(dto.GeoPostalId, entity.GeoPostalId);
         }
 
         [Fact]

@@ -6,6 +6,7 @@ import { SidebarFilter } from '../../../models/sidebar-filter';
 import { Item } from '../../../models/item.model';
 import { ItemService } from '../../../services/item-service';
 import { SideBar } from '../../../shared/side-bar/side-bar';
+import { CommonDataService } from '../../../services/common-data-service';
 
 @Component({
   selector: 'app-items',
@@ -19,6 +20,7 @@ export class Items implements OnInit {
   private router = inject(Router);
   private subCategoryService = inject(SubCategoryService);
   private itemService = inject(ItemService);
+  private commonDataService = inject(CommonDataService);
 
   isSubCategoryForm = signal(false);
 
@@ -80,17 +82,21 @@ export class Items implements OnInit {
   }
 
   onFilterUseOnItem(item: Item): boolean {
+
     if (this.sideBarFilter() == undefined) {
       return true;
     }
+
     if (!(this.sideBarFilter()!.country == '' || item.geoPostal.country.includes(this.sideBarFilter()!.country))) return false;
-    if (!(this.sideBarFilter()!.state == '' || item.geoPostal.state.toLocaleUpperCase().includes(this.sideBarFilter()!.state.toLocaleUpperCase()))) return false;
-    if (!(this.sideBarFilter()!.postalCode == '' || item.geoPostal.postalCode.toLocaleUpperCase().includes(this.sideBarFilter()!.postalCode.toLocaleUpperCase()))) return false;
-    if (!(this.sideBarFilter()!.place == '' || item.geoPostal.place.toLocaleUpperCase().includes(this.sideBarFilter()!.place.toLocaleUpperCase()))) return false;
+    if (!(this.sideBarFilter()!.state == '' || item.geoPostal.state.includes(this.sideBarFilter()!.state))) return false;
+    if (!(this.sideBarFilter()!.postalCode == '' || item.geoPostal.postalCode.includes(this.sideBarFilter()!.postalCode))) return false;
+    if (!(this.sideBarFilter()!.place == '' || item.geoPostal.place.includes(this.sideBarFilter()!.place))) return false;
     if (!(this.sideBarFilter()!.price == 0 || item.price <= this.sideBarFilter()!.price)) return false;
     if (!(this.sideBarFilter()!.deposit == 0 || item.deposit <= this.sideBarFilter()!.deposit)) return false;
-    if (!(this.sideBarFilter()!.itemCondition == 0 || item.itemCondition == this.sideBarFilter()!.itemCondition)) return false;
-    if (!(this.sideBarFilter()!.rentalType == 0 || item.rentalType == this.sideBarFilter()?.rentalType)) return false;
+    if (!(this.sideBarFilter()!.itemCondition === 0 || item.itemCondition.toString() == this.commonDataService.getItemConditionLabelEnglish(this.sideBarFilter()!.itemCondition))) return false;
+    if (!(this.sideBarFilter()!.rentalType === 0 || item.rentalType.toString() == this.commonDataService.getRentalTypeLabelEnglish(this.sideBarFilter()!.rentalType))) return false;
+
+
 
     return true;
   }

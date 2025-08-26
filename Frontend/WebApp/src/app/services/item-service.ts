@@ -15,7 +15,7 @@ const httpOptions = {
 
 export class ItemService {
 
-  private apiUrl = "https://localhost:7267/api/items/";
+  private apiUrl = "https://localhost:7267/api/items";
   private http = inject(HttpClient);
 
   constructor() { }
@@ -24,11 +24,11 @@ export class ItemService {
   //   return this.http.get<Item>(this.apiUrl + "/get/" + id);
   // }
   getByFilter(filter: string) {
-    return this.http.get<Item[]>(this.apiUrl + "getbyfilter?filter=" + filter);
+    return this.http.get<Item[]>(this.apiUrl + "/getbyfilter?filter=" + filter);
   }
 
   getById(id: number) {
-    return this.http.get<Item>(this.apiUrl + "get/" + id);
+    return this.http.get<Item>(this.apiUrl + "/get/" + id);
   }
 
 }

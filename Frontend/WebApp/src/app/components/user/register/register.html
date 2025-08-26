@@ -1,0 +1,80 @@
+<div class="register-container">
+    <h2 class="register-title">Konto erstellen</h2>
+
+    <form (ngSubmit)="register()" class="register-form">
+
+        <div class="form-group">
+            <input type="text" name="userName" [(ngModel)]="userName" placeholder="Username" required />
+        </div>
+
+        <div class="form-group">
+            <input type="password" name="password" [(ngModel)]="password" placeholder="*Passwort" required />
+        </div>
+
+        <div class="form-group">
+            <input type="email" name="email" [(ngModel)]="email" placeholder="*Email" required />
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="firstName" [(ngModel)]="firstName" placeholder="*Vorname(n)" required />
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="lastName" [(ngModel)]="lastName" placeholder="*Nachname" required />
+        </div>
+
+        <div class="form-group">
+            <input type="date" [(ngModel)]="birthDate" name="birthDate" />
+        </div>
+
+
+        <div class="form-group">
+            <label for="country">Land:</label>
+            <select [(ngModel)]="selectedCountry" (change)="onCountryChanged()" id="country" name="country"
+                class="form-select">
+                <option value="" disabled selected>Bitte Land auswählen</option>
+                @for (country of countries(); track $index) {
+                <option [value]="country">{{ country }}</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="state">Bundesland:</label>
+            <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" name="state" class="form-select">
+                <option value="" disabled selected>Bitte Bundesland auswählen</option>
+                @for (state of states(); track $index) {
+                <option [value]="state">{{state}}</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="postalCode">Postleitzahl:</label>
+            <select [(ngModel)]="selectedPostalCode" (change)="onPostalCodeChanged()" id="postalCode" name="postalCode"
+                class="form-select">
+                <option value="" disabled selected>Bitte Postleitzahl auswählen</option>
+                @for (item of postalCodesAndPlaces(); track $index) {
+                <option [value]="item.postalCode">{{ item.postalCode }}</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="place">Ort:</label>
+            <select [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" name="place">
+                <option value="" disabled selected>Bitte Ort auswählen</option>
+                @for (item of postalCodesAndPlaces(); track $index) {
+                <option [value]="item.place">{{ item.place }}</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="address" [(ngModel)]="address" placeholder="Address" />
+        </div>
+
+        <div class="form-group">
+            <input type="tel" name="phoneNumber" [(ngModel)]="phoneNumber" placeholder="Handynummer" />
+        </div>
+
+        <button type="submit" class="btn-register">Register</button>
+    </form>
+</div>

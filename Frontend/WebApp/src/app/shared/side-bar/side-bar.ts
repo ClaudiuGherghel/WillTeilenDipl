@@ -42,8 +42,8 @@ export class SideBar implements OnInit {
 
   ngOnInit(): void {
     this.loadCountries();
-    this.rentalTypes.set(this.commonDataService.getRentalTypes());
-    this.itemConditions.set(this.commonDataService.getItemConditions());
+    this.rentalTypes.set(this.commonDataService.getRentalTypeList());
+    this.itemConditions.set(this.commonDataService.getItemConditionList());
 
   }
   loadCountries() {

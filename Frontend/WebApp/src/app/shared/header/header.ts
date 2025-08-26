@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { SearchBar } from '../search-bar/search-bar';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,14 @@ import { SearchBar } from '../search-bar/search-bar';
   styleUrl: './header.css'
 })
 export class Header {
-  userId = signal<number | undefined>(undefined);
+  auth = inject(AuthService);
 
+  // Signale für Template
+  userId = this.auth.userId;
+  role = this.auth.role;
+
+  logout() {
+    this.auth.logout();
+  }
 
 }

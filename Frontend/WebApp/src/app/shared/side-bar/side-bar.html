@@ -47,7 +47,7 @@
         <label for="itemCondition">Zustand des Gegenstandes: </label>
         <select [(ngModel)]="selectedItemCondition" class="form-select" name="itemCondition" id="itemCondition">
             @for (itemCondition of itemConditions(); track $index) {
-            <option [ngValue]="itemCondition">{{commonDataService.getItemConditionLabel(itemCondition)}}
+            <option [ngValue]="itemCondition">{{commonDataService.getItemConditionLabelGerman(itemCondition)}}
             </option>
             }
         </select>
@@ -56,7 +56,7 @@
         <label for="rentalType">Vermietung durch: </label>
         <select [(ngModel)]="selectedRentalType" class="form-select" name="rentalType" id="rentalType">
             @for (rentalType of rentalTypes(); track $index) {
-            <option [ngValue]="rentalType">{{commonDataService.getRentalTypeLabel(rentalType)}}
+            <option [ngValue]="rentalType">{{commonDataService.getRentalTypeLabelGerman(rentalType)}}
             </option>
             }
         </select>

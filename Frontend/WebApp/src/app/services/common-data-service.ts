@@ -8,20 +8,20 @@ import { RentalStatus } from '../enums/rental-status';
 })
 export class CommonDataService {
 
-  private rentalStatus: RentalStatus[] = [
+  private rentalStatusList: RentalStatus[] = [
     RentalStatus.Active,
     RentalStatus.Cancelled,
     RentalStatus.Completed,
   ];
 
 
-  private rentalTypes: RentalType[] = [
+  private rentalTypeList: RentalType[] = [
     RentalType.Unknown,
     RentalType.Privat,
     RentalType.Dealer,
   ];
 
-  private itemConditions: ItemCondition[] = [
+  private itemConditionList: ItemCondition[] = [
     ItemCondition.Unknown,
     ItemCondition.LikeNew,
     ItemCondition.Good,
@@ -31,13 +31,14 @@ export class CommonDataService {
   constructor() { }
 
 
-  getRentalStatus(): RentalStatus[] {
-    return this.rentalStatus;
+  // -------- Rental Status --------
+
+  getRentalStatusList(): RentalStatus[] {
+    return this.rentalStatusList;
   }
 
-  // Methode, um den Enum-Wert in einen lesbaren String umzuwandeln
-  getRentalStatusLabel(rentalType: RentalStatus): string {
-    switch (rentalType) {
+  getRentalStatusLabelGerman(status: RentalStatus): string {
+    switch (status) {
       case RentalStatus.Active:
         return 'Aktiv';
       case RentalStatus.Cancelled:
@@ -45,17 +46,33 @@ export class CommonDataService {
       case RentalStatus.Completed:
         return 'Abgeschlossen';
       default:
-        return '';
+        return 'Aktiv';
     }
   }
 
 
-  getRentalTypes(): RentalType[] {
-    return this.rentalTypes;
+  getRentalStatusLabelEnglish(status: RentalStatus): string {
+    switch (status) {
+      case RentalStatus.Active:
+        return 'Activ';
+      case RentalStatus.Cancelled:
+        return 'Cancalled';
+      case RentalStatus.Completed:
+        return 'Completed';
+      default:
+        return 'Aktiv';
+    }
   }
 
-  getRentalTypeLabel(rentalType: RentalType): string {
-    switch (rentalType) {
+
+  // -------- Rental Types --------
+
+  getRentalTypeList(): RentalType[] {
+    return this.rentalTypeList;
+  }
+
+  getRentalTypeLabelGerman(type: RentalType): string {
+    switch (type) {
       case RentalType.Unknown:
         return 'Unbekannt';
       case RentalType.Privat:
@@ -63,15 +80,31 @@ export class CommonDataService {
       case RentalType.Dealer:
         return 'Dealer';
       default:
-        return '';
+        return 'Unbekannt';
+    }
+  }
+
+  getRentalTypeLabelEnglish(type: RentalType): string {
+    switch (type) {
+      case RentalType.Unknown:
+        return 'Unknown';
+      case RentalType.Privat:
+        return 'Privat';
+      case RentalType.Dealer:
+        return 'Dealer';
+      default:
+        return 'Unknown';
     }
   }
 
 
-  getItemConditions(): ItemCondition[] {
-    return this.itemConditions;
+
+  // -------- Item Conditions --------
+
+  getItemConditionList(): ItemCondition[] {
+    return this.itemConditionList;
   }
-  getItemConditionLabel(condition: ItemCondition): string {
+  getItemConditionLabelGerman(condition: ItemCondition): string {
     switch (condition) {
       case ItemCondition.Unknown:
         return 'Unbekannt';
@@ -82,8 +115,25 @@ export class CommonDataService {
       case ItemCondition.Used:
         return 'Gebraucht';
       default:
-        return '';
+        return 'Unbekannt';
     }
   }
+
+  getItemConditionLabelEnglish(condition: ItemCondition): string {
+    switch (condition) {
+      case ItemCondition.Unknown:
+        return 'Unknown';
+      case ItemCondition.LikeNew:
+        return 'LikeNew';
+      case ItemCondition.Good:
+        return 'Good';
+      case ItemCondition.Used:
+        return 'Used';
+      default:
+        return 'Unknown';
+    }
+  }
+
+
 
 }

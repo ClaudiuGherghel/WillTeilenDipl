@@ -8,12 +8,12 @@ import { SubCategory } from '../models/sub-category.model';
 export class SubCategoryService {
 
   private http = inject(HttpClient);
-  private apiUrl = "https://localhost:7267/api/subcategories/";
+  private apiUrl = "https://localhost:7267/api/subcategories";
 
 
   constructor() { }
 
   get(id: number) {
-    return this.http.get<SubCategory>(this.apiUrl + "get/" + id);
+    return this.http.get<SubCategory>(this.apiUrl + "/get/" + id);
   }
 }

@@ -7,13 +7,13 @@ import { Category } from '../models/category.model';
 })
 export class CategoryService {
 
-  private apiUrl = "https://localhost:7267/api/categories/";
+  private apiUrl = "https://localhost:7267/api/categories";
   private http = inject(HttpClient);
 
   constructor() { }
 
   get() {
-    return this.http.get<Category[]>(this.apiUrl + "get");
+    return this.http.get<Category[]>(this.apiUrl + "/get");
   }
 
 }

@@ -26,6 +26,19 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get([FromQuery] string country, [FromQuery] string state, [FromQuery] string postalCode, [FromQuery] string place)
+        {
+            GeoPostal? geoPostal = await _uow.GeoPostalRepository.GetByQueryAsync(country, state, postalCode, place);
+            if(geoPostal is null)
+                return NotFound(new { error = $"Kein GeoPostal gefunden." });
+
+            return Ok(geoPostal);
+        }
+
+        [HttpGet]
         [ProducesResponseType(typeof(string[]), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCountries()

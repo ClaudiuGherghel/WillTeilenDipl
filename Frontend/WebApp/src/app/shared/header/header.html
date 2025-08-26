@@ -1,19 +1,22 @@
 <nav class="navbar">
     <div>
-        <a class="homeButton" (click)="searchBar.clearSearch()" [routerLink]="'/categories'">
-            WILLTEILEN
-        </a>
+        <a class="homeButton" [routerLink]="'/categories'">WILLTEILEN</a>
     </div>
 
-    <app-search-bar #searchBar class="search"></app-search-bar>
+    <app-search-bar class="search"></app-search-bar>
+
 
     <div class="navButtons">
-        @if (userId() !== undefined) {
-        <a [routerLink]="['/user', userId()]">User</a>
+        @if (userId() !== null) {
+        <a [routerLink]="'/user'">User</a>
+        <a (click)="logout()">Abmelden</a>
+        @if (role() === 'Admin') {
+        <a [routerLink]="'/admin'">Admin</a>
+        }
         }
         @else {
-        <a routerLink="/login">Login</a>
-        <a routerLink="/register">Register</a>
+        <a [routerLink]="'/login'">Login</a>
+        <a [routerLink]="'/register'">Register</a>
         }
     </div>
 </nav>

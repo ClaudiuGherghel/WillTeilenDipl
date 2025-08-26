@@ -26,6 +26,18 @@ namespace Persistence
                 .FirstOrDefaultAsync(gp=> gp.Id == id);
         }
 
+        public async Task<GeoPostal?> GetByQueryAsync(string country, string state, string postalCode, string place)
+        {
+            return await DbContext.GeoPostals
+                .AsNoTracking()
+                .FirstOrDefaultAsync(gp =>
+                    gp.Country == country &&
+                    gp.State == state &&
+                    gp.PostalCode == postalCode &&
+                    gp.Place == place);
+        }
+
+
         public async Task<ICollection<string>> GetCountriesAsync()
         {
             return await DbContext.GeoPostals

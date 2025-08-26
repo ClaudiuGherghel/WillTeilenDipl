@@ -49,7 +49,7 @@ namespace Core.Entities
         public int GeoPostalId { get; set; }
 
         // Navigation Properties
-        public GeoPostal GeoPostal { get; set; } = null!;
+        public GeoPostal? GeoPostal { get; set; }
         public ICollection<Rental> Rentals { get; set; } = [];
         public ICollection<Item> OwnedItems { get; set; } = [];
     }

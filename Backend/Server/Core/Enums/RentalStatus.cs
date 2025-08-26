@@ -8,6 +8,7 @@ namespace Core.Enums
 {
     public enum RentalStatus
     {
+
         Active,
         Cancelled,
         Completed,

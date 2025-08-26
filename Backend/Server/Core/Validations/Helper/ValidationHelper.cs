@@ -8,7 +8,7 @@ namespace Core.Validations.Helper
         public static ValidationResult? ValidateNotMinValue(DateTime date, string fieldDisplayName)
         {
             //Angular Date-MinValue
-            DateTime angularMinDate = new(1970, 1, 1);
+            DateTime angularMinDate = new(1900, 1, 31);
 
 
             if (date == DateTime.MinValue || date == angularMinDate)
