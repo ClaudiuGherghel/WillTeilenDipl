@@ -5,6 +5,7 @@ import { AuthService } from '../../../services/auth-service';
 import { GeoPostalService } from '../../../services/geo-postal-service';
 import { PostalCodeAndPlaceDto } from '../../../dtos/postal-code-and-place-dto';
 import { RegisterRequest } from '../../../models/register-request';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,6 @@ export class Register implements OnInit {
   birthDate = signal('');
   address = signal('');
   phoneNumber = signal('');
-  geoPostalId = signal(0);
 
 
   countries = signal<string[]>([]);
@@ -102,41 +102,32 @@ export class Register implements OnInit {
   register() {
 
     this.geoPostalService.getByQuery(this.selectedCountry(), this.selectedState(), this.selectedPostalCode(), this.selectedPlace())
+      .pipe(
+        switchMap(data => {
+          const newUser: RegisterRequest = {
+            role: "User",
+            userName: this.userName(),
+            password: this.password(),
+            email: this.email(),
+            firstName: this.firstName(),
+            lastName: this.lastName(),
+            birthDate: new Date(this.birthDate()).toISOString(),
+            geoPostalId: data.id,
+            address: this.address(),
+            phoneNumber: this.phoneNumber()
+          };
+          console.log(newUser);
+          return this.authService.register(newUser);
+        })
+      )
       .subscribe({
-        next: data => {
-          this.geoPostalId.set(data.id);
+        next: (data) => {
+          alert('Registration successful');
+          this.router.navigate(['/user']);
         },
         error: error => {
-          alert("Laden der GeoPostalId fehlgeschlagen: " + error.message);
+          alert('Registration failed' + error.message);
         }
       });
-
-    console.log(this.birthDate());
-    console.log(new Date(this.birthDate()).toISOString());
-
-
-    const newUser: RegisterRequest = {
-      role: "User",
-      userName: this.userName(),
-      password: this.password(),
-      email: this.email(),
-      firstName: this.firstName(),
-      lastName: this.lastName(),
-      birthDate: new Date(this.birthDate()).toISOString(),
-      geoPostalId: this.geoPostalId(),
-      address: this.address(),
-      phoneNumber: this.phoneNumber()
-    };
-
-    console.log(newUser);
-    this.authService.register(newUser).subscribe({
-      next: (data) => {
-        alert('Registration successful');
-        this.router.navigate(['/user']);
-      },
-      error: error => {
-        alert('Registration failed' + error.message);
-      }
-    });
   }
 }

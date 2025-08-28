@@ -32,7 +32,7 @@ namespace WebApiTests.Mappings
             Assert.Equal(dto.ItemCondition, entity.ItemCondition);
             Assert.Equal(dto.SubCategoryId, entity.SubCategoryId);
             Assert.Equal(dto.OwnerId, entity.OwnerId);
-            Assert.Equal(dto.GeoPostaldId, entity.GeoPostalId);
+            Assert.Equal(dto.GeoPostalId, entity.GeoPostalId);
             Assert.True((DateTime.UtcNow - entity.CreatedAt).TotalSeconds < 2);
         }
 
@@ -91,7 +91,7 @@ namespace WebApiTests.Mappings
             Assert.Equal(dto.RowVersion, entity.RowVersion);
             Assert.NotNull(entity.UpdatedAt);
             Assert.True((DateTime.UtcNow - entity.UpdatedAt!.Value).TotalSeconds < 2);
-            Assert.Equal(dto.GeoPostaldId, entity.GeoPostalId);
+            Assert.Equal(dto.GeoPostalId, entity.GeoPostalId);
         }
 
 

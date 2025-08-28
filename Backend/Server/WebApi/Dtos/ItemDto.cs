@@ -41,7 +41,7 @@ namespace WebApi.Dtos
             [Range(1, int.MaxValue, ErrorMessage = "OwnerId (UserId) muss größer als 0 sein.")]
             int OwnerId,
             [Range(1, int.MaxValue, ErrorMessage = "GeoPostalId muss größer als 0 sein.")]
-            int GeoPostaldId
+            int GeoPostalId
         );
 
         public record ItemPutDto(
@@ -82,7 +82,7 @@ namespace WebApi.Dtos
             [Range(1, int.MaxValue, ErrorMessage = "OwnerId (UserId) muss größer als 0 sein.")]
             int OwnerId,
             [Range(1, int.MaxValue, ErrorMessage = "GeoPostalId muss größer als 0 sein.")]
-            int GeoPostaldId
+            int GeoPostalId
         );
     }
 }

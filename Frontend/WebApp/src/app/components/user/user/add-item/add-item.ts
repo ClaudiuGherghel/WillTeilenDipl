@@ -8,7 +8,9 @@ import { GeoPostalService } from '../../../../services/geo-postal-service';
 import { Category } from '../../../../models/category.model';
 import { CategoryService } from '../../../../services/category-service';
 import { AuthService } from '../../../../services/auth-service';
-import { CommonModule } from '@angular/common';
+import { Item, ItemPostDto } from '../../../../models/item.model';
+import { ItemService } from '../../../../services/item-service';
+import { switchMap } from 'rxjs/internal/operators/switchMap';
 
 @Component({
   selector: 'app-add-item',
@@ -19,10 +21,15 @@ import { CommonModule } from '@angular/common';
 })
 export class AddItem implements OnInit {
 
+  // private router = inject(Router);
+  // private route = inject(ActivatedRoute);
+  private itemService = inject(ItemService);
   private geoPostalService = inject(GeoPostalService);
   private categoryService = inject(CategoryService);
   protected commonDataService = inject(CommonDataService);
   private authService = inject(AuthService);
+
+  // itemId = 0;
 
   name = signal("");
   description = signal("");
@@ -31,11 +38,9 @@ export class AddItem implements OnInit {
   price = signal<number | undefined>(undefined);
   deposit = signal<number | undefined>(undefined);
   stock = signal<number | undefined>(undefined);
-  rentalType = signal<RentalType>(RentalType.Unknown);
-  itemCondition = signal<ItemCondition>(ItemCondition.Unknown);
   subCategoryId = signal(0);
-  ownerId = signal(this.authService.userId);
-  geoPostalId = signal(0);
+  ownerId = this.authService.userId;
+
 
   categories = signal<Category[]>([]);
   selectedCategory = signal<Category | undefined>(undefined);
@@ -55,11 +60,21 @@ export class AddItem implements OnInit {
 
 
   ngOnInit(): void {
+    // if (this.router.url.indexOf('edit') >= 0) {
+    //   this.route.params.subscribe(params => {
+    //     if (params['itemId']) {
+    //       this.itemId = params['itemId'];
+    //       this.loadItem();
+    //     }
+    //   });
+    // }
+
     this.loadCountries();
     this.loadCategories();
     this.rentalTypes.set(this.commonDataService.getRentalTypeList());
     this.itemConditions.set(this.commonDataService.getItemConditionList());
   }
+
   loadCategories() {
     this.categoryService.get().subscribe({
       next: data => {
@@ -81,6 +96,40 @@ export class AddItem implements OnInit {
       }
     });
   }
+
+  // loadItem() {
+  //   this.itemService.getById(this.itemId).subscribe({
+  //     next: data => {
+  //       this.fillFields(data);
+  //     },
+  //     error: error => {
+  //       alert("Laden des Items fehlgeschlagen: " + error.message);
+  //     }
+  //   });
+  // }
+
+  // fillFields(data: Item) {
+  //   this.name.set(data.name);
+  //   this.description.set(data.description);
+  //   this.isAvailable.set(data.isAvailable);
+  //   this.address = signal(data.address);
+  //   this.price.set(data.price);
+  //   this.deposit.set(data.deposit);
+  //   this.stock.set(data.stock);
+  //   this.subCategoryId.set(data.subCategoryId);
+  //   this.ownerId = signal(data.ownerId); //weil ownerId auch null sein kann funktioniert set nicht
+
+  //   // this.selectedCategory.set() // item hat keine CategoryProperty
+  //   this.selectedCountry.set(data.geoPostal.country);
+  //   this.selectedState.set(data.geoPostal.state);
+  //   // this.postalCodesAndPlaces = signal<PostalCodeAndPlaceDto[]>([]);
+  //   this.selectedPostalCode.set(data.geoPostal.postalCode);
+  //   this.selectedPlace.set(data.geoPostal.place);
+
+  //   this.selectedRentalType.set(data.rentalType);
+  //   this.selectedItemCondition.set(data.itemCondition);
+  // }
+
 
   onCountryChanged() {
     this.geoPostalService.getStates(this.selectedCountry()).subscribe({
@@ -124,7 +173,62 @@ export class AddItem implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    if (!form.valid) return;
 
+    this.geoPostalService
+      .getByQuery(this.selectedCountry(), this.selectedState(), this.selectedPostalCode(), this.selectedPlace())
+      .pipe(
+        switchMap(data => {
+          const newItem: ItemPostDto = {
+            name: this.name(),
+            description: this.description(),
+            isAvailable: this.isAvailable(),
+            address: this.address(),
+            price: this.price() ?? 0,
+            deposit: this.deposit() ?? 0,
+            stock: this.stock() ?? 0,
+            rentalType: RentalType[this.selectedRentalType()],
+            itemCondition: ItemCondition[this.selectedItemCondition()],
+            subCategoryId: this.subCategoryId(),
+            ownerId: this.ownerId() ?? 0,
+            geoPostalId: data.id,
+          };
+          console.log(newItem);
+          return this.itemService.post(newItem);
+        })
+      )
+      .subscribe({
+        next: () => {
+          alert("Item hinzugefügt");
+          this.clearFields();
+        },
+        error: error => {
+          alert("Fehler: " + error.message);
+        }
+      });
+  }
+
+
+  clearFields() {
+    this.name = signal("");
+    this.description = signal("");
+    this.isAvailable = signal(true);
+    this.address = signal("");
+    this.price = signal<number | undefined>(undefined);
+    this.deposit = signal<number | undefined>(undefined);
+    this.stock = signal<number | undefined>(undefined);
+    this.subCategoryId = signal(0);
+    this.ownerId = this.authService.userId;
+
+    this.selectedCategory = signal<Category | undefined>(undefined);
+    this.selectedCountry = signal('');
+    this.selectedState = signal('');
+    this.postalCodesAndPlaces = signal<PostalCodeAndPlaceDto[]>([]);
+    this.selectedPostalCode = signal('');
+    this.selectedPlace = signal('');
+
+    this.selectedRentalType = signal<RentalType>(RentalType.Unknown);
+    this.selectedItemCondition = signal<ItemCondition>(ItemCondition.Unknown);
   }
 
 }

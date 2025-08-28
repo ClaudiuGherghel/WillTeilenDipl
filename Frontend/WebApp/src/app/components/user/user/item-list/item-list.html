@@ -1,0 +1,33 @@
+<div class="container">
+    <h2>Meine Anzeigen</h2>
+
+    <div class="item-list">
+        @for (item of items(); track $index) {
+        <div class="item-card">
+            <div class="item-image">
+                <img src="#" alt="ItemImage" />
+            </div>
+            <div class="item-info">
+                <h3>{{ item.name }}</h3>
+                <p class="price">{{ item.price }} € / Stunde</p>
+                <p class="location">
+                    {{ item.geoPostal.postalCode }} {{ item.geoPostal.place }},
+                    {{ item.geoPostal.country }}
+                </p>
+            </div>
+            <div class="item-actions">
+                <button class="btn info">Fotos bearbeiten</button>
+
+                <!-- Button abhängig vom Status -->
+                <button (click)="onChangeActivation(item)" class="btn"
+                    [ngClass]="item.isAvailable ? 'deactivate' : 'success'">
+                    {{ item.isAvailable ? 'Deaktivieren' : 'Aktivieren' }}
+                </button>
+
+                <button [routerLink]="'/user/edit-item/'+item.id" class="btn secondary">Bearbeiten</button>
+                <button (click)="onDelete(item)" class="btn danger">Löschen</button>
+            </div>
+        </div>
+        }
+    </div>
+</div>

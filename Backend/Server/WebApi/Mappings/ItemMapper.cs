@@ -25,7 +25,7 @@ namespace WebApi.Mappings
                 RentalType = itemToPost.RentalType, // Standart Unknown
                 ItemCondition = itemToPost.ItemCondition, // Standart Unknown
                 SubCategoryId = itemToPost.SubCategoryId,
-                GeoPostalId = itemToPost.GeoPostaldId,
+                GeoPostalId = itemToPost.GeoPostalId,
                 OwnerId = itemToPost.OwnerId
             };
         }
@@ -45,7 +45,7 @@ namespace WebApi.Mappings
             itemToPut.RentalType = itemDto.RentalType; // Standart Unknown
             itemToPut.ItemCondition = itemDto.ItemCondition; // Standart Unknown
             itemToPut.SubCategoryId = itemDto.SubCategoryId;
-            itemToPut.GeoPostalId = itemDto.GeoPostaldId;
+            itemToPut.GeoPostalId = itemDto.GeoPostalId;
             itemToPut.OwnerId = itemDto.OwnerId;
         }
     }

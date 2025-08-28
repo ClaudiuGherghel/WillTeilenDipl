@@ -845,6 +845,37 @@
   },
   {
     "ContainingType": "WebApi.Controllers.ItemsController",
+    "Method": "GetByUser",
+    "RelativePath": "api/items/getbyuser/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Core.Entities.Item[]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 500
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApi.Controllers.ItemsController",
     "Method": "PostByUser",
     "RelativePath": "api/items/postbyuser",
     "HttpMethod": "POST",

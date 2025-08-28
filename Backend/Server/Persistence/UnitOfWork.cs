@@ -106,9 +106,9 @@ namespace Persistence
             var validationContext = new ValidationContext(entity);
             var validationResults = new List<ValidationResult>();
 
-            // Führt die Validierung aller markierten Eigenschaften aus
+            // Führt die Validierung aller Annotationen aus
             bool isValid = Validator.TryValidateObject(entity, validationContext, validationResults, true);
-
+            
             // 2. Wenn ungültig → detaillierte Fehlermeldung zusammenbauen
             if (!isValid)
             {
@@ -151,67 +151,6 @@ namespace Persistence
                     //    Für andere Entities ggf. erweitern
             }
 
-            //if (entity is Category category)
-            //{
-            //    bool exists = await _dbContext.Categories
-            //        .AnyAsync(c => c.Id != category.Id &&
-            //                       EF.Functions.Like(c.Name, category.Name));
-
-            //    if (exists)
-            //    {
-            //        throw new ValidationException(
-            //            new ValidationResult("Category mit gleichem Namen existiert bereits", [nameof(Category.Name)]), null, category);
-            //    }
-            //}
-
-            //if (entity is SubCategory subCategory)
-            //{
-            //    bool exists = await _dbContext.SubCategories
-            //        .AnyAsync(sc => sc.Id != subCategory.Id &&
-            //                        EF.Functions.Like(sc.Name, subCategory.Name));
-
-            //    if (exists)
-            //    {
-            //        throw new ValidationException(
-            //            new ValidationResult("SubCategory mit gleichem Namen existiert bereits", [nameof(SubCategory.Name)]), null, subCategory);
-            //    }
-            //}
-
-            //if (entity is Image image)
-            //{
-            //    bool exists = await _dbContext.Images
-            //        .AnyAsync(img => img.Id != image.Id &&
-            //                         EF.Functions.Like(img.ImageUrl, image.ImageUrl));
-
-            //    if (exists)
-            //    {
-            //        throw new ValidationException(
-            //            new ValidationResult("Image mit der gleichen URL existiert bereits", [nameof(Image.ImageUrl)]), null, image);
-            //    }
-            //}
-
-            //if (entity is User user)
-            //{
-            //    bool emailExists = await _dbContext.Users
-            //        .AnyAsync(u => u.Id != user.Id &&
-            //                       EF.Functions.Like(u.Email, user.Email));
-
-            //    if (emailExists)
-            //    {
-            //        throw new ValidationException(
-            //            new ValidationResult("E-Mail existiert bereits", [nameof(User.Email)]), null, user);
-            //    }
-
-            //    bool usernameExists = await _dbContext.Users
-            //        .AnyAsync(u => u.Id != user.Id &&
-            //                       EF.Functions.Like(u.Username, user.Username));
-
-            //    if (usernameExists)
-            //    {
-            //        throw new ValidationException(
-            //            new ValidationResult("Benutzername existiert bereits", [nameof(User.Username)]), null, user);
-            //    }
-            //}
         }
 
         public async Task FillDbAsync()

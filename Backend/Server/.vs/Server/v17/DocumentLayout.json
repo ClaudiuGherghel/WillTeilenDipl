@@ -3,11 +3,22 @@
   "WorkspaceRootPath": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WillTeilenDb/True/SqlTable/dbo.Users.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\core\\validations\\annotations\\datenotminvalueattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{92B74793-C600-4040-8A9F-8344259EE4C4}|Core\\Core.csproj|solutionrelative:core\\validations\\annotations\\datenotminvalueattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\dtos\\itemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\dtos\\itemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\claud\\AppData\\Local\\SourceServer\\55fdf4cfe09a07cce726a6dd120f01a74d94738261e7d6a3fa46262ff4c59edd\\Backend\\Server\\WebApi\\Controllers\\ItemsController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WillTeilenDb/True/SqlTable/dbo.Items.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -17,29 +28,66 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DateNotMinValueAttribute.cs",
-              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\Annotations\\DateNotMinValueAttribute.cs",
-              "RelativeDocumentMoniker": "Core\\Validations\\Annotations\\DateNotMinValueAttribute.cs",
-              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Core\\Validations\\Annotations\\DateNotMinValueAttribute.cs",
-              "RelativeToolTip": "Core\\Validations\\Annotations\\DateNotMinValueAttribute.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "ItemsController.cs",
+              "DocumentMoniker": "C:\\Users\\claud\\AppData\\Local\\SourceServer\\55fdf4cfe09a07cce726a6dd120f01a74d94738261e7d6a3fa46262ff4c59edd\\Backend\\Server\\WebApi\\Controllers\\ItemsController.cs",
+              "ToolTip": "C:\\Users\\claud\\AppData\\Local\\SourceServer\\55fdf4cfe09a07cce726a6dd120f01a74d94738261e7d6a3fa46262ff4c59edd\\Backend\\Server\\WebApi\\Controllers\\ItemsController.cs [Schreibgesch\u00FCtzt]",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAewHoAAAAAAAAAAQAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-26T17:48:14.373Z",
+              "WhenOpened": "2025-08-28T09:43:33.798Z",
+              "EditorCaption": " [Schreibgesch\u00FCtzt]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "WebApi\\Controllers\\UsersController.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "WebApi\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAmwJUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-28T09:41:08.721Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ItemDto.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Dtos\\ItemDto.cs",
+              "RelativeDocumentMoniker": "WebApi\\Dtos\\ItemDto.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Dtos\\ItemDto.cs",
+              "RelativeToolTip": "WebApi\\Dtos\\ItemDto.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-28T10:47:58.714Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "dbo.Users [Daten]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WillTeilenDb/True/SqlTable/dbo.Users.sql",
-              "ToolTip": "dbo.Users [Daten]",
+              "Title": "ItemsController.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\ItemsController.cs",
+              "RelativeDocumentMoniker": "WebApi\\Controllers\\ItemsController.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\ItemsController.cs",
+              "RelativeToolTip": "WebApi\\Controllers\\ItemsController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAkwKIAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-27T11:27:54.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "dbo.Items [Daten]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WillTeilenDb/True/SqlTable/dbo.Items.sql",
+              "ToolTip": "dbo.Items [Daten]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-08-26T16:54:13.698Z",
+              "WhenOpened": "2025-08-28T08:36:46.841Z",
               "EditorCaption": ""
             }
           ]

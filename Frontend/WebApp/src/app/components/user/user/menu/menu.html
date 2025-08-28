@@ -2,16 +2,13 @@
     <ul class="dropdown">
         <li>
             <div>
-                <img alt="Profilbild" src="profilbild.jpg" />
-                &nbsp;
                 <span>Name</span>
             </div>
         </li>
-        <li><a [routerLink]="['/user/addItem']">Neue Anzeige aufgeben</a></li>
-        <!-- <li><a [routerLink]="'/user/1/items'">Meine Anzeigen</a></li> -->
+        <li><a [routerLink]="['/user/add-item']">Neue Anzeige aufgeben</a></li>
+        <li><a [routerLink]="'/user/itemlist'">Meine Anzeigen</a></li>
         <li><a href="#">Merkliste</a></li>
-        <li><a href="#">Nachrichten</a></li>
-        <!-- <li><a [routerLink]="'/user/profile'">Profildaten</a></li> -->
-        <li><a href="#">Abmelden</a></li>
+        <li><a [routerLink]="'/user/profile'">Benutzerdaten ändern</a></li>
+        <li><a [routerLink]="'/user/profile'">Passwort ändern</a></li>
     </ul>
 </section>

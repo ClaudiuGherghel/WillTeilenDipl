@@ -1,17 +1,14 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user.model';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
 import { RegisterRequest } from '../models/register-request';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private datePipe = inject(DatePipe);
 
   private _isAuthenticated = signal(false);
   private _userId = signal<number | null>(null);
@@ -22,20 +19,12 @@ export class AuthService {
   userId = this._userId.asReadonly();
   role = this._role.asReadonly();
 
-  private apiUrl = 'https://localhost:7267/api/users'; // ✅ Anpassen!
+  private apiUrl = 'https://localhost:7267/api/users';
 
   constructor() {
     this.restoreSession();
   }
 
-  // ---- Register ---- https://localhost:7267/api/users/register
-  // register(user: User): Observable<{ token: string }> {
-  //   return this.http.post<{ token: string }>(`${this.apiUrl}/register`, user).pipe(
-  //     tap(res => {
-  //       this.saveToken(res.token);
-  //     })
-  //   );
-  // }
 
   register(registerRequest: RegisterRequest): Observable<{ token: string }> {
     console.log(registerRequest);
@@ -46,9 +35,6 @@ export class AuthService {
   }
 
 
-
-
-  // ---- Login ----
   login(username: string, password: string): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap(res => {

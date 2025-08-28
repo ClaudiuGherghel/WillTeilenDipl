@@ -148,7 +148,6 @@ namespace WebApi.Controllers
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur Eigentümer oder Admin darf Benutzer bearbeiten." });
  
             userDto.UpdateEntity(userToPut);
-
             _uow.UserRepository.Update(userToPut);
             await _uow.SaveChangesAsync();
             return Ok(userToPut);

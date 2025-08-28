@@ -1344,6 +1344,58 @@
         }
       }
     },
+    "/api/items/getbyuser/{userId}": {
+      "get": {
+        "tags": [
+          "Items"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Item"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/items/postbyuser": {
       "post": {
         "tags": [
@@ -3534,7 +3586,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "geoPostaldId": {
+          "geoPostalId": {
             "type": "integer",
             "format": "int32"
           }
@@ -3594,7 +3646,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "geoPostaldId": {
+          "geoPostalId": {
             "type": "integer",
             "format": "int32"
           }

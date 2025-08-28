@@ -8,6 +8,8 @@ import { adminGuard } from './guards/admin-guard';
 import { authGuard } from './guards/auth-guard';
 import { User } from './components/user/user/user';
 import { AddItem } from './components/user/user/add-item/add-item';
+import { ItemList } from './components/user/user/item-list/item-list';
+import { EditItem } from './components/user/user/edit-item/edit-item';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'categories', pathMatch: 'full' },
@@ -20,8 +22,9 @@ export const routes: Routes = [
     {
         path: 'user', component: User, canActivate: [authGuard],   //  nur eingeloggte User
         children: [
-            { path: 'addItem', component: AddItem },
-            //   { path: 'items', component: UserItemsComponent },
+            { path: 'add-item', component: AddItem },
+            { path: 'itemlist', component: ItemList },
+            { path: 'edit-item/:itemId', component: EditItem },
             //   { path: 'profile', component: UserProfileComponent },
         ],
     },

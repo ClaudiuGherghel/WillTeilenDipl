@@ -20,8 +20,7 @@ namespace Persistence
                 .AsNoTracking()
                 //.Include(i=> i.SubCategory)
                 //.Include(i=> i.Rentals)
-                //.Include(i => i.Images) //ICollection
-                //.Include(i => i.Images) //ICollection
+                .Include(i => i.Images) //ICollection
                 .Include(i=> i.GeoPostal)
                 .Where(w => w.IsDeleted == false)
                 .OrderBy(o => o.Name)
@@ -34,12 +33,23 @@ namespace Persistence
                 .AsNoTracking()
                 //.Include(i=> i.SubCategory)
                 //.Include(i=> i.Rentals)
-                //.Include(i => i.Images) //ICollection
-                //.Include(i => i.Images) //ICollection
+                .Include(i => i.Images) //ICollection
                 .Include(i => i.GeoPostal)
-                .Where(w => w.IsDeleted == false)
+                .Where(w => w.IsDeleted == false && w.Id == id)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
+
+        public async Task<ICollection<Item>> GetByUserIdAsync(int userId)
+        {
+            return await DbContext.Items
+                .AsNoTracking()
+                .Include(i=> i.GeoPostal) 
+                .Include(i=> i.Images) //ICollection
+                .Where(i => i.IsDeleted == false && i.OwnerId == userId)
+                .OrderBy(i=> i.CreatedAt)
+                .ToListAsync();          
+        }
+
 
         public void Insert(Item itemToPost)
         {

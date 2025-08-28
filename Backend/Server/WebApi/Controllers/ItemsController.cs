@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Claims;
-using WebApi.Mappings;
-using WebApi.Dtos;
-using static WebApi.Dtos.ItemDto;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using WebApi.Dtos;
+using WebApi.Mappings;
+using static WebApi.Dtos.ItemDto;
 
 namespace WebApi.Controllers
 {
@@ -28,7 +29,6 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Get()
         {
             ICollection<Item> items = await _uow.ItemRepository.GetAllAsync();
-
             return Ok(items);
         }
 
@@ -57,6 +57,20 @@ namespace WebApi.Controllers
             ICollection<Item> items = await _uow.ItemRepository.GetFilteredAsync(filter);
             return Ok(items);
         }
+
+
+
+        [Authorize]
+        [HttpGet("{userId}")]
+        [ProducesResponseType(typeof(Item[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByUser(int userId)
+        {
+            ICollection<Item> items = await _uow.ItemRepository.GetByUserIdAsync(userId);
+
+            return Ok(items);
+        }
+
 
 
 
@@ -110,6 +124,7 @@ namespace WebApi.Controllers
 
             Item? itemToPut = await _uow.ItemRepository.GetByIdAsync(id);
 
+
             if (itemToPut == null)
                 return NotFound(new { error = $"Kein Item mit ID {itemDto.Id} gefunden." });
 
@@ -128,9 +143,11 @@ namespace WebApi.Controllers
             if (userId != itemDto.OwnerId && !User.IsInRole(nameof(Roles.Admin)))
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur Eigentümer oder Admin darf Item hinzufügen." });
 
+            itemDto.UpdateEntity(itemToPut);
             _uow.ItemRepository.Update(itemToPut);
             await _uow.SaveChangesAsync();
-            return Ok(itemDto);
+            return Ok(itemToPut);
+
         }
 
 

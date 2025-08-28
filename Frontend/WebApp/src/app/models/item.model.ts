@@ -8,7 +8,7 @@ import { User } from "./user.model";
 
 export interface Item {
     id: number,
-    rowVersoin: any,
+    rowVersion: any,
     name: string,
     description: string,
     isAvailable: boolean,
@@ -27,3 +27,37 @@ export interface Item {
     rentals: Rental[],
     images: Image[]
 }
+
+export interface ItemPostDto {
+    name: string,
+    description: string,
+    isAvailable: boolean,
+    address: string,
+    price: number,
+    stock: number,
+    deposit: number,
+    rentalType: string,
+    itemCondition: string,
+    subCategoryId: number,
+    ownerId: number,
+    geoPostalId: number
+}
+
+export interface ItemPutDto {
+    id: number,
+    rowVersion: any,
+    name: string,
+    description: string,
+    isAvailable: boolean,
+    address: string,
+    price: number,
+    stock: number,
+    deposit: number,
+    rentalType: RentalType,
+    itemCondition: ItemCondition,
+    subCategoryId: number,
+    ownerId: number,
+    geoPostalId: number,
+}
+
+
