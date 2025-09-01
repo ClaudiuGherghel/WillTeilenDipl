@@ -25,6 +25,7 @@ namespace WebApi.Mappings
                 Address = userDto.Address ?? string.Empty,
                 Role = userDto.Role,
                 GeoPostalId = userDto.GeoPostalId,
+
             };
         }
 

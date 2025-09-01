@@ -15,15 +15,13 @@ namespace WebApiTests.Mappings
         public void Image_ToEntity_MapsCorrectly()
         {
             // Arrange
-            var dto = new ImagePostDto("url", "alt", "mime", 1, true, 99);
+            var dto = new ImagePostDto(null!, null!, "alt", 1, true, 99);
             
             // Act
             var entity = dto.ToEntity();
 
             // Assert
-            Assert.Equal(dto.ImageUrl, entity.ImageUrl);
             Assert.Equal(dto.AltText, entity.AltText);
-            Assert.Equal(dto.MimeType, entity.MimeType);
             Assert.Equal(dto.DisplayOrder, entity.DisplayOrder);
             Assert.Equal(dto.IsMainImage, entity.IsMainImage);
             Assert.Equal(dto.ItemId, entity.ItemId);
@@ -34,7 +32,7 @@ namespace WebApiTests.Mappings
         public void Image_ToEntity_SetsEmptyStrings_WhenFieldsAreNull()
         {
             // Arrange
-            var dto = new ImagePostDto(null!, null!, null!, 1, true, 99);
+            var dto = new ImagePostDto(null!,"", null!, 1, true, 99);
 
             // Act
             var entity = dto.ToEntity();
@@ -42,7 +40,6 @@ namespace WebApiTests.Mappings
             // Assert
             Assert.Equal(string.Empty, entity.ImageUrl);
             Assert.Equal(string.Empty, entity.AltText);
-            Assert.Equal(string.Empty, entity.MimeType);
         }
 
 
@@ -51,7 +48,7 @@ namespace WebApiTests.Mappings
         {
             //Arrange
             var entity = new Image();
-            var dto = new ImagePutDto(1, [1, 2], "url", "alt", "mime", 1, true, 99);
+            var dto = new ImagePutDto(1, [1, 2], "url", "alt", 1, true, 99);
             
             // Act
             dto.UpdateEntity(entity);
@@ -59,7 +56,6 @@ namespace WebApiTests.Mappings
             // Assert
             Assert.Equal(dto.ImageUrl, entity.ImageUrl);
             Assert.Equal(dto.AltText, entity.AltText);
-            Assert.Equal(dto.MimeType, entity.MimeType);
             Assert.Equal(dto.DisplayOrder, entity.DisplayOrder);
             Assert.Equal(dto.IsMainImage, entity.IsMainImage);
             Assert.Equal(dto.ItemId, entity.ItemId);
@@ -76,10 +72,9 @@ namespace WebApiTests.Mappings
             {
                 ImageUrl = "old",
                 AltText = "old",
-                MimeType = "old"
             };
 
-            var dto = new ImagePutDto(1, [1, 2, 3], null!, null!, null!, 1, true, 99);
+            var dto = new ImagePutDto(1, [1, 2, 3], null!, null!, 1, true, 99);
 
             // Act
             dto.UpdateEntity(entity);
@@ -87,7 +82,6 @@ namespace WebApiTests.Mappings
             // Assert
             Assert.Equal(string.Empty, entity.ImageUrl);
             Assert.Equal(string.Empty, entity.AltText);
-            Assert.Equal(string.Empty, entity.MimeType);
         }
 
 

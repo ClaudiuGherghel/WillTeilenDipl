@@ -10,6 +10,10 @@
         <div class="form-group">
             <input type="password" name="password" [(ngModel)]="password" placeholder="*Passwort" required />
         </div>
+        <div class="form-group">
+            <input type="password" name="password" [(ngModel)]="password" placeholder="*Passwort wiederholen"
+                required />
+        </div>
 
         <div class="form-group">
             <input type="email" name="email" [(ngModel)]="email" placeholder="*Email" required />
@@ -68,13 +72,13 @@
         </div>
 
         <div class="form-group">
-            <input type="text" name="address" [(ngModel)]="address" placeholder="Address" />
+            <input type="text" name="address" [(ngModel)]="address" placeholder="Adresse" />
         </div>
 
         <div class="form-group">
             <input type="tel" name="phoneNumber" [(ngModel)]="phoneNumber" placeholder="Handynummer" />
         </div>
 
-        <button type="submit" class="btn-register">Register</button>
+        <button type="submit" class="btn-register">Registrieren</button>
     </form>
 </div>

@@ -821,6 +821,69 @@
         }
       }
     },
+    "/api/images/getbyitemid/{itemId}": {
+      "get": {
+        "tags": [
+          "Images"
+        ],
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Image"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Image"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Image"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/images/postbyuser": {
       "post": {
         "tags": [
@@ -830,7 +893,52 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/ImagePostDto"
+                "type": "object",
+                "properties": {
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "ImageUrl": {
+                    "type": "string"
+                  },
+                  "AltText": {
+                    "type": "string"
+                  },
+                  "DisplayOrder": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "IsMainImage": {
+                    "type": "boolean"
+                  },
+                  "ItemId": {
+                    "maximum": 2147483647,
+                    "minimum": 1,
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              },
+              "encoding": {
+                "File": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                },
+                "AltText": {
+                  "style": "form"
+                },
+                "DisplayOrder": {
+                  "style": "form"
+                },
+                "IsMainImage": {
+                  "style": "form"
+                },
+                "ItemId": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -2599,7 +2707,7 @@
         }
       }
     },
-    "/api/users/getbyadmin/{id}": {
+    "/api/users/get/{id}": {
       "get": {
         "tags": [
           "Users"
@@ -3334,12 +3442,6 @@
             "type": "string",
             "nullable": true
           },
-          "mimeType": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
           "displayOrder": {
             "type": "integer",
             "format": "int32"
@@ -3353,35 +3455,6 @@
           },
           "item": {
             "$ref": "#/components/schemas/Item"
-          }
-        },
-        "additionalProperties": false
-      },
-      "ImagePostDto": {
-        "type": "object",
-        "properties": {
-          "imageUrl": {
-            "type": "string",
-            "nullable": true
-          },
-          "altText": {
-            "type": "string",
-            "nullable": true
-          },
-          "mimeType": {
-            "type": "string",
-            "nullable": true
-          },
-          "displayOrder": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "isMainImage": {
-            "type": "boolean"
-          },
-          "itemId": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -3403,10 +3476,6 @@
             "nullable": true
           },
           "altText": {
-            "type": "string",
-            "nullable": true
-          },
-          "mimeType": {
             "type": "string",
             "nullable": true
           },

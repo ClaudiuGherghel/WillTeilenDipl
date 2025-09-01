@@ -1,13 +1,12 @@
 <div class="container">
-    <h1>Neues Item hinzufügen</h1>
+    <h1>Item bearbeiten</h1>
     <form #pupilForm="ngForm" (ngSubmit)="onSubmit(pupilForm)">
-
 
         <div class="form-group">
             <label class="form-label" for="itemName">Artikelname</label>
             <input [(ngModel)]="name" type="text" id="itemName" name="itemName" required #nameElement="ngModel" />
             @if(nameElement?.errors?.['required']){
-            <div class="alert alert-danger">Artikelname muss einegegeben werden!</div>
+            <div class="alert alert-danger">Artikelname muss eingegeben werden!</div>
             }
         </div>
 
@@ -19,7 +18,7 @@
         <div class="form-group">
             <label for="category">Kategorie</label>
             <select [(ngModel)]="selectedCategory" id="category" name="category" required #categoryElement="ngModel">
-                @for (category of categories(); track $index) {
+                @for (category of categories(); track category.id) {
                 <option [ngValue]="category">{{category.name}}</option>
                 }
             </select>
@@ -32,8 +31,10 @@
             <label for="subcategory">Unterkategorie</label>
             <select [(ngModel)]="subCategoryId" id="subcategory" name="subcategory" required
                 #subCategoryElement="ngModel">
-                @for (subcategory of selectedCategory()?.subCategories; track $index) {
+                @if(selectedCategory()){
+                @for (subcategory of selectedCategory()?.subCategories; track subcategory.id) {
                 <option [ngValue]="subcategory.id">{{subcategory.name}}</option>
+                }
                 }
             </select>
             @if(subCategoryElement?.errors?.['required']){
@@ -41,45 +42,50 @@
             }
         </div>
 
+        <!-- Länder, Bundesland, PLZ, Ort -->
         <div class="form-group">
             <label for="country">Land:</label>
             <select [(ngModel)]="selectedCountry" (change)="onCountryChanged()" id="country" name="country"
                 class="form-select">
                 <option value="" disabled selected>Bitte Land auswählen</option>
-                @for (country of countries(); track $index) {
+                @for (country of countries(); track country) {
                 <option [value]="country">{{ country }}</option>
                 }
             </select>
         </div>
+
         <div class="form-group">
             <label for="state">Bundesland:</label>
             <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" name="state" class="form-select">
                 <option value="" disabled selected>Bitte Bundesland auswählen</option>
-                @for (state of states(); track $index) {
+                @for (state of states(); track state) {
                 <option [value]="state">{{state}}</option>
                 }
             </select>
         </div>
+
         <div class="form-group">
             <label for="postalCode">Postleitzahl:</label>
             <select [(ngModel)]="selectedPostalCode" (change)="onPostalCodeChanged()" id="postalCode" name="postalCode"
                 class="form-select">
                 <option value="" disabled selected>Bitte Postleitzahl auswählen</option>
-                @for (item of postalCodesAndPlaces(); track $index) {
+                @for (item of postalCodesAndPlaces(); track item.postalCode + '-' + item.place) {
                 <option [value]="item.postalCode">{{ item.postalCode }}</option>
                 }
             </select>
         </div>
+
         <div class="form-group">
             <label for="place">Ort:</label>
             <select [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" name="place">
                 <option value="" disabled selected>Bitte Ort auswählen</option>
-                @for (item of postalCodesAndPlaces(); track $index) {
+                @for (item of postalCodesAndPlaces(); track item.postalCode + '-' + item.place) {
                 <option [value]="item.place">{{ item.place }}</option>
                 }
             </select>
         </div>
 
+        <!-- Restliche Inputs wie Adresse, Preis, etc. -->
         <div class="form-group">
             <label for="address">Adresse:</label>
             <input [(ngModel)]="address" type="text" id="address" name="address" />
@@ -88,15 +94,16 @@
         <div class="form-group">
             <label for="rentType">Vermietung durch:</label>
             <select [(ngModel)]="selectedRentalType" id="rentType" name="rentType">
-                @for (rentalType of rentalTypes(); track $index) {
+                @for (rentalType of rentalTypes(); track rentalType) {
                 <option [ngValue]="rentalType">{{commonDataService.getRentalTypeLabelGerman(rentalType)}}</option>
                 }
             </select>
         </div>
+
         <div class="form-group">
             <label for="itemCondition">Zustand des Gegenstandes: </label>
             <select [(ngModel)]="selectedItemCondition" name="itemCondition" id="itemCondition">
-                @for (itemCondition of itemConditions(); track $index) {
+                @for (itemCondition of itemConditions(); track itemCondition) {
                 <option [ngValue]="itemCondition">{{commonDataService.getItemConditionLabelGerman(itemCondition)}}
                 </option>
                 }
@@ -108,7 +115,7 @@
             <input [(ngModel)]="price" type="number" id="price" name="price" step="0.01" required
                 #rentElement="ngModel" />
             @if(rentElement?.errors?.['required']){
-            <div class="alert alert-danger">Preis muss einegegeben werden!</div>
+            <div class="alert alert-danger">Preis muss eingegeben werden!</div>
             }
         </div>
 
@@ -123,8 +130,7 @@
         </div>
 
         <div class="form-group">
-            <label for="deposit">Soll das Inserat sofort aktiv sein ?</label>
-            &nbsp;
+            <label for="isAvailable">Soll das Inserat sofort aktiv sein?</label>
             <input [(ngModel)]="isAvailable" type="checkbox" id="isAvailable" name="isAvailable" />
         </div>
 

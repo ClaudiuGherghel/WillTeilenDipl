@@ -5,7 +5,7 @@
         @for (item of items(); track $index) {
         <div class="item-card">
             <div class="item-image">
-                <img src="#" alt="ItemImage" />
+                <img alt="ItemImage" />
             </div>
             <div class="item-info">
                 <h3>{{ item.name }}</h3>
@@ -16,7 +16,7 @@
                 </p>
             </div>
             <div class="item-actions">
-                <button class="btn info">Fotos bearbeiten</button>
+                <button [routerLink]="['/user/item', item.id, 'images']" class="btn info">Fotos bearbeiten</button>
 
                 <!-- Button abhängig vom Status -->
                 <button (click)="onChangeActivation(item)" class="btn"

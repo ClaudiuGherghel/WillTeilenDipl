@@ -22,11 +22,10 @@ export class Login {
   login() {
     this.authService.login(this.username(), this.password()).subscribe({
       next: data => {
-        alert('Login successful');
         this.router.navigateByUrl('/user');
       },
       error: error => {
-        alert("Invalid user or password");
+        alert("Anmeldung fehlgeschlagen" + error.message);
       }
     });
   }

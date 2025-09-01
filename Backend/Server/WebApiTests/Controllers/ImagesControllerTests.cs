@@ -76,9 +76,9 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PostByUser_NoFile_ReturnsBadRequest()
         {
-            var dto = new ImagePostDto("https://test.com/img.jpg", "alt", "image/jpeg", 1, true, 1);
+            var dto = new ImagePostDto(null, null!, "alt", 1, true, 1);
 
-            var result = await _controller.PostByUser(null!, dto);
+            var result = await _controller.PostByUser(dto);
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
@@ -86,12 +86,12 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PostByUser_InvalidFileType_ReturnsBadRequest()
         {
-            var dto = new ImagePostDto("https://test.com/img.jpg", "alt", "image/jpeg", 1, true, 1);
             var fileMock = new Mock<IFormFile>();
             fileMock.Setup(f => f.Length).Returns(100);
             fileMock.Setup(f => f.ContentType).Returns("text/plain");
+            var dto = new ImagePostDto(fileMock.Object, null!, "alt", 1, true, 1);
 
-            var result = await _controller.PostByUser(fileMock.Object, dto);
+            var result = await _controller.PostByUser(dto);
 
             Assert.IsType<BadRequestObjectResult>(result);
         }
@@ -99,10 +99,10 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PostByUser_Unauthorized_Returns401()
         {
-            var dto = new ImagePostDto("https://test.com/img.jpg", "alt", "image/jpeg", 1, true, 1);
             var fileMock = new Mock<IFormFile>();
             fileMock.Setup(f => f.Length).Returns(100);
             fileMock.Setup(f => f.ContentType).Returns("image/jpeg");
+            var dto = new ImagePostDto(fileMock.Object,null!, "alt", 1, true, 1);
 
             _controller.ControllerContext = new ControllerContext
             {
@@ -112,7 +112,7 @@ namespace WebApiTests.Controllers
                 }
             };
 
-            var result = await _controller.PostByUser(fileMock.Object, dto);
+            var result = await _controller.PostByUser(dto);
 
             Assert.IsType<UnauthorizedObjectResult>(result);
         }
@@ -120,7 +120,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PutByUser_IdMismatch_ReturnsBadRequest()
         {
-            var dto = new ImagePutDto(2, null, "https://test.com/img.jpg", "alt", "image/jpeg", 1, true, 1);
+            var dto = new ImagePutDto(2, null, "https://test.com/img.jpg", "alt", 1, true, 1);
 
             var result = await _controller.PutByUser(1, dto);
 
@@ -130,7 +130,7 @@ namespace WebApiTests.Controllers
         [Fact]
         public async Task PutByUser_ImageNotFound_Returns404()
         {
-            var dto = new ImagePutDto(1, null, "https://test.com/img.jpg", "alt", "image/jpeg", 1, true, 1);
+            var dto = new ImagePutDto(1, null, "https://test.com/img.jpg", "alt", 1, true, 1);
             _mockImageRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((Image?)null);
 
             var result = await _controller.PutByUser(1, dto);

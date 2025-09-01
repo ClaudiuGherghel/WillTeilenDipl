@@ -40,11 +40,11 @@ namespace WebApi.Controllers
 
 
         [HttpGet("{id}")]
-        [Authorize(Roles = nameof(Roles.Admin))]
+        [Authorize]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetByAdmin(int id)
+        public async Task<IActionResult> Get(int id)
         {
             User? user = await _uow.UserRepository.GetByIdAsync(id);
 
@@ -136,7 +136,7 @@ namespace WebApi.Controllers
             if (id != userDto.Id)
                 return BadRequest("Die übergebene ID stimmt nicht mit der Item-ID überein.");
 
-            User? userToPut = await _uow.UserRepository.GetByIdAsync(id);
+            User? userToPut = await _uow.UserRepository.GetWithoutReferencesByIdAsync(id);
             if (userToPut == null)
                 return NotFound(new { error = $"Kein Benutzer mit der ID {userDto.Id} gefunden." });
 
@@ -166,7 +166,7 @@ namespace WebApi.Controllers
             if (id != userDto.Id)
                 return BadRequest("Die übergebene ID stimmt nicht mit der Item-ID überein.");
 
-            User? userToPut = await _uow.UserRepository.GetByIdAsync(id);
+            User? userToPut = await _uow.UserRepository.GetWithoutReferencesByIdAsync(id);
             if (userToPut == null)
                 return NotFound(new { error = $"Kein Benutzer mit der ID {userDto.Id} gefunden." });
 
@@ -182,7 +182,7 @@ namespace WebApi.Controllers
             _uow.UserRepository.Update(userToPut);
             await _uow.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(userToPut);
         }
 
 
@@ -195,7 +195,7 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteByUser(int id)
         {
-            User? userToRemove = await _uow.UserRepository.GetByIdAsync(id);
+            User? userToRemove = await _uow.UserRepository.GetWithoutReferencesByIdAsync(id);
             if (userToRemove is null)
                 return NotFound(new { error = $"Kein Benutzer mit der ID {id} gefunden." });
 

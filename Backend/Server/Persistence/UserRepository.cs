@@ -39,6 +39,15 @@ namespace Persistence
                 .Where(w=> w.IsDeleted == false)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
+
+        public async Task<User?> GetWithoutReferencesByIdAsync(int id)
+        {
+            return await DbContext.Users
+                .AsNoTracking()
+                .Where(w => w.IsDeleted == false)
+                .SingleOrDefaultAsync(s => s.Id == id);
+        }
+
         public void Insert(User userToPost)
         {
             DbContext.Users.Add(userToPost);
@@ -115,7 +124,6 @@ namespace Persistence
 
             return isValid ? user : null;
         }
-
 
 
     }

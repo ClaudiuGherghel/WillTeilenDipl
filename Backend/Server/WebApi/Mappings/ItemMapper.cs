@@ -45,6 +45,7 @@ namespace WebApi.Mappings
             itemToPut.RentalType = itemDto.RentalType; // Standart Unknown
             itemToPut.ItemCondition = itemDto.ItemCondition; // Standart Unknown
             itemToPut.SubCategoryId = itemDto.SubCategoryId;
+            itemToPut.GeoPostal = null!;
             itemToPut.GeoPostalId = itemDto.GeoPostalId;
             itemToPut.OwnerId = itemDto.OwnerId;
         }

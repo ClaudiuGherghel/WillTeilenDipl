@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using WebApi.Dtos;
 using WebApi.Mappings;
 using static WebApi.Dtos.ImageDto;
 
@@ -19,7 +20,6 @@ namespace WebApi.Controllers
     public class ImagesController(IUnitOfWork uow, ILogger<ImagesController> logger, IWebHostEnvironment env) : BaseController<ImagesController>(uow, logger)
     {
         private readonly IWebHostEnvironment _env = env;
-
 
         [HttpGet]
         [ProducesResponseType(typeof(Image[]), StatusCodes.Status200OK)]
@@ -45,6 +45,17 @@ namespace WebApi.Controllers
             return Ok(image);
         }
 
+        [HttpGet("{itemId}")]
+        [ProducesResponseType(typeof(Image), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetByItemId(int itemId)
+        {
+            ICollection<Image> images = await _uow.ImageRepository.GetByItemIdAsync(itemId);
+
+            return Ok(images);
+        }
+
 
 
 
@@ -57,17 +68,21 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PostByUser(IFormFile file, [FromBody] ImagePostDto imageDto)
+        [Consumes("multipart/form-data")]
+
+        public async Task<IActionResult> PostByUser([FromForm] ImageClassPostDto imageDto)
         {
-            if (file == null || file.Length == 0)
+            if (imageDto == null || imageDto.File.Length == 0)
                 return BadRequest(new { error = "Die hochgeladene Datei ist leer oder fehlt." });
 
-            if (!file.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
+            if (!imageDto.File.ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase))
                 return BadRequest(new { error = "Nur Bilddateien sind erlaubt (image/*)." });
 
             int? userId = GetUserIdFromClaims();
             if (userId is null)
                 return Unauthorized(new { error = "Benutzer nicht angemeldet." });
+
+
 
             Item? item = await _uow.ItemRepository.GetByIdAsync(imageDto.ItemId);
             if (item is null)
@@ -77,22 +92,46 @@ namespace WebApi.Controllers
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur Eigentümer oder Admin darf Bilder hochladen." });
 
             // Pfad aufbauen: /wwwroot/uploads/user42/
-            string userFolder = Path.Combine(_env.WebRootPath, "uploads", $"user{userId}");
-            Directory.CreateDirectory(userFolder); // falls noch nicht vorhanden
+            string webRoot = _env.WebRootPath ?? Path.Combine(_env.ContentRootPath, "wwwroot");
+            string userFolder = Path.Combine(webRoot, "uploads", $"user{userId}");
+            Directory.CreateDirectory(userFolder);
 
-            string extension = Path.GetExtension(file.FileName);
+            string extension = Path.GetExtension(imageDto.File.FileName);
             string uniqueFileName = $"{Guid.NewGuid()}{extension}";
             string filePath = Path.Combine(userFolder, uniqueFileName);
 
             await using var stream = new FileStream(filePath, FileMode.Create);
-            await file.CopyToAsync(stream);
+            await imageDto.File.CopyToAsync(stream);
 
             // URL erzeugen: /uploads/user42/filename.jpg
             string relativeUrl = $"/uploads/user{userId}/{uniqueFileName}";
             string absoluteUrl = $"{Request.Scheme}://{Request.Host}{relativeUrl}";
 
-            Image imageToPost = imageDto.ToEntity();
-            imageToPost.ImageUrl = absoluteUrl;
+
+            int cntImages = await _uow.ImageRepository.CountAsync(imageDto.ItemId);
+            bool isMainImage = false;
+
+            if(cntImages == 0)
+             isMainImage = true;   
+
+
+            string altText = imageDto.AltText;
+            if (string.IsNullOrWhiteSpace(imageDto.AltText))
+            {
+                altText = Path.GetFileNameWithoutExtension(imageDto.File.FileName);
+            }
+
+            var imageToPost = new Image
+            {
+                ItemId = imageDto.ItemId,
+                ImageUrl = absoluteUrl,
+                AltText = imageDto.AltText,
+                IsMainImage = false,
+            };
+
+            //var imageToPost = imageDto.ToEntity();
+            imageToPost.IsMainImage = isMainImage;
+            imageToPost.AltText = altText;
 
             _uow.ImageRepository.Insert(imageToPost);
             await _uow.SaveChangesAsync();
@@ -133,10 +172,24 @@ namespace WebApi.Controllers
             if (userId != item.OwnerId && !User.IsInRole(nameof(Roles.Admin)))
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur der Eigentümer oder ein Admin darf das Bild bearbeiten." });
 
+            Console.WriteLine(Convert.ToBase64String(imageToPut.RowVersion));
+            Console.WriteLine(Convert.ToBase64String(imageDto.RowVersion));
+            Console.WriteLine(Convert.ToBase64String(imageToPut.RowVersion));
             imageDto.UpdateEntity(imageToPut);
             _uow.ImageRepository.Update(imageToPut);
             await _uow.SaveChangesAsync();
 
+            if (imageToPut.IsMainImage)
+            {
+                Image? otherMainImage = await _uow.ImageRepository.GetOtherMainImageAsync(id);
+                if(otherMainImage == null)
+                {
+                    return Ok(imageToPut);
+                }
+                otherMainImage.IsMainImage = false;
+                _uow.ImageRepository.Update(otherMainImage);
+                await _uow.SaveChangesAsync();
+            }
             return Ok(imageToPut);
         }
 
@@ -169,6 +222,17 @@ namespace WebApi.Controllers
             if (!isOwnerOrAdmin)
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur der Eigentümer oder ein Admin darf das Bild löschen." });
 
+            bool isMainImageToChange = false;
+            if (imageToRemove.IsMainImage)
+            {
+                int cntImages = 0;
+                cntImages = await _uow.ImageRepository.CountAsync(item.Id);
+                if (cntImages > 1)
+                {
+                    isMainImageToChange = true;
+                }
+            }
+            
             // Datei löschen – Besitzer-ID nutzen, auch bei Admins
             if (!string.IsNullOrWhiteSpace(imageToRemove.ImageUrl))
             {
@@ -181,6 +245,19 @@ namespace WebApi.Controllers
             }
 
             _uow.ImageRepository.SoftDelete(id);
+            await _uow.SaveChangesAsync();
+
+            if (isMainImageToChange)
+            {
+                ICollection<Image> list = await _uow.ImageRepository.GetAllAsync();
+                list = [..list.OrderBy(x => x.Id)];
+                Image imageToChange = list.FirstOrDefault() ?? throw new ArgumentNullException("Es sollte zumindest ein Image existieren");
+
+                imageToChange.UpdatedAt = DateTime.UtcNow;
+                imageToChange.IsMainImage = true;
+                _uow.ImageRepository.Update(imageToChange);
+            }
+
             await _uow.SaveChangesAsync();
 
             return NoContent();

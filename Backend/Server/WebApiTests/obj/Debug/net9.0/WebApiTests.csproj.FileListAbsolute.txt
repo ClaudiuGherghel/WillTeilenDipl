@@ -11,6 +11,7 @@ D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApiTests\bin\Debug\net9.0\WebAp
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApiTests\bin\Debug\net9.0\WebApi.runtimeconfig.json
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApiTests\bin\Debug\net9.0\appsettings.Development.json
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApiTests\bin\Debug\net9.0\appsettings.json
+D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApiTests\bin\Debug\net9.0\WebApi.staticwebassets.runtime.json
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApiTests\bin\Debug\net9.0\WebApi.staticwebassets.endpoints.json
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApiTests\bin\Debug\net9.0\WebApi.exe
 D:\Dipl-Project\WillTeilenDipl\Backend\Server\WebApiTests\bin\Debug\net9.0\testhost.exe

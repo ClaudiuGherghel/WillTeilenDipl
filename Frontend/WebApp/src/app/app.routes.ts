@@ -10,6 +10,8 @@ import { User } from './components/user/user/user';
 import { AddItem } from './components/user/user/add-item/add-item';
 import { ItemList } from './components/user/user/item-list/item-list';
 import { EditItem } from './components/user/user/edit-item/edit-item';
+import { Profile } from './components/user/user/profile/profile';
+import { AddEditImages } from './components/user/user/add-edit-images/add-edit-images';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'categories', pathMatch: 'full' },
@@ -25,7 +27,8 @@ export const routes: Routes = [
             { path: 'add-item', component: AddItem },
             { path: 'itemlist', component: ItemList },
             { path: 'edit-item/:itemId', component: EditItem },
-            //   { path: 'profile', component: UserProfileComponent },
+            { path: 'item/:itemId/images', component: AddEditImages },
+            { path: 'profile', component: Profile },
         ],
     },
 

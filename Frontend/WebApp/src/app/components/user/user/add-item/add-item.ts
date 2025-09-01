@@ -194,7 +194,7 @@ export class AddItem implements OnInit {
             geoPostalId: data.id,
           };
           console.log(newItem);
-          return this.itemService.post(newItem);
+          return this.itemService.postByUser(newItem);
         })
       )
       .subscribe({

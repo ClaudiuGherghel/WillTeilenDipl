@@ -19,8 +19,6 @@ namespace Core.Entities
         [StringLength(150, ErrorMessage = "Der Alternativtext darf maximal 150 Zeichen lang sein.")]
         public string AltText { get; set; } = string.Empty;
 
-        [StringLength(100, ErrorMessage = "Der MIME-Typ darf maximal 100 Zeichen lang sein.")]
-        public string MimeType { get; set; } = string.Empty; // z. B. "image/jpeg"
 
 
         //Image-Sortierung
@@ -33,7 +31,6 @@ namespace Core.Entities
 
         // Navigation Property
         public Item Item { get; set; } = null!;
-        //Die Navigation-Property Item ist nullable, was bei ORM-Modellen üblich ist, weil das verknüpfte Objekt z. B. nicht immer mitgeladen wird.
     }
 }
 

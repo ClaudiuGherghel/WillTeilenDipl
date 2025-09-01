@@ -158,7 +158,6 @@ namespace Persistence.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ImageUrl = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     AltText = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    MimeType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DisplayOrder = table.Column<int>(type: "int", nullable: false),
                     IsMainImage = table.Column<bool>(type: "bit", nullable: false),
                     ItemId = table.Column<int>(type: "int", nullable: false),

@@ -22,6 +22,9 @@ namespace WebApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.WebHost.UseWebRoot("wwwroot");
+
+
             // JWT Einstellungen aus appsettings.json
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             if (jwtSettings == null || jwtSettings["Secret"] == null)

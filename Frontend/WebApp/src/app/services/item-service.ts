@@ -35,7 +35,7 @@ export class ItemService {
     return this.http.get<Item[]>(`${this.apiUrl}/getbyuser/${userId}`);
   }
 
-  post(item: ItemPostDto) {
+  postByUser(item: ItemPostDto) {
     return this.http.post<Item>(`${this.apiUrl}/postbyuser`, item,)
   }
 

@@ -4,6 +4,8 @@ import { ItemService } from '../../../../services/item-service';
 import { AuthService } from '../../../../services/auth-service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { RentalType } from '../../../../enums/rental-type';
+import { ItemCondition } from '../../../../enums/item-condition';
 
 @Component({
   selector: 'app-item-list',
@@ -55,8 +57,8 @@ export class ItemList implements OnInit {
       price: item.price,
       stock: item.stock,
       deposit: item.deposit,
-      rentalType: item.rentalType,
-      itemCondition: item.itemCondition,
+      rentalType: RentalType[item.rentalType],
+      itemCondition: ItemCondition[item.itemCondition],
       geoPostalId: item.geoPostalId,
       subCategoryId: item.subCategoryId,
       isAvailable: !item.isAvailable,
@@ -82,6 +84,7 @@ export class ItemList implements OnInit {
     }
     this.itemService.delete(item.id).subscribe({
       next: data => {
+        console.log(data);
         this.loadItems();
       },
       error: error => {

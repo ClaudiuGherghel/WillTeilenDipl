@@ -64,7 +64,7 @@ namespace WebApiTests.Controllers
         {
             _mockUserRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync((User?)null);
 
-            var result = await _controller.GetByAdmin(1);
+            var result = await _controller.GetByAdmin();
 
             Assert.IsType<NotFoundObjectResult>(result);
         }
@@ -75,7 +75,7 @@ namespace WebApiTests.Controllers
             var user = new User { Id = 1, UserName = "User1" };
             _mockUserRepo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(user);
 
-            var result = await _controller.GetByAdmin(1);
+            var result = await _controller.GetByAdmin();
 
             var okResult = Assert.IsType<OkObjectResult>(result);
             var returnValue = Assert.IsType<User>(okResult.Value);

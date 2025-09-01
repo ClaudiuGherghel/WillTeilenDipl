@@ -4,7 +4,7 @@ export interface RegisterRequest {
     email: string;
     firstName: string;
     lastName: string;
-    birthDate: string;  // ISO-String
+    birthDate: string;  // //Backend liefert ISO-String
     role: string;       // "User"
     address: string;
     phoneNumber: string;

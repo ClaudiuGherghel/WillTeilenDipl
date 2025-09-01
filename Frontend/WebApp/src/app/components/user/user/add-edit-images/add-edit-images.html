@@ -1,0 +1,25 @@
+<div class="image-manager">
+    <h2>Bilder verwalten</h2>
+
+    <div class="upload">
+        <input type="file" (change)="onFileSelected($event)" />
+    </div>
+
+
+    <div cdkDropList class="image-list">
+        @for (image of images(); track image.id) {
+        <div class="image-card" cdkDrag [class.main]="image.isMainImage">
+
+            <!-- Badge nur wenn Hauptfoto -->
+            @if (image.isMainImage) {
+            <span class="main-badge">Hauptfoto</span>
+            }
+            <img [src]="image.imageUrl" [alt]="image.altText" />
+
+            <button mat-stroked-button color="warn" (click)="deleteImage(image)">Löschen</button>
+            <button (click)="changeMainImage(image)">Als Hauptfoto auswählen</button>
+        </div>
+        }
+    </div>
+
+</div>

@@ -110,54 +110,53 @@ namespace Persistence
                 .OnDelete(DeleteBehavior.Restrict);   // Kein Cascade Delete
         }
 
-
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-
-        //    // Verhindert, dass beim Löschen eines Users alle seine Items automatisch gelöscht werden (besser für Datenintegrität)
-        //    // Item-Owner Beziehung (kann optional Restrict sein, je nachdem, ob du alle Items löschen willst)
-        //    modelBuilder.Entity<Item>()
-        //        .HasOne(i => i.Owner)
-        //        .WithMany(u => u.OwnedItems)
-        //        .HasForeignKey(i => i.OwnerId)
-        //        .IsRequired()
-        //        .OnDelete(DeleteBehavior.Restrict); // Oder Cascade, wenn du möchtest
-
-        //    // Verhindert den Fehler "multiple cascade paths" – Mieten bleiben bestehen, auch wenn ein User gelöscht wird
-        //    // Rental-Renter Beziehung (niemals mit Cascade, da es zu den Konflikten führt)
-        //    modelBuilder.Entity<Rental>()
-        //        .HasOne(r => r.Renter)
-        //        .WithMany(u => u.Rentals)
-        //        .HasForeignKey(r => r.RenterId)
-        //        .IsRequired()
-        //        .OnDelete(DeleteBehavior.Restrict);
-
-        //    // Logisch sinnvoll: Wenn ein Item gelöscht wird, sollen auch alle zugehörigen Mietvorgänge verschwinden
-        //    // Rental-Item Beziehung (Cascade ist hier unproblematisch, wenn gewünscht)
-        //    modelBuilder.Entity<Rental>()
-        //        .HasOne(r => r.Item)
-        //        .WithMany(i => i.Rentals)
-        //        .HasForeignKey(r => r.ItemId)
-        //        .IsRequired()
-        //        .OnDelete(DeleteBehavior.Cascade);
-        //}
-
-
-        //dotnet tool install --global dotnet-ef --version 9.0.7
-        //dotnet tool update --global dotnet-ef --version 9.0.7
-        //dotnet ef migrations add InitialCreate
-        //dotnet ef database update
-        //dotnet ef database drop --force
-
-
-        /* VALIDIERUNG!
-        1️. Ein Admin kann Kategorien per API erstellen →
-        → DTO-Validation verhindert leere Namen beim API-Aufruf. ModelState prüft DTOs
-
-        2️. Ein internes System importiert Daten direkt ins DbContext →
-        → Hier greift nur die Entity-Validation oder ein ValidationService.
-        */
-
     }
 }
+
+
+//protected override void OnModelCreating(ModelBuilder modelBuilder)
+//{
+
+//    // Verhindert, dass beim Löschen eines Users alle seine Items automatisch gelöscht werden (besser für Datenintegrität)
+//    // Item-Owner Beziehung (kann optional Restrict sein, je nachdem, ob du alle Items löschen willst)
+//    modelBuilder.Entity<Item>()
+//        .HasOne(i => i.Owner)
+//        .WithMany(u => u.OwnedItems)
+//        .HasForeignKey(i => i.OwnerId)
+//        .IsRequired()
+//        .OnDelete(DeleteBehavior.Restrict); // Oder Cascade, wenn du möchtest
+
+//    // Verhindert den Fehler "multiple cascade paths" – Mieten bleiben bestehen, auch wenn ein User gelöscht wird
+//    // Rental-Renter Beziehung (niemals mit Cascade, da es zu den Konflikten führt)
+//    modelBuilder.Entity<Rental>()
+//        .HasOne(r => r.Renter)
+//        .WithMany(u => u.Rentals)
+//        .HasForeignKey(r => r.RenterId)
+//        .IsRequired()
+//        .OnDelete(DeleteBehavior.Restrict);
+
+//    // Logisch sinnvoll: Wenn ein Item gelöscht wird, sollen auch alle zugehörigen Mietvorgänge verschwinden
+//    // Rental-Item Beziehung (Cascade ist hier unproblematisch, wenn gewünscht)
+//    modelBuilder.Entity<Rental>()
+//        .HasOne(r => r.Item)
+//        .WithMany(i => i.Rentals)
+//        .HasForeignKey(r => r.ItemId)
+//        .IsRequired()
+//        .OnDelete(DeleteBehavior.Cascade);
+//}
+
+
+//dotnet tool install --global dotnet-ef --version 9.0.7
+//dotnet tool update --global dotnet-ef --version 9.0.7
+//dotnet ef migrations add InitialCreate
+//dotnet ef database update
+//dotnet ef database drop --force
+
+
+/* VALIDIERUNG!
+1️. Ein Admin kann Kategorien per API erstellen →
+→ DTO-Validation verhindert leere Namen beim API-Aufruf. ModelState prüft DTOs
+
+2️. Ein internes System importiert Daten direkt ins DbContext →
+→ Hier greift nur die Entity-Validation oder ein ValidationService.
+*/

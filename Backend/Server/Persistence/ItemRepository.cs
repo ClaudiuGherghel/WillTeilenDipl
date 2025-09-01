@@ -17,11 +17,11 @@ namespace Persistence
         public async Task<ICollection<Item>> GetAllAsync()
         {
             return await DbContext.Items
-                .AsNoTracking()
                 //.Include(i=> i.SubCategory)
                 //.Include(i=> i.Rentals)
                 .Include(i => i.Images) //ICollection
                 .Include(i=> i.GeoPostal)
+                .AsNoTracking()
                 .Where(w => w.IsDeleted == false)
                 .OrderBy(o => o.Name)
                 .ToListAsync();
@@ -30,13 +30,25 @@ namespace Persistence
         public async Task<Item?> GetByIdAsync(int id)
         {
             return await DbContext.Items
-                .AsNoTracking()
                 //.Include(i=> i.SubCategory)
                 //.Include(i=> i.Rentals)
                 .Include(i => i.Images) //ICollection
                 .Include(i => i.GeoPostal)
+                .AsNoTracking()
                 .Where(w => w.IsDeleted == false && w.Id == id)
-                .SingleOrDefaultAsync(s => s.Id == id);
+                .SingleOrDefaultAsync();
+        }
+
+        public async Task<Item?> GetByIdInclDeleted(int id)
+        {
+            return await DbContext.Items
+                //.Include(i=> i.SubCategory)
+                //.Include(i=> i.Rentals)
+                .Include(i => i.Images) //ICollection
+                .Include(i => i.GeoPostal)
+                .AsNoTracking()
+                .Where(w => w.Id == id)
+                .SingleOrDefaultAsync();
         }
 
         public async Task<ICollection<Item>> GetByUserIdAsync(int userId)
@@ -48,6 +60,14 @@ namespace Persistence
                 .Where(i => i.IsDeleted == false && i.OwnerId == userId)
                 .OrderBy(i=> i.CreatedAt)
                 .ToListAsync();          
+        }
+
+        public async Task<Item?> GetWithoutReferencesByIdAsync(int id)
+        {
+            return await DbContext.Items
+              .AsNoTracking()
+              .Where(w => w.IsDeleted == false && w.Id == id)
+              .SingleOrDefaultAsync(s => s.Id == id);
         }
 
 

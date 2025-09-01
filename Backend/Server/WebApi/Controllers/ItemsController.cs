@@ -20,8 +20,11 @@ namespace WebApi.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ItemsController(IUnitOfWork uow, ILogger<ItemsController> logger) : BaseController<ItemsController>(uow, logger)
+    public class ItemsController(IUnitOfWork uow, ILogger<ItemsController> logger, IWebHostEnvironment env) : BaseController<ItemsController>(uow, logger)
     {
+
+        private readonly IWebHostEnvironment _env = env;
+
 
         [HttpGet]
         [ProducesResponseType(typeof(Item[]), StatusCodes.Status200OK)]
@@ -73,8 +76,6 @@ namespace WebApi.Controllers
 
 
 
-
-
         [HttpPost]
         [Authorize]
         [ProducesResponseType(typeof(Item), StatusCodes.Status201Created)]
@@ -88,7 +89,7 @@ namespace WebApi.Controllers
             if (subCategory == null)
                 return NotFound(new { error = $"Keine Unterkategorie mit der ID {itemDto.SubCategoryId} gefunden." });
 
-            User? user = await _uow.UserRepository.GetByIdAsync(itemDto.OwnerId);
+            User? user = await _uow.UserRepository.GetWithoutReferencesByIdAsync(itemDto.OwnerId);
             if (user == null)
                 return NotFound(new { error = $"Kein Benutzer mit der ID {itemDto.OwnerId} gefunden." });
 
@@ -122,7 +123,7 @@ namespace WebApi.Controllers
             if (id != itemDto.Id)
                 return BadRequest("Die übergebene ID stimmt nicht mit der Item-ID überein.");
 
-            Item? itemToPut = await _uow.ItemRepository.GetByIdAsync(id);
+            Item? itemToPut = await _uow.ItemRepository.GetWithoutReferencesByIdAsync(id);
 
 
             if (itemToPut == null)
@@ -132,7 +133,7 @@ namespace WebApi.Controllers
             if (subCategory is null)
                 return NotFound(new { error = $"Keine Unterkategorie mit der ID {itemDto.SubCategoryId} gefunden." });
 
-            User? user = await _uow.UserRepository.GetByIdAsync(itemDto.OwnerId);
+            User? user = await _uow.UserRepository.GetWithoutReferencesByIdAsync(itemDto.OwnerId);
             if (user is null)
                 return NotFound(new { error = $"Kein Benutzer mit der ID {itemDto.OwnerId} gefunden." });
 
@@ -162,7 +163,7 @@ namespace WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> DeleteByUser(int id)
         {
-            Item? itemToRemove = await _uow.ItemRepository.GetByIdAsync(id);
+            Item? itemToRemove = await _uow.ItemRepository.GetWithoutReferencesByIdAsync(id);
             if (itemToRemove is null)
                 return NotFound(new { error = $"Kein Item mit ID {id} gefunden." });
 
@@ -176,6 +177,23 @@ namespace WebApi.Controllers
             _uow.ItemRepository.SoftDelete(id);
             await _uow.SaveChangesAsync();
             _logger.LogInformation("User {UserId} deleted Item {ItemId}", userId, id);
+
+            Item? item = await _uow.ItemRepository.GetByIdInclDeleted(id) ?? throw new ArgumentNullException($"Kein Item mit ID {id} gefunden.");
+
+            ICollection<Image> imagesToRemove = item.Images;
+            foreach (var img in imagesToRemove)
+            {
+                if (!string.IsNullOrWhiteSpace(img.ImageUrl))
+                {
+                    string fileName = Path.GetFileName(img.ImageUrl);
+                    string userFolder = Path.Combine(_env.WebRootPath, "uploads", $"user{userId}");
+                    string fullPath = Path.Combine(userFolder, fileName);
+
+                    if (System.IO.File.Exists(fullPath))
+                        System.IO.File.Delete(fullPath);
+                }
+
+            }
             return NoContent();
         }
 

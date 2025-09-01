@@ -20,7 +20,6 @@ export class Register implements OnInit {
   private geoPostalService = inject(GeoPostalService);
   private router = inject(Router);
 
-  protected MIN_DATE = new Date(1900, 1, 1); //01.01.1990
 
   userName = signal('');
   password = signal('');
@@ -123,7 +122,7 @@ export class Register implements OnInit {
       .subscribe({
         next: (data) => {
           alert('Registration successful');
-          this.router.navigate(['/user']);
+          this.router.navigate(['/categories']);
         },
         error: error => {
           alert('Registration failed' + error.message);

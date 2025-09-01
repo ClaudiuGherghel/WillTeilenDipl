@@ -13,5 +13,6 @@ namespace Core.Contracts
         void Insert(User userToPost);
         void SoftDelete(int id);
         void Update(User userToPut);
+        Task<User?> GetWithoutReferencesByIdAsync(int id);
     }
 }

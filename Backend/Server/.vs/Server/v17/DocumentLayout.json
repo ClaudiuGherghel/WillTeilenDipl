@@ -7,18 +7,16 @@
       "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\dtos\\itemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\dtos\\itemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\persistence\\itemrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|solutionrelative:persistence\\itemrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\claud\\AppData\\Local\\SourceServer\\55fdf4cfe09a07cce726a6dd120f01a74d94738261e7d6a3fa46262ff4c59edd\\Backend\\Server\\WebApi\\Controllers\\ItemsController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\controllers\\imagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\imagescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WillTeilenDb/True/SqlTable/dbo.Items.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\webapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{502070EF-749F-4EA2-BC58-4128D92D15DB}|WebApi\\WebApi.csproj|solutionrelative:webapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|d:\\dipl-project\\willteilendipl\\backend\\server\\persistence\\imagerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{343B74B6-5D1E-4C15-AEED-917FD1EEE7C0}|Persistence\\Persistence.csproj|solutionrelative:persistence\\imagerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,43 +26,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ItemsController.cs",
-              "DocumentMoniker": "C:\\Users\\claud\\AppData\\Local\\SourceServer\\55fdf4cfe09a07cce726a6dd120f01a74d94738261e7d6a3fa46262ff4c59edd\\Backend\\Server\\WebApi\\Controllers\\ItemsController.cs",
-              "ToolTip": "C:\\Users\\claud\\AppData\\Local\\SourceServer\\55fdf4cfe09a07cce726a6dd120f01a74d94738261e7d6a3fa46262ff4c59edd\\Backend\\Server\\WebApi\\Controllers\\ItemsController.cs [Schreibgesch\u00FCtzt]",
-              "ViewState": "AgIAAG0AAAAAAAAAAAAewHoAAAAAAAAAAQAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-28T09:43:33.798Z",
-              "EditorCaption": " [Schreibgesch\u00FCtzt]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "WebApi\\Controllers\\UsersController.cs",
-              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "WebApi\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAAH4AAAAAAAAAAAAmwJUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-28T09:41:08.721Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ItemDto.cs",
-              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Dtos\\ItemDto.cs",
-              "RelativeDocumentMoniker": "WebApi\\Dtos\\ItemDto.cs",
-              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Dtos\\ItemDto.cs",
-              "RelativeToolTip": "WebApi\\Dtos\\ItemDto.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
+              "Title": "ItemRepository.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\ItemRepository.cs",
+              "RelativeDocumentMoniker": "Persistence\\ItemRepository.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\ItemRepository.cs",
+              "RelativeToolTip": "Persistence\\ItemRepository.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAowC4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-28T10:47:58.714Z",
+              "WhenOpened": "2025-09-01T08:27:37.125Z",
               "EditorCaption": ""
             },
             {
@@ -75,19 +49,35 @@
               "RelativeDocumentMoniker": "WebApi\\Controllers\\ItemsController.cs",
               "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\ItemsController.cs",
               "RelativeToolTip": "WebApi\\Controllers\\ItemsController.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAkwKIAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAKYAAAAAAAAAAAAAwLAAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-27T11:27:54.401Z",
+              "WhenOpened": "2025-09-01T08:23:41.384Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "dbo.Items [Daten]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WillTeilenDb/True/SqlTable/dbo.Items.sql",
-              "ToolTip": "dbo.Items [Daten]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2025-08-28T08:36:46.841Z",
+              "Title": "ImageRepository.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\ImageRepository.cs",
+              "RelativeDocumentMoniker": "Persistence\\ImageRepository.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\Persistence\\ImageRepository.cs",
+              "RelativeToolTip": "Persistence\\ImageRepository.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwDAAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-31T19:36:27.865Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ImagesController.cs",
+              "DocumentMoniker": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\ImagesController.cs",
+              "RelativeDocumentMoniker": "WebApi\\Controllers\\ImagesController.cs",
+              "ToolTip": "D:\\Dipl-Project\\WillTeilenDipl\\Backend\\Server\\WebApi\\Controllers\\ImagesController.cs",
+              "RelativeToolTip": "WebApi\\Controllers\\ImagesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-31T06:55:40.887Z",
               "EditorCaption": ""
             }
           ]

@@ -1,0 +1,59 @@
+.image-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    /* wichtig für Badge */
+    transition: border 0.2s ease;
+}
+
+.image-card.main {
+    border: 3px solid gold;
+}
+
+.main-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: gold;
+    color: #000;
+    font-weight: bold;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.image-card img {
+    max-width: 100%;
+    max-height: 180px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.alt-input {
+    margin-top: 0.5rem;
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.alt-input:focus {
+    border-color: #1976d2;
+    outline: none;
+    box-shadow: 0 0 4px rgba(25, 118, 210, 0.4);
+}
+
+.actions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
