@@ -2,12 +2,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { switchMap } from 'rxjs';
 import { of } from 'rxjs';
 import { PostalCodeAndPlaceDto } from '../../../../dtos/postal-code-and-place-dto';
-import { RegisterRequest } from '../../../../models/register-request';
 import { AuthService } from '../../../../services/auth-service';
 import { GeoPostalService } from '../../../../services/geo-postal-service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { UserService } from '../../../../services/user-service';
-import { User, UserChangePwDto, UserPutDo } from '../../../../models/user.model';
+import { User, UserPutDo } from '../../../../models/user.model';
 
 @Component({
   selector: 'app-profile',
@@ -21,11 +20,13 @@ export class Profile implements OnInit {
   private userService = inject(UserService);
   private geoPostalService = inject(GeoPostalService);
 
+  isTriedToSave = signal(false);
+  formIsValid = signal(true);
 
   userId = this.authService.userId;
   rowVersion: any = "";
   userName = signal('');
-  password = signal('');
+  currentPassword = signal('');
   newPassword = signal('');
   email = signal('');
   firstName = signal('');
@@ -49,7 +50,7 @@ export class Profile implements OnInit {
         next: data => {
           this.fillFields(data);
         }
-      })
+      });
     }
     this.loadCountries();
   }
@@ -61,7 +62,6 @@ export class Profile implements OnInit {
 
     this.rowVersion = data.rowVersion;
     this.userName.set(data.userName);
-    this.password.set(data.password);
     this.email.set(data.email);
     this.firstName.set(data.firstName);
     this.lastName.set(data.lastName);
@@ -97,6 +97,7 @@ export class Profile implements OnInit {
       }
     });
   }
+
 
   loadCountries() {
     this.geoPostalService.getCountries().subscribe({
@@ -150,53 +151,70 @@ export class Profile implements OnInit {
     }
   }
 
+  save(form: NgForm) {
+    this.isTriedToSave.set(true);
 
-  save() {
-    if (!this.userId()) return;
+    if (form.valid) {
 
-    const pwChange$ = this.newPassword()
-      ? this.userService.changePw(this.userId()!, {
-        id: this.userId()!,
-        rowVersion: this.rowVersion,
-        newPassword: this.newPassword()
-      }).pipe(
-        // aktualisiere rowVersion nach erfolgreicher Änderung
-        switchMap(data => {
-          this.password.set(data.newPassword);
-          this.rowVersion = data.rowVersion;
-          return [true]; // dummy Observable um fortzufahren
-        })
-      )
-      : [true]; // wenn kein Passwort, einfach weitermachen
+      if (this.newPassword() != "" && this.currentPassword() == "") {
+        this.formIsValid.set(false);
+        return;
+      }
 
-    // jetzt die Aktualisierung der User-Daten
-    of(null).pipe(
-      switchMap(() => pwChange$), // warten, bis pwChange abgeschlossen ist
-      switchMap(() => this.geoPostalService.getByQuery(
-        this.selectedCountry(),
-        this.selectedState(),
-        this.selectedPostalCode(),
-        this.selectedPlace()
-      )),
-      switchMap(data => {
-        const updatedUser: UserPutDo = {
+      const pwChange$ = this.newPassword()
+        ? this.userService.changePw(this.userId()!, {
           id: this.userId()!,
           rowVersion: this.rowVersion,
-          userName: this.userName(),
-          email: this.email(),
-          firstName: this.firstName(),
-          lastName: this.lastName(),
-          birthDate: new Date(this.birthDate()).toISOString(),
-          geoPostalId: data.id,
-          address: this.address(),
-          phoneNumber: this.phoneNumber()
-        };
-        return this.userService.put(this.userId()!, updatedUser);
-      })
-    ).subscribe({
-      next: () => alert("Daten wurden geändert"),
-      error: error => alert("Fehler beim speichern: " + error.message)
-    });
+          currentPassword: this.currentPassword(),
+          newPassword: this.newPassword()
+        }).pipe(
+          switchMap(data => {
+            this.currentPassword.set(this.newPassword());
+            this.rowVersion = data.rowVersion;
+
+            // Passwort erfolgreich geändert → Alert
+            alert("Passwort erfolgreich geändert!");
+
+            return of(true); // Weiter mit der nächsten Operation
+          })
+        )
+        : of(true); // kein Passwortwechsel, einfach weiter
+
+      pwChange$.pipe(
+        switchMap(() => this.geoPostalService.getByQuery(
+          this.selectedCountry(),
+          this.selectedState(),
+          this.selectedPostalCode(),
+          this.selectedPlace()
+        )),
+        switchMap(geoPostalData => {
+          const updatedUser: UserPutDo = {
+            id: this.userId()!,
+            rowVersion: this.rowVersion,
+            userName: this.userName(),
+            email: this.email(),
+            firstName: this.firstName(),
+            lastName: this.lastName(),
+            birthDate: new Date(this.birthDate()).toISOString(),
+            geoPostalId: geoPostalData.id,
+            address: this.address(),
+            phoneNumber: this.phoneNumber()
+          };
+          return this.userService.put(this.userId()!, updatedUser);
+        }),
+        switchMap(() => this.userService.get(this.userId()!)) // User neu laden
+      ).subscribe({
+        next: data => {
+          this.fillFields(data); // Formular wieder befüllen
+          alert("Daten wurden geändert");
+        },
+        error: error => alert("Fehler beim Speichern: " + error.message)
+      });
+
+      this.isTriedToSave.set(false);
+      this.formIsValid.set(true);
+    }
   }
+
 
 }

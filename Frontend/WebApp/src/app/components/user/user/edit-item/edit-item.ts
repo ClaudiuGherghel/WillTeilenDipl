@@ -28,6 +28,8 @@ export class EditItem implements OnInit {
   protected commonDataService = inject(CommonDataService);
   private authService = inject(AuthService);
 
+  isTriedToSave = signal(false);
+
   itemId = 0;
   rowVersion = signal<any>("");
   name = signal("");
@@ -212,42 +214,43 @@ export class EditItem implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (!form.valid) return;
-
-    this.geoPostalService
-      .getByQuery(this.selectedCountry(), this.selectedState(), this.selectedPostalCode(), this.selectedPlace())
-      .pipe(
-        switchMap(data => {
-          const newItem: ItemPutDto = {
-            id: this.itemId,
-            rowVersion: this.rowVersion(),
-            name: this.name(),
-            description: this.description(),
-            isAvailable: this.isAvailable(),
-            address: this.address(),
-            price: this.price() ?? 0,
-            deposit: this.deposit() ?? 0,
-            stock: this.stock() ?? 0,
-            rentalType: RentalType[this.selectedRentalType()],
-            itemCondition: ItemCondition[this.selectedItemCondition()],
-            subCategoryId: this.subCategoryId(),
-            ownerId: this.ownerId() ?? 0,
-            geoPostalId: data.id,
-          };
-          console.log(newItem);
-          console.log(this.itemId);
-          return this.itemService.putByUser(this.itemId, newItem);
-        })
-      )
-      .subscribe({
-        next: () => {
-          alert("Item erfolgreich geändert");
-        },
-        error: error => {
-          alert("Fehler: " + error.message);
-        }
-      });
-
+    this.isTriedToSave.set(true);
+    if (form.valid) {
+      this.geoPostalService
+        .getByQuery(this.selectedCountry(), this.selectedState(), this.selectedPostalCode(), this.selectedPlace())
+        .pipe(
+          switchMap(data => {
+            const newItem: ItemPutDto = {
+              id: this.itemId,
+              rowVersion: this.rowVersion(),
+              name: this.name(),
+              description: this.description(),
+              isAvailable: this.isAvailable(),
+              address: this.address(),
+              price: this.price() ?? 0,
+              deposit: this.deposit() ?? 0,
+              stock: this.stock() ?? 0,
+              rentalType: RentalType[this.selectedRentalType()],
+              itemCondition: ItemCondition[this.selectedItemCondition()],
+              subCategoryId: this.subCategoryId(),
+              ownerId: this.ownerId() ?? 0,
+              geoPostalId: data.id,
+            };
+            console.log(newItem);
+            console.log(this.itemId);
+            return this.itemService.putByUser(this.itemId, newItem);
+          })
+        )
+        .subscribe({
+          next: () => {
+            alert("Item erfolgreich geändert");
+          },
+          error: error => {
+            alert("Fehler: " + error.message);
+          }
+        });
+      this.isTriedToSave.set(false);
+    }
   }
 
 

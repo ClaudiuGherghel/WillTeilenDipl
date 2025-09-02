@@ -1,4 +1,5 @@
-﻿using Core.Contracts;
+﻿using Azure.Core;
+using Core.Contracts;
 using Core.Entities;
 using Core.Enums;
 using Core.Validations;
@@ -176,6 +177,10 @@ namespace WebApi.Controllers
 
             if (userId != userDto.Id && !User.IsInRole(nameof(Roles.Admin)))
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur Eigentümer oder Admin darf das Passwort ändern." });
+
+            var user = await _uow.UserRepository.AuthenticateAsync(userToPut.UserName, userDto.CurrentPassword);
+            if (user == null)
+                return Unauthorized("Invalid credentials");
 
             userDto.ChangePassword(userToPut);
 

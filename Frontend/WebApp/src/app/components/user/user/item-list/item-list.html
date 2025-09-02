@@ -5,7 +5,11 @@
         @for (item of items(); track $index) {
         <div class="item-card">
             <div class="item-image">
+                @if (getMainImageUrl(item.id).length > 0) {
                 <img [src]="getMainImageUrl(item.id)" [alt]="item.name" />
+                }@else {
+                <img src="No_Image_Available.jpg" [alt]="'Kein Bild verfügbar'" />
+                }
             </div>
             <div class="item-info">
                 <h3>{{ item.name }}</h3>

@@ -4275,6 +4275,10 @@
             "format": "byte",
             "nullable": true
           },
+          "currentPassword": {
+            "type": "string",
+            "nullable": true
+          },
           "newPassword": {
             "type": "string",
             "nullable": true

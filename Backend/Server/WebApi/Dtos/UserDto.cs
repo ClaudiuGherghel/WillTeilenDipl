@@ -86,6 +86,9 @@ namespace WebApi.Dtos
         public record UserChangePasswordDto(
             int Id,
             byte[]? RowVersion,
+            
+            [Required(AllowEmptyStrings = false, ErrorMessage = "Passwort muss eingegeben werden")]
+            string CurrentPassword,
 
             [Required(AllowEmptyStrings = false, ErrorMessage = "Passwort muss eingegeben werden")]
             string NewPassword

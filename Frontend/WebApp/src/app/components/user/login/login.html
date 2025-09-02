@@ -1,13 +1,25 @@
 <div class="login-container">
     <h2 class="login-title">Anmeldung</h2>
 
-    <form (ngSubmit)="login()" class="login-form">
+    <form (ngSubmit)="login(loginForm)" #loginForm="ngForm" class="login-form was-validated">
         <div class="form-group">
-            <input type="text" name="username" [(ngModel)]="username" placeholder="Username" required />
+            <input type="text" name="username" [(ngModel)]="username" #userNameElement="ngModel" placeholder="Username"
+                required />
+            @if (userNameElement?.errors?.['required']) {
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
+                Benutzername muss eingegeben werden!
+            </div>
+            }
         </div>
 
         <div class="form-group">
-            <input type="password" name="password" [(ngModel)]="password" placeholder="Password" required />
+            <input type="password" name="password" [(ngModel)]="password" #passwordElement="ngModel"
+                placeholder="Password" required />
+            @if (passwordElement?.errors?.['required']) {
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
+                Passwort muss eingegeben werden!
+            </div>
+            }
         </div>
 
         <button type="submit" class="btn-login">Login</button>

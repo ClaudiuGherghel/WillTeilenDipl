@@ -20,6 +20,8 @@ export class Register implements OnInit {
   private geoPostalService = inject(GeoPostalService);
   private router = inject(Router);
 
+  isTriedToSave = signal(false);
+
 
   userName = signal('');
   password = signal('');
@@ -100,39 +102,38 @@ export class Register implements OnInit {
 
 
   register(form: NgForm) {
+    this.isTriedToSave.set(true);
 
-    if (!form || this.password() != this.passwordRepeat()) {
-      alert("Formular ist ungültig!");
-      return;
+    if (form.valid && this.password() != this.passwordRepeat()) {
+
+      this.geoPostalService.getByQuery(this.selectedCountry(), this.selectedState(), this.selectedPostalCode(), this.selectedPlace())
+        .pipe(
+          switchMap(data => {
+            const newUser: RegisterRequest = {
+              role: "User",
+              userName: this.userName(),
+              password: this.password(),
+              email: this.email(),
+              firstName: this.firstName(),
+              lastName: this.lastName(),
+              birthDate: new Date(this.birthDate()).toISOString(),
+              geoPostalId: data.id,
+              address: this.address(),
+              phoneNumber: this.phoneNumber()
+            };
+            console.log(newUser);
+            return this.authService.register(newUser);
+          })
+        )
+        .subscribe({
+          next: (data) => {
+            this.router.navigate(['/categories']);
+          },
+          error: error => {
+            alert('Registration failed' + error.message);
+          }
+        });
+      this.isTriedToSave.set(false);
     }
-
-    this.geoPostalService.getByQuery(this.selectedCountry(), this.selectedState(), this.selectedPostalCode(), this.selectedPlace())
-      .pipe(
-        switchMap(data => {
-          const newUser: RegisterRequest = {
-            role: "User",
-            userName: this.userName(),
-            password: this.password(),
-            email: this.email(),
-            firstName: this.firstName(),
-            lastName: this.lastName(),
-            birthDate: new Date(this.birthDate()).toISOString(),
-            geoPostalId: data.id,
-            address: this.address(),
-            phoneNumber: this.phoneNumber()
-          };
-          console.log(newUser);
-          return this.authService.register(newUser);
-        })
-      )
-      .subscribe({
-        next: (data) => {
-          alert('Registration successful');
-          this.router.navigate(['/categories']);
-        },
-        error: error => {
-          alert('Registration failed' + error.message);
-        }
-      });
   }
 }

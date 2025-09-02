@@ -1,18 +1,18 @@
 <div class="register-container">
     <h2 class="register-title">Konto erstellen</h2>
 
-    <form (ngSubmit)="register(registerForm)" #registerForm="ngForm" class="register-form was-validatet">
+    <form (ngSubmit)="register(registerForm)" #registerForm="ngForm" class="register-form  was-validated">
 
         <div class="form-group">
             <input type="text" name="userName" [(ngModel)]="userName" #userNameElement="ngModel" placeholder="*Username"
                 required minlength="2" />
             @if (userNameElement?.errors?.['required']) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
                 Benutzername muss eingegeben werden!
             </div>
             }
             @if (userNameElement?.errors?.['minlength']) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
                 Benutzername muss mindestens 2 Zeichen lang sein!
             </div>
             }
@@ -22,7 +22,7 @@
             <input type="password" name="password" [(ngModel)]="password" #passwordElement1="ngModel"
                 placeholder="*Passwort" required />
             @if (passwordElement1?.errors?.['required']) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
                 Passwort muss eingegeben werden!
             </div>
             }
@@ -31,12 +31,12 @@
             <input type="password" name="password" [(ngModel)]="passwordRepeat" #passwordElement2="ngModel"
                 placeholder="*Passwort wiederholen" required />
             @if (passwordElement2?.errors?.['required']) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
                 Passwort muss eingegeben werden!
             </div>
             }
             @if (password() != passwordRepeat()) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="alert alert-danger">
                 Passwörter stimmen nicht überein!
             </div>
             }
@@ -46,7 +46,7 @@
             <input type="email" name="email" [(ngModel)]="email" #emailElement="ngModel" placeholder="*Email"
                 required />
             @if (emailElement?.errors?.['required']) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
                 Email muss eingegeben werden!
             </div>
             }
@@ -56,12 +56,12 @@
             <input type="text" name="firstName" [(ngModel)]="firstName" #firstNameElement="ngModel"
                 placeholder="*Vorname(n)" required minlength="2" />
             @if (firstNameElement?.errors?.['required']) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
                 Vorname muss eingegeben werden!
             </div>
             }
             @if (firstNameElement?.errors?.['minlength']) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
                 Vorname muss mindestens 2 Zeichen lang sein!
             </div>
             }
@@ -71,12 +71,12 @@
             <input type="text" name="lastName" [(ngModel)]="lastName" #lastNameElement="ngModel" placeholder="*Nachname"
                 required minlength="2" />
             @if (lastNameElement?.errors?.['required']) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
                 Nachname muss eingegeben werden!
             </div>
             }
             @if (lastNameElement?.errors?.['minlength']) {
-            <div class="alert alert-danger">
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
                 Nachname muss mindestens 2 Zeichen lang sein!
             </div>
             }
@@ -89,9 +89,8 @@
 
         <div class="form-group">
             <label for="country">Land:</label>
-            <select [(ngModel)]="selectedCountry" (change)="onCountryChanged()" id="country" name="country"
-                class="form-select">
-                <option value="" disabled selected>Bitte Land auswählen</option>
+            <select [(ngModel)]="selectedCountry" (change)="onCountryChanged()" id="country" name="country">
+                <option value="" disabled selected></option>
                 @for (country of countries(); track $index) {
                 <option [value]="country">{{ country }}</option>
                 }
@@ -99,8 +98,8 @@
         </div>
         <div class="form-group">
             <label for="state">Bundesland:</label>
-            <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" name="state" class="form-select">
-                <option value="" disabled selected>Bitte Bundesland auswählen</option>
+            <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" name="state">
+                <option value="" disabled selected></option>
                 @for (state of states(); track $index) {
                 <option [value]="state">{{state}}</option>
                 }
@@ -108,9 +107,8 @@
         </div>
         <div class="form-group">
             <label for="postalCode">Postleitzahl:</label>
-            <select [(ngModel)]="selectedPostalCode" (change)="onPostalCodeChanged()" id="postalCode" name="postalCode"
-                class="form-select">
-                <option value="" disabled selected>Bitte Postleitzahl auswählen</option>
+            <select [(ngModel)]="selectedPostalCode" (change)="onPostalCodeChanged()" id="postalCode" name="postalCode">
+                <option value="" disabled selected></option>
                 @for (item of postalCodesAndPlaces(); track $index) {
                 <option [value]="item.postalCode">{{ item.postalCode }}</option>
                 }
@@ -119,7 +117,7 @@
         <div class="form-group">
             <label for="place">Ort:</label>
             <select [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" name="place">
-                <option value="" disabled selected>Bitte Ort auswählen</option>
+                <option value="" disabled selected></option>
                 @for (item of postalCodesAndPlaces(); track $index) {
                 <option [value]="item.place">{{ item.place }}</option>
                 }

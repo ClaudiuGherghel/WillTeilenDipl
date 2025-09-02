@@ -40,5 +40,6 @@ export interface UserPutDo {
 export interface UserChangePwDto {
     id: number,
     rowVersion: any,
+    currentPassword: string,
     newPassword: string,
 }

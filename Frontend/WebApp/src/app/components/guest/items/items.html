@@ -5,7 +5,7 @@
         @for (item of subCategoryDto()?.itemsDto; track $index) {
         @if(onFilterUseOnItem(item)){
         <div class="item" [routerLink]="'/item/'+ item.id">
-            @if(item.mainImage?.imageUrl != ""){
+            @if(item.mainImage?.imageUrl?.length! > 0){
             <img [src]="item.mainImage?.imageUrl" [alt]="item.name" />
             }@else{
             <img src="No_Image_Available.jpg" [alt]="'Kein Bild verfügbar'" />

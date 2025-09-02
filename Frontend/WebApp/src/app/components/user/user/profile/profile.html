@@ -1,34 +1,81 @@
 <div class="edit-container">
     <h2 class="edit-title">Benutzerdaten ändern</h2>
 
-    <form (ngSubmit)="save()" class="edit-form">
+    <form #userForm="ngForm" (ngSubmit)="save(userForm)" class="edit-form was-validated">
 
         <div class="form-group">
-            <input type="text" name="userName" [(ngModel)]="userName" placeholder="Username" required />
+            <input class="form-control" type="text" name="userName" [(ngModel)]="userName" placeholder="Username"
+                #userNameElement="ngModel" required minlength="2" />
+            @if (userNameElement?.errors?.['required']) {
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
+                Benutzername muss eingegeben werden!
+            </div>
+            }
+            @if (userNameElement?.errors?.['minlength']) {
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
+                Benutzername muss mindestens 2 Zeichen lang sein!
+            </div>
+            }
         </div>
 
         <div class="form-group">
-            <input type="password" name="newPassword" [(ngModel)]="password" placeholder="*Altes Passwort" required />
-        </div>
-        <div class="form-group">
-            <input type="newPassword" name="newPassword" [(ngModel)]="newPassword" placeholder="Neues Passwort"
-                required />
+            <input class="form-control" type="password" name="currentPassword" [(ngModel)]="currentPassword"
+                [required]="newPassword() !== ''" #currentPw="ngModel"
+                [class.is-invalid]="isTriedToSave() && currentPw.invalid" placeholder="Aktuelles Passwort" />
+
+            <div class="invalid-feedback">
+                Passwort muss eingegeben werden!
+            </div>
         </div>
 
         <div class="form-group">
-            <input type="email" name="email" [(ngModel)]="email" placeholder="Email" required />
+            <input class="form-control" type="password" name="newPassword" [(ngModel)]="newPassword"
+                placeholder="Neues Passwort" />
+        </div>
+
+
+        <div class="form-group">
+            <input class="form-control" type="email" name="email" [(ngModel)]="email" placeholder="Email"
+                #emailElement="ngModel" required />
+            @if (emailElement?.errors?.['required']) {
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
+                Email muss eingegeben werden!
+            </div>
+            }
         </div>
 
         <div class="form-group">
-            <input type="text" name="firstName" [(ngModel)]="firstName" placeholder="Vorname(n)" required />
+            <input class="form-control" type="text" name="firstName" [(ngModel)]="firstName" placeholder="Vorname(n)"
+                #firstNameElement="ngModel" required minlength="2" />
+            @if (firstNameElement?.errors?.['required']) {
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
+                Vorname muss eingegeben werden!
+            </div>
+            }
+            @if (firstNameElement?.errors?.['minlength']) {
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
+                Vorname muss mindestens 2 Zeichen lang sein!
+            </div>
+            }
         </div>
 
         <div class="form-group">
-            <input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Nachname" required />
+            <input class="form-control" type="text" name="lastName" [(ngModel)]="lastName" placeholder="Nachname"
+                #lastNameElement="ngModel" minlength="2" required />
+            @if (lastNameElement?.errors?.['required']) {
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
+                Nachname muss eingegeben werden!
+            </div>
+            }
+            @if (lastNameElement?.errors?.['minlength']) {
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">
+                Nachname muss mindestens 2 Zeichen lang sein!
+            </div>
+            }
         </div>
 
         <div class="form-group">
-            <input type="date" [(ngModel)]="birthDate" name="birthDate" />
+            <input class="form-control" type="date" [(ngModel)]="birthDate" name="birthDate" />
         </div>
 
 
@@ -45,7 +92,7 @@
         <div class="form-group">
             <label for="state">Bundesland:</label>
             <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" name="state" class="form-select">
-                <option value="" disabled selected>Bitte Bundesland auswählen</option>
+                <option value="" disabled selected></option>
                 @for (state of states(); track $index) {
                 <option [value]="state">{{state}}</option>
                 }
@@ -55,7 +102,7 @@
             <label for="postalCode">Postleitzahl:</label>
             <select [(ngModel)]="selectedPostalCode" (change)="onPostalCodeChanged()" id="postalCode" name="postalCode"
                 class="form-select">
-                <option value="" disabled selected>Bitte Postleitzahl auswählen</option>
+                <option value="" disabled selected></option>
                 @for (item of postalCodesAndPlaces(); track $index) {
                 <option [value]="item.postalCode">{{ item.postalCode }}</option>
                 }
@@ -63,8 +110,8 @@
         </div>
         <div class="form-group">
             <label for="place">Ort:</label>
-            <select [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" name="place">
-                <option value="" disabled selected>Bitte Ort auswählen</option>
+            <select class="form-select" [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" name="place">
+                <option value="" disabled selected></option>
                 @for (item of postalCodesAndPlaces(); track $index) {
                 <option [value]="item.place">{{ item.place }}</option>
                 }
@@ -72,11 +119,12 @@
         </div>
 
         <div class="form-group">
-            <input type="text" name="address" [(ngModel)]="address" placeholder="Adresse" />
+            <input class="form-control" type="text" name="address" [(ngModel)]="address" placeholder="Adresse" />
         </div>
 
         <div class="form-group">
-            <input type="tel" name="phoneNumber" [(ngModel)]="phoneNumber" placeholder="Handynummer" />
+            <input class="form-control" type="tel" name="phoneNumber" [(ngModel)]="phoneNumber"
+                placeholder="Handynummer" />
         </div>
 
         <button type="submit" class="btn-save">Übernehmen</button>

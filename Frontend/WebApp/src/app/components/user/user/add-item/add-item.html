@@ -1,19 +1,28 @@
 <div class="container">
     <h1>Neues Item hinzufügen</h1>
-    <form #pupilForm="ngForm" (ngSubmit)="onSubmit(pupilForm)">
-
+    <form #itemForm="ngForm" class="was-validated" (ngSubmit)="onSubmit(itemForm)">
 
         <div class="form-group">
             <label class="form-label" for="itemName">Artikelname</label>
-            <input [(ngModel)]="name" type="text" id="itemName" name="itemName" required #nameElement="ngModel" />
+            <input [(ngModel)]="name" type="text" id="itemName" name="itemName" required minlength="2"
+                #nameElement="ngModel" />
             @if(nameElement?.errors?.['required']){
-            <div class="alert alert-danger">Artikelname muss einegegeben werden!</div>
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Artikelname muss einegegeben werden!</div>
+            }
+            @if(nameElement?.errors?.['minlength']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback"> Artikelname muss mindestens 2 Zeichen lang sein!
+            </div>
             }
         </div>
 
         <div class="form-group">
             <label class="form-label" for="description">Beschreibung</label>
-            <textarea [(ngModel)]="description" id="description" name="description" rows="7"></textarea>
+            <textarea [(ngModel)]="description" id="description" name="description" rows="7" maxlength="1000"
+                #descriptionElement="ngModel"></textarea>
+            @if(descriptionElement?.errors?.['maxlength']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Beschreibung darf maximal 1000 Zeichen lang sein!
+            </div>
+            }
         </div>
 
         <div class="form-group">
@@ -24,7 +33,7 @@
                 }
             </select>
             @if(categoryElement?.errors?.['required']){
-            <div class="alert alert-danger">Kategorie muss ausgewählt werden!</div>
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Kategorie muss ausgewählt werden!</div>
             }
         </div>
 
@@ -37,47 +46,64 @@
                 }
             </select>
             @if(subCategoryElement?.errors?.['required']){
-            <div class="alert alert-danger">Unterkategorie muss ausgewählt werden!</div>
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Unterkategorie muss ausgewählt werden!</div>
+            }
+            @if(subCategoryId() == 0){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Unterkategorie muss ausgewählt werden!</div>
             }
         </div>
 
         <div class="form-group">
             <label for="country">Land:</label>
             <select [(ngModel)]="selectedCountry" (change)="onCountryChanged()" id="country" name="country"
-                class="form-select">
-                <option value="" disabled selected>Bitte Land auswählen</option>
+                #countryElement="ngModel" required>
+                <option value="" disabled selected></option>
                 @for (country of countries(); track $index) {
                 <option [value]="country">{{ country }}</option>
                 }
             </select>
+            @if(countryElement?.errors?.['required']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Land muss ausgewählt werden!</div>
+            }
         </div>
         <div class="form-group">
             <label for="state">Bundesland:</label>
-            <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" name="state" class="form-select">
-                <option value="" disabled selected>Bitte Bundesland auswählen</option>
+            <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" name="state" required
+                #stateElement="ngModel">
+                <option value="" disabled selected></option>
                 @for (state of states(); track $index) {
                 <option [value]="state">{{state}}</option>
                 }
             </select>
+            @if(stateElement?.errors?.['required']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Bundesland muss ausgewählt werden!</div>
+            }
         </div>
         <div class="form-group">
             <label for="postalCode">Postleitzahl:</label>
             <select [(ngModel)]="selectedPostalCode" (change)="onPostalCodeChanged()" id="postalCode" name="postalCode"
-                class="form-select">
-                <option value="" disabled selected>Bitte Postleitzahl auswählen</option>
+                #postalCodeElement="ngModel" required>
+                <option value="" disabled selected></option>
                 @for (item of postalCodesAndPlaces(); track $index) {
                 <option [value]="item.postalCode">{{ item.postalCode }}</option>
                 }
             </select>
+            @if(postalCodeElement?.errors?.['required']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Postleitzahl muss ausgewählt werden!</div>
+            }
         </div>
         <div class="form-group">
             <label for="place">Ort:</label>
-            <select [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" name="place">
-                <option value="" disabled selected>Bitte Ort auswählen</option>
+            <select [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" name="place"
+                #placeElement="ngModel" required>
+                <option value="" disabled selected></option>
                 @for (item of postalCodesAndPlaces(); track $index) {
                 <option [value]="item.place">{{ item.place }}</option>
                 }
             </select>
+            @if(placeElement?.errors?.['required']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Ort muss ausgewählt werden!</div>
+            }
         </div>
 
         <div class="form-group">
@@ -87,11 +113,20 @@
 
         <div class="form-group">
             <label for="rentType">Vermietung durch:</label>
-            <select [(ngModel)]="selectedRentalType" id="rentType" name="rentType">
+            <select [(ngModel)]="selectedRentalType" id="rentType" name="rentType" #rentalTypeElement="ngModel"
+                required>
                 @for (rentalType of rentalTypes(); track $index) {
+                @if(rentalType != 0){
                 <option [ngValue]="rentalType">{{commonDataService.getRentalTypeLabelGerman(rentalType)}}</option>
                 }
+                }
             </select>
+            @if(rentalTypeElement?.errors?.['required']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Vermietungsart muss ausgewählt werden!</div>
+            }
+            @if(selectedRentalType() == 0){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Vermietungsart muss ausgewählt werden!</div>
+            }
         </div>
         <div class="form-group">
             <label for="itemCondition">Zustand des Gegenstandes: </label>
@@ -105,21 +140,34 @@
 
         <div class="form-group">
             <label for="price">Preis(€):</label>
-            <input [(ngModel)]="price" type="number" id="price" name="price" step="0.01" required
+            <input [(ngModel)]="price" type="number" id="price" name="price" step="0.01" required min="0"
                 #rentElement="ngModel" />
             @if(rentElement?.errors?.['required']){
-            <div class="alert alert-danger">Preis muss einegegeben werden!</div>
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Preis muss einegegeben werden!</div>
+            }
+            @if(rentElement?.errors?.['min']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Preis muss 0 oder höher sein!</div>
             }
         </div>
 
         <div class="form-group">
             <label for="stock">Auf Lager (Anzahl):</label>
-            <input [(ngModel)]="stock" type="number" id="stock" name="stock" />
+            <input [(ngModel)]="stock" type="number" id="stock" name="stock" min #stockElement="ngModel" min="0" />
+            @if(stockElement?.errors?.['min']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Anzahl muss 0 oder höher sein!</div>
+            }
         </div>
 
         <div class="form-group">
             <label for="deposit">Kaution (€)</label>
-            <input [(ngModel)]="deposit" type="number" id="deposit" name="deposit" step="0.01" />
+            <input [(ngModel)]="deposit" type="number" id="deposit" name="deposit" step="0.01" #depositElement="ngModel"
+                min="0" required />
+            @if(depositElement?.errors?.['required']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Kaution muss einegegeben werden!</div>
+            }
+            @if(depositElement?.errors?.['min']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Kaution muss 0 oder höher sein!</div>
+            }
         </div>
 
         <div class="form-group">
