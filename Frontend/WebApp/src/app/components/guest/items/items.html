@@ -2,10 +2,14 @@
 @if(isSubCategoryForm()){
 <div>
     <div class="itemGrid">
-        @for (item of subCategory()?.items; track $index) {
+        @for (item of subCategoryDto()?.itemsDto; track $index) {
         @if(onFilterUseOnItem(item)){
         <div class="item" [routerLink]="'/item/'+ item.id">
-            <img src="" />
+            @if(item.mainImage?.imageUrl != ""){
+            <img [src]="item.mainImage?.imageUrl" [alt]="item.name" />
+            }@else{
+            <img src="No_Image_Available.jpg" [alt]="'Kein Bild verfügbar'" />
+            }
             <p>{{ item.name }}</p>
             <p>€ {{ item.price }}/h</p>
             <p>
@@ -25,8 +29,11 @@
         @for (item of items(); track $index) {
         @if(onFilterUseOnItem(item)){
         <div class="item" [routerLink]="'/item/'+ item.id">
-            <img src="anhänger.png" />
-            <p>{{ item.name }}</p>
+            @if(item.mainImage?.imageUrl?.length! > 0){
+            <img [src]="item.mainImage?.imageUrl" [alt]="item.name" />
+            }@else{
+            <img src="No_Image_Available.jpg" [alt]="'Kein Bild verfügbar'" />
+            } <p>{{ item.name }}</p>
             <p>€ {{ item.price }}/h</p>
             <p>
                 <span>{{ item.geoPostal.postalCode }} </span>

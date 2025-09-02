@@ -6,10 +6,10 @@ namespace Core.Contracts
     {
         Task<int> CountAsync(int itemId);
         void Delete(Image imageToRemove);
-        Task<ICollection<Image>> GetAllAsync();
+        Task<ICollection<Image>> GetAllAsync(int itemId = 0);
         Task<Image?> GetByIdAsync(int id);
         Task<ICollection<Image>> GetByItemIdAsync(int itemId);
-        Task<Image?> GetOtherMainImageAsync(int id);
+        Task<Image?> GetOtherMainImageAsync(int itemId, int imageId);
         void Insert(Image imageToPost);
         void SoftDelete(int id);
         void Update(Image imageToPut);

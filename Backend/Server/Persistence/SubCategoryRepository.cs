@@ -1,4 +1,5 @@
 ﻿using Core.Contracts;
+using Core.Dtos;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,6 +39,43 @@ namespace Persistence
                 .Where(w => w.IsDeleted == false)
                 .SingleOrDefaultAsync(s => s.Id == id);
         }
+
+
+public async Task<SubCategoryWithMainImageDto?> GetWithMainImageByIdAsync(int id)
+{
+    return await DbContext.SubCategories
+        .AsNoTracking()
+        .Where(sc => sc.Id == id && !sc.IsDeleted)
+        .Select(sc => new SubCategoryWithMainImageDto
+        {
+            Id = sc.Id,
+            Name = sc.Name,
+            ItemsDto = sc.Items
+                .Where(i => !i.IsDeleted)
+                .Select(i => new ItemForSearchQueryDto
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Description = i.Description,
+                    Price = i.Price,
+                    Deposit = i.Deposit,
+                    RentalType = i.RentalType,
+                    ItemCondition = i.ItemCondition,
+                    GeoPostal = i.GeoPostal,
+                    MainImage = i.Images
+                        .Where(img => img.IsMainImage && !img.IsDeleted)
+                        .Select(img => new ImageForSearchQueryDto
+                        {
+                            Id = img.Id,
+                            ImageUrl = img.ImageUrl,
+                            AltText = img.AltText
+                        })
+                        .FirstOrDefault() // entweder das MainImage oder null
+                })
+                .ToList()
+        })
+        .FirstOrDefaultAsync();
+}
 
         public void Insert(SubCategory subCategoryToPost)
         {
@@ -89,5 +127,7 @@ namespace Persistence
             }
 
         }
+
+
     }
 }

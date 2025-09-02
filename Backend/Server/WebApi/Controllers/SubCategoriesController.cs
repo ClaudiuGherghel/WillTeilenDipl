@@ -1,4 +1,5 @@
 ﻿using Core.Contracts;
+using Core.Dtos;
 using Core.Entities;
 using Core.Enums;
 using Microsoft.AspNetCore.Authorization;
@@ -46,6 +47,21 @@ namespace WebApi.Controllers
 
             return Ok(subCategory);
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(SubCategoryWithMainImageDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetWithMainImage(int id)
+        {
+            SubCategoryWithMainImageDto? subCategoryDto = await _uow.SubCategoryRepository.GetWithMainImageByIdAsync(id);
+
+            if (subCategoryDto is null)
+                return NotFound(new { error = $"Keine Unterkategorie mit der ID {id} gefunden." });
+
+            return Ok(subCategoryDto);
+        }
+
 
 
 

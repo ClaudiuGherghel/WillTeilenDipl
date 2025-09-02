@@ -59,6 +59,8 @@ namespace WebApi.Controllers
 
 
 
+
+
         [HttpPost]
         [Authorize]
         [RequestSizeLimit(5_000_000)] // Max. 5 MB
@@ -107,13 +109,7 @@ namespace WebApi.Controllers
             string relativeUrl = $"/uploads/user{userId}/{uniqueFileName}";
             string absoluteUrl = $"{Request.Scheme}://{Request.Host}{relativeUrl}";
 
-
-            int cntImages = await _uow.ImageRepository.CountAsync(imageDto.ItemId);
-            bool isMainImage = false;
-
-            if(cntImages == 0)
-             isMainImage = true;   
-
+            bool isMainImage = item.Images.Count(c=> !c.IsDeleted) == 0;
 
             string altText = imageDto.AltText;
             if (string.IsNullOrWhiteSpace(imageDto.AltText))
@@ -125,13 +121,9 @@ namespace WebApi.Controllers
             {
                 ItemId = imageDto.ItemId,
                 ImageUrl = absoluteUrl,
-                AltText = imageDto.AltText,
-                IsMainImage = false,
+                AltText = altText,
+                IsMainImage = isMainImage,
             };
-
-            //var imageToPost = imageDto.ToEntity();
-            imageToPost.IsMainImage = isMainImage;
-            imageToPost.AltText = altText;
 
             _uow.ImageRepository.Insert(imageToPost);
             await _uow.SaveChangesAsync();
@@ -172,16 +164,13 @@ namespace WebApi.Controllers
             if (userId != item.OwnerId && !User.IsInRole(nameof(Roles.Admin)))
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur der Eigentümer oder ein Admin darf das Bild bearbeiten." });
 
-            Console.WriteLine(Convert.ToBase64String(imageToPut.RowVersion));
-            Console.WriteLine(Convert.ToBase64String(imageDto.RowVersion));
-            Console.WriteLine(Convert.ToBase64String(imageToPut.RowVersion));
             imageDto.UpdateEntity(imageToPut);
             _uow.ImageRepository.Update(imageToPut);
             await _uow.SaveChangesAsync();
 
             if (imageToPut.IsMainImage)
             {
-                Image? otherMainImage = await _uow.ImageRepository.GetOtherMainImageAsync(id);
+                Image? otherMainImage = await _uow.ImageRepository.GetOtherMainImageAsync(imageDto.ItemId, id);
                 if(otherMainImage == null)
                 {
                     return Ok(imageToPut);
@@ -222,17 +211,9 @@ namespace WebApi.Controllers
             if (!isOwnerOrAdmin)
                 return StatusCode(StatusCodes.Status403Forbidden, new { error = "Nur der Eigentümer oder ein Admin darf das Bild löschen." });
 
-            bool isMainImageToChange = false;
-            if (imageToRemove.IsMainImage)
-            {
-                int cntImages = 0;
-                cntImages = await _uow.ImageRepository.CountAsync(item.Id);
-                if (cntImages > 1)
-                {
-                    isMainImageToChange = true;
-                }
-            }
-            
+            bool isMainImageToChange = imageToRemove.IsMainImage && item.Images.Count(i => !i.IsDeleted && i.ItemId == item.Id && i.Id != id) > 0;
+
+
             // Datei löschen – Besitzer-ID nutzen, auch bei Admins
             if (!string.IsNullOrWhiteSpace(imageToRemove.ImageUrl))
             {
@@ -249,8 +230,7 @@ namespace WebApi.Controllers
 
             if (isMainImageToChange)
             {
-                ICollection<Image> list = await _uow.ImageRepository.GetAllAsync();
-                list = [..list.OrderBy(x => x.Id)];
+                ICollection<Image> list = await _uow.ImageRepository.GetAllAsync(item.Id);
                 Image imageToChange = list.FirstOrDefault() ?? throw new ArgumentNullException("Es sollte zumindest ein Image existieren");
 
                 imageToChange.UpdatedAt = DateTime.UtcNow;

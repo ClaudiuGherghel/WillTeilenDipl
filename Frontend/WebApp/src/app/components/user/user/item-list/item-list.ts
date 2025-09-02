@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { RentalType } from '../../../../enums/rental-type';
 import { ItemCondition } from '../../../../enums/item-condition';
+import { ImageService } from '../../../../services/image-service';
+import { MainImageDto } from '../../../../dtos/main-image-dto';
+
+
 
 @Component({
   selector: 'app-item-list',
@@ -13,15 +17,18 @@ import { ItemCondition } from '../../../../enums/item-condition';
   templateUrl: './item-list.html',
   styleUrl: './item-list.css'
 })
+
 export class ItemList implements OnInit {
 
-  itemService = inject(ItemService);
+
   authService = inject(AuthService);
+  itemService = inject(ItemService);
+  imageService = inject(ImageService);
 
   userId = this.authService.userId;
 
   items = signal<Item[]>([]);
-
+  mainImages = signal<MainImageDto[]>([]);
 
   ngOnInit(): void {
     this.loadItems();
@@ -32,6 +39,19 @@ export class ItemList implements OnInit {
       this.itemService.getByUser(this.userId()!).subscribe({
         next: data => {
           this.items.set(data);
+
+          const imgs: MainImageDto[] = [];
+
+          for (let i = 0; i < data.length; i++) {
+            const mainImg = data[i].images.find(img => img.isMainImage);
+            if (mainImg) {
+              imgs.push({
+                itemId: data[i].id,
+                imageUrl: mainImg.imageUrl
+              });
+            }
+          }
+          this.mainImages.set(imgs);
         },
         error: error => {
           alert("Laden der Items fehlgeschlagen: " + error.message);
@@ -39,6 +59,13 @@ export class ItemList implements OnInit {
       });
     }
   }
+
+  getMainImageUrl(itemId: number): string {
+    const entry = this.mainImages().find(img => img.itemId === itemId);
+    return entry ? entry.imageUrl : '';
+  }
+
+
 
 
   onChangeActivation(item: Item) {

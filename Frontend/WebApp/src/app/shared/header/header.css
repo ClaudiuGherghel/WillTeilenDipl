@@ -1,25 +1,26 @@
 .navbar {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    /* statt center -> gleichmäßig Header, Suche, Buttons */
     align-items: center;
-    padding: 20px;
+    padding: 15px 30px;
     background-color: #f8f8f8;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     gap: 20px;
-    margin-bottom: 100px;
+    margin-bottom: 60px;
     color: #333;
-
+    flex-wrap: wrap;
+    /* sorgt dafür, dass bei kleinen Screens alles umbrechen darf */
 }
 
+/* Links */
 a {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     text-decoration: none;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 0 10px;
     color: #333;
-
+    transition: all 0.2s ease;
 }
-
 
 a:hover {
     cursor: pointer;
@@ -27,45 +28,89 @@ a:hover {
     transform: scale(1.05);
 }
 
+/* Suchleiste */
 .search {
     flex: 2;
     max-width: 500px;
+    min-width: 200px;
 }
 
+/* Home Button (Logo-Schrift) */
 .homeButton {
-    flex: 1;
-    max-width: 350px;
     color: #043972;
     letter-spacing: 3px;
-    font-size: 3rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+    /* verhindert Umbruch bei kleinem Screen */
 }
 
+/* Navigation rechts */
 .navButtons {
-    margin-left: 30px;
+    display: flex;
+    gap: 15px;
+    margin-left: auto;
+    /* schiebt Buttons nach rechts */
+    flex-wrap: wrap;
 }
 
+/* Header (Logo + Text) */
+.header {
+    display: flex;
+    align-items: center;
+}
 
+img {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 8px;
+}
 
-/* Responsive adjustments*/
+/* ---------- Responsive Anpassungen ---------- */
 
-@media (max-width: 800px) {
+/* Mittelgroße Screens */
+@media (max-width: 900px) {
     .homeButton {
         font-size: 2rem;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
+    }
+
+    .navbar {
+        padding: 10px 15px;
+        gap: 10px;
     }
 }
 
-@media (max-width: 500px) {
+/* Kleine Screens */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .header {
+        justify-content: center;
+    }
+
     .homeButton {
-        font-size: 1.5rem;
-        letter-spacing: 0;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+
+    .navButtons {
+        justify-content: center;
+        margin-left: 0;
     }
 
     a {
         font-size: 1rem;
+        margin: 5px;
     }
 
-    .navbar {
-        gap: 5px;
+    img {
+        height: 50px;
     }
 }

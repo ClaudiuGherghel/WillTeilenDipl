@@ -1424,7 +1424,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Item"
+                    "$ref": "#/components/schemas/ItemForSearchQueryDto"
                   }
                 }
               },
@@ -1432,7 +1432,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Item"
+                    "$ref": "#/components/schemas/ItemForSearchQueryDto"
                   }
                 }
               },
@@ -1440,7 +1440,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Item"
+                    "$ref": "#/components/schemas/ItemForSearchQueryDto"
                   }
                 }
               }
@@ -2337,6 +2337,69 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SubCategory"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/subcategories/getwithmainimage/{id}": {
+      "get": {
+        "tags": [
+          "SubCategories"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubCategoryWithMainImageDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubCategoryWithMainImageDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubCategoryWithMainImageDto"
                 }
               }
             }
@@ -3459,6 +3522,24 @@
         },
         "additionalProperties": false
       },
+      "ImageForSearchQueryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "altText": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ImagePutDto": {
         "type": "object",
         "properties": {
@@ -3611,6 +3692,44 @@
         ],
         "type": "string"
       },
+      "ItemForSearchQueryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "deposit": {
+            "type": "number",
+            "format": "double"
+          },
+          "rentalType": {
+            "$ref": "#/components/schemas/RentalType"
+          },
+          "itemCondition": {
+            "$ref": "#/components/schemas/ItemCondition"
+          },
+          "geoPostal": {
+            "$ref": "#/components/schemas/GeoPostal"
+          },
+          "mainImage": {
+            "$ref": "#/components/schemas/ImageForSearchQueryDto"
+          }
+        },
+        "additionalProperties": false
+      },
       "ItemPostDto": {
         "type": "object",
         "properties": {
@@ -3737,21 +3856,15 @@
         "additionalProperties": false
       },
       "PostalCodeAndPlaceDto": {
-        "required": [
-          "place",
-          "postalCode"
-        ],
         "type": "object",
         "properties": {
           "postalCode": {
-            "maxLength": 10,
-            "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "place": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4028,6 +4141,27 @@
           "categoryId": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubCategoryWithMainImageDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "itemsDto": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ItemForSearchQueryDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

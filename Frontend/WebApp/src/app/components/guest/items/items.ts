@@ -7,6 +7,9 @@ import { Item } from '../../../models/item.model';
 import { ItemService } from '../../../services/item-service';
 import { SideBar } from '../../../shared/side-bar/side-bar';
 import { CommonDataService } from '../../../services/common-data-service';
+import { MainImageDto } from '../../../dtos/main-image-dto';
+import { ItemDtoForSearchQuery } from '../../../dtos/item-dto-for-search-query';
+import { SubCategoryWithMainImageDto } from '../../../dtos/sub-category-with-main-image-dto';
 
 @Component({
   selector: 'app-items',
@@ -25,13 +28,14 @@ export class Items implements OnInit {
   isSubCategoryForm = signal(false);
 
   subCategoryId = 0;
-  subCategory = signal<SubCategory | null>(null);
+  subCategoryDto = signal<SubCategoryWithMainImageDto | null>(null);
 
-  items = signal<Item[]>([]);
+  items = signal<ItemDtoForSearchQuery[]>([]);
   queryFilter = signal<string>("");
 
   // For SidebarFilter
   sideBarFilter = signal<SidebarFilter | undefined>(undefined);
+  mainImages = signal<MainImageDto[]>([]);
 
 
 
@@ -60,9 +64,11 @@ export class Items implements OnInit {
   }
 
   loadSubCategory() {
-    this.subCategoryService.get(this.subCategoryId).subscribe({
+    this.subCategoryService.getWithMainImage(this.subCategoryId).subscribe({
       next: data => {
-        this.subCategory.set(data);
+        this.subCategoryDto.set(data);
+
+
       },
       error: error => {
         alert("Laden der Subkategorie ist fehlgeschlagen: " + error.message);
@@ -81,11 +87,12 @@ export class Items implements OnInit {
     });
   }
 
-  onFilterUseOnItem(item: Item): boolean {
-
+  onFilterUseOnItem(item: ItemDtoForSearchQuery | Item): boolean {
     if (this.sideBarFilter() == undefined) {
       return true;
     }
+
+
 
     if (!(this.sideBarFilter()!.country == '' || item.geoPostal.country.includes(this.sideBarFilter()!.country))) return false;
     if (!(this.sideBarFilter()!.state == '' || item.geoPostal.state.includes(this.sideBarFilter()!.state))) return false;
@@ -96,14 +103,14 @@ export class Items implements OnInit {
     if (!(this.sideBarFilter()!.itemCondition === 0 || item.itemCondition.toString() == this.commonDataService.getItemConditionLabelEnglish(this.sideBarFilter()!.itemCondition))) return false;
     if (!(this.sideBarFilter()!.rentalType === 0 || item.rentalType.toString() == this.commonDataService.getRentalTypeLabelEnglish(this.sideBarFilter()!.rentalType))) return false;
 
-
-
     return true;
   }
 
   onSideBarFilter(filter: SidebarFilter) {
     this.sideBarFilter.set(filter);
   }
+
+
 
 
 }

@@ -888,7 +888,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Core.Entities.Item[]",
+        "Type": "Core.Dtos.ItemForSearchQueryDto[]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -1386,6 +1386,46 @@
     "ReturnTypes": [
       {
         "Type": "Core.Entities.SubCategory",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      },
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 500
+      }
+    ]
+  },
+  {
+    "ContainingType": "WebApi.Controllers.SubCategoriesController",
+    "Method": "GetWithMainImage",
+    "RelativePath": "api/subcategories/getwithmainimage/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Core.Dtos.SubCategoryWithMainImageDto",
         "MediaTypes": [
           "text/plain",
           "application/json",

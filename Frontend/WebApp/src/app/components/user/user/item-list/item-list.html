@@ -5,7 +5,7 @@
         @for (item of items(); track $index) {
         <div class="item-card">
             <div class="item-image">
-                <img alt="ItemImage" />
+                <img [src]="getMainImageUrl(item.id)" [alt]="item.name" />
             </div>
             <div class="item-info">
                 <h3>{{ item.name }}</h3>

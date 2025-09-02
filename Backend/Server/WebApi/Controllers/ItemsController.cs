@@ -1,6 +1,7 @@
 ﻿using Core.Contracts;
 using Core.Entities;
 using Core.Enums;
+using Core.Dtos;
 using Core.Validations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -53,11 +54,11 @@ namespace WebApi.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(Item[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ItemForSearchQueryDto[]), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetByFilter([FromQuery] string filter)
         {
-            ICollection<Item> items = await _uow.ItemRepository.GetFilteredAsync(filter);
+            ICollection<ItemForSearchQueryDto> items = await _uow.ItemRepository.GetFilteredAsync(filter);
             return Ok(items);
         }
 

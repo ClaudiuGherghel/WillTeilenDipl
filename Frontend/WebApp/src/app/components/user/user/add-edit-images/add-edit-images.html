@@ -16,8 +16,11 @@
             }
             <img [src]="image.imageUrl" [alt]="image.altText" />
 
-            <button mat-stroked-button color="warn" (click)="deleteImage(image)">Löschen</button>
-            <button (click)="changeMainImage(image)">Als Hauptfoto auswählen</button>
+            <div class="btnContainer">
+                <button mat-stroked-button color="warn" (click)="deleteImage(image)">Löschen</button>
+                <button (click)="changeMainImage(image)">Als Hauptfoto auswählen</button>
+            </div>
+
         </div>
         }
     </div>

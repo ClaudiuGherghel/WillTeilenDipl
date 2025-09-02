@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Item, ItemPostDto, ItemPutDto } from '../models/item.model';
+import { ItemDtoForSearchQuery } from '../dtos/item-dto-for-search-query';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -24,7 +25,7 @@ export class ItemService {
   // }
 
   getByFilter(filter: string) {
-    return this.http.get<Item[]>(this.apiUrl + "/getbyfilter?filter=" + filter);
+    return this.http.get<ItemDtoForSearchQuery[]>(this.apiUrl + "/getbyfilter?filter=" + filter);
   }
 
   getById(id: number) {

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 import { GeoPostalService } from '../../../services/geo-postal-service';
@@ -23,6 +23,7 @@ export class Register implements OnInit {
 
   userName = signal('');
   password = signal('');
+  passwordRepeat = signal('');
   email = signal('');
   firstName = signal('');
   lastName = signal('');
@@ -98,7 +99,12 @@ export class Register implements OnInit {
   }
 
 
-  register() {
+  register(form: NgForm) {
+
+    if (!form || this.password() != this.passwordRepeat()) {
+      alert("Formular ist ungültig!");
+      return;
+    }
 
     this.geoPostalService.getByQuery(this.selectedCountry(), this.selectedState(), this.selectedPostalCode(), this.selectedPlace())
       .pipe(

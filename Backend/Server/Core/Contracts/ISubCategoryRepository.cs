@@ -1,4 +1,5 @@
-﻿using Core.Entities;
+﻿using Core.Dtos;
+using Core.Entities;
 
 namespace Core.Contracts
 {
@@ -8,6 +9,7 @@ namespace Core.Contracts
         void Delete(SubCategory subCategoryToRemove);
         Task<ICollection<SubCategory>> GetAllAsync();
         Task<SubCategory?> GetByIdAsync(int id);
+        Task<SubCategoryWithMainImageDto?> GetWithMainImageByIdAsync(int id);
         void Insert(SubCategory subCategoryToPost);
         void SoftDelete(int id);
         void Update(SubCategory subCategoryToPut);

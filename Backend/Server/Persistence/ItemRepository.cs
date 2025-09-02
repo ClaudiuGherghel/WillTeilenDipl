@@ -1,4 +1,5 @@
 ﻿using Core.Contracts;
+using Core.Dtos;
 using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -86,30 +87,54 @@ namespace Persistence
             DbContext.Items.Remove(itemToRemove);
         }
 
-        public async Task<ICollection<Item>> GetFilteredAsync(string filter)
+        public async Task<ICollection<ItemForSearchQueryDto>> GetFilteredAsync(string filter)
         {
-
             IQueryable<Item> query = DbContext.Items
                 .AsNoTracking()
                 .Include(i => i.GeoPostal)
                 .Include(i => i.SubCategory)
-                .Include(i => i.SubCategory).ThenInclude(i => i.Category);
+                .ThenInclude(sc => sc.Category);
 
             filter = filter.ToUpper();
 
-            query = query.Where(i => 
+            query = query.Where(i =>
                 EF.Functions.Like(i.Name.ToUpper(), $"{filter}%") ||
                 EF.Functions.Like(i.Description.ToUpper(), $"%{filter}%") ||
-                i.SubCategory != null && EF.Functions.Like(i.SubCategory.Name.ToUpper(), $"{filter}%") ||
-                i.SubCategory != null && i.SubCategory.Category != null && EF.Functions.Like(i.SubCategory.Category.Name.ToUpper(), $"{filter}%") ||
-                i.GeoPostal!= null && EF.Functions.Like(i.GeoPostal.Country.ToUpper(), $"{filter}%") ||
-                i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.Place.ToUpper(), $"{filter}%") ||
-                i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.PostalCode.ToUpper(), $"{filter}%") ||
-                i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.State.ToUpper(), $"{filter}%")
-                );
+                (i.SubCategory != null && EF.Functions.Like(i.SubCategory.Name.ToUpper(), $"{filter}%")) ||
+                (i.SubCategory != null && i.SubCategory.Category != null && EF.Functions.Like(i.SubCategory.Category.Name.ToUpper(), $"{filter}%")) ||
+                (i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.Country.ToUpper(), $"{filter}%")) ||
+                (i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.Place.ToUpper(), $"{filter}%")) ||
+                (i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.PostalCode.ToUpper(), $"{filter}%")) ||
+                (i.GeoPostal != null && EF.Functions.Like(i.GeoPostal.State.ToUpper(), $"{filter}%"))
+            );
 
-            return await query.ToListAsync();
+            var result = await query
+                .Select(i => new ItemForSearchQueryDto
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Description = i.Description,
+                    Price = i.Price,
+                    Deposit = i.Deposit,
+                    RentalType = i.RentalType,
+                    ItemCondition = i.ItemCondition,
+                    GeoPostal = i.GeoPostal,
+                    MainImage = i.Images
+                        .Where(img => img.IsMainImage && !img.IsDeleted)
+                        .Select(img => new ImageForSearchQueryDto
+                        {
+                            Id = img.Id,
+                            ImageUrl = img.ImageUrl,
+                            AltText = img.AltText
+                        })
+                        .FirstOrDefault()   // kann null sein, wenn Item keine Images hat
+                })
+                .ToListAsync();
+
+            return result;
         }
+
+
 
         public void SoftDelete(int id)
         {

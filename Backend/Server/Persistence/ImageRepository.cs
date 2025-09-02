@@ -13,18 +13,25 @@ namespace Persistence
 
         public async Task<int> CountAsync(int itemId)
         {
-            return await DbContext.Images.CountAsync(i => i.ItemId == itemId && !i.IsDeleted);
+            return await DbContext.Images.CountAsync(i => !i.IsDeleted && i.ItemId == itemId);
         }
 
 
-        public async Task<ICollection<Image>> GetAllAsync()
+        public async Task<ICollection<Image>> GetAllAsync(int itemId = 0)
         {
-            return await DbContext.Images
+
+            IQueryable<Image> query = DbContext.Images.AsQueryable();
+
+            if (itemId != 0)
+            {
+                query = query.Where(i => i.ItemId == itemId);
+            }
+
+            return await query
                 .AsNoTracking()
-                //.Include(i => i.Item)
                 .Where(i => !i.IsDeleted)
-                .OrderBy(i=> i.IsMainImage)
-                .ThenByDescending(i=> i.Id)
+                .OrderBy(i => i.IsMainImage)
+                .ThenBy(i => i.Id)
                 .ToListAsync();
         }
 
@@ -77,11 +84,14 @@ namespace Persistence
 
         }
 
-        public async Task<Image?> GetOtherMainImageAsync(int id)
+        public async Task<Image?> GetOtherMainImageAsync(int itemId, int imageId)
         {
-            return await DbContext.Images.AsNoTracking()
-                .Where(i => i.Id != id && !i.IsDeleted && i.IsMainImage)
+            return await DbContext.Images
+                .AsNoTracking()
+                .Where(i => i.ItemId == itemId && i.Id != imageId && !i.IsDeleted && i.IsMainImage)
                 .FirstOrDefaultAsync();
         }
+
+
     }
 }

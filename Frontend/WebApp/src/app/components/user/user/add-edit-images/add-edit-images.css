@@ -1,7 +1,29 @@
+.image-manager {
+    padding: 1rem;
+    /* Abstand innen */
+    margin: 1rem auto;
+    /* Abstand außen zur Seite */
+}
+
+.upload {
+    margin-bottom: 1.5rem;
+    /* Abstand nach unten zur Bildliste */
+}
+
+.image-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    /* Abstand zwischen Karten */
+}
+
 .image-card {
     background: #fff;
     border-radius: 12px;
-    padding: 0.5rem;
+    padding: 1rem;
+    /* etwas mehr Innenabstand */
+    margin: 0.5rem;
+    /* kleine Luft um jede Karte zusätzlich zum gap */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
@@ -17,13 +39,13 @@
 
 .main-badge {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: 10px;
+    left: 10px;
     background: gold;
     color: #000;
     font-weight: bold;
     font-size: 0.8rem;
-    padding: 2px 6px;
+    padding: 3px 8px;
     border-radius: 6px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
@@ -33,12 +55,14 @@
     max-height: 180px;
     border-radius: 8px;
     object-fit: cover;
+    margin-bottom: 0.75rem;
+    /* Luft zum nächsten Element */
 }
 
 .alt-input {
     margin-top: 0.5rem;
     width: 100%;
-    padding: 0.4rem 0.6rem;
+    padding: 0.5rem 0.75rem;
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 0.9rem;
@@ -50,10 +74,81 @@
     box-shadow: 0 0 4px rgba(25, 118, 210, 0.4);
 }
 
-.actions {
+.btnContainer {
+    display: flex;
+    gap: 0.5rem;
+    /* Abstand zwischen Buttons */
     margin-top: 0.5rem;
+    /* Luft nach dem Bild */
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.actions {
+    margin-top: 0.75rem;
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.upload {
+    margin-bottom: 1.5rem;
+    text-align: center;
+
+    input[type="file"] {
+        display: inline-block;
+        padding: 0.6rem 1rem;
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        background: #fafafa;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            border-color: #1976d2;
+            background: #f0f7ff;
+        }
+
+        &:active {
+            border-color: #125ea7;
+            background: #e2efff;
+        }
+    }
+}
+
+/* Gemeinsamer Button-Stil für die Container-Buttons */
+.btnContainer button {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Speziell für "warn" (löschen) Buttons */
+.btnContainer button[color="warn"] {
+    border: 1px solid #d32f2f;
+    color: #d32f2f;
+
+    &:hover {
+        background: #fdecea;
+        border-color: #b71c1c;
+        color: #b71c1c;
+    }
+}
+
+/* Für die normalen Buttons */
+.btnContainer button:not([color="warn"]) {
+    border: 1px solid #1976d2;
+    color: #1976d2;
+
+    &:hover {
+        background: #e3f2fd;
+        border-color: #125ea7;
+        color: #125ea7;
+    }
 }

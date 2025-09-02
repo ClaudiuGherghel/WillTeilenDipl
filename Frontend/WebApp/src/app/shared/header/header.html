@@ -1,6 +1,7 @@
 <nav class="navbar">
-    <div>
-        <a class="homeButton" [routerLink]="'/categories'">WILLTEILEN</a>
+    <div class="header" [routerLink]="'/categories'">
+        <img src="Logo_white.png" alt="Logo">
+        <a class="homeButton">WILLTEILEN</a>
     </div>
 
     <app-search-bar class="search"></app-search-bar>
@@ -15,8 +16,8 @@
         }
         }
         @else {
-        <a [routerLink]="'/login'">Login</a>
-        <a [routerLink]="'/register'">Register</a>
+        <a [routerLink]="'/login'">Anmelden</a>
+        <a [routerLink]="'/register'">Registrieren</a>
         }
     </div>
 </nav>
