@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../../../services/auth-service';
 import { Router } from '@angular/router';
+import { extractErrorMessage } from '../../../utils/error';
 
 @Component({
   selector: 'app-login',
@@ -29,8 +30,9 @@ export class Login {
         next: data => {
           this.router.navigateByUrl('/user');
         },
-        error: error => {
-          alert("Anmeldung fehlgeschlagen" + error.message);
+        error: (err) => {
+          const message = extractErrorMessage(err);
+          alert(message);
         }
       });
       this.isTriedToSave.set(false);

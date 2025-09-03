@@ -11,6 +11,7 @@ import { AuthService } from '../../../../services/auth-service';
 import { Item, ItemPostDto } from '../../../../models/item.model';
 import { ItemService } from '../../../../services/item-service';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
+import { extractErrorMessage } from '../../../../utils/error';
 
 @Component({
   selector: 'app-add-item',
@@ -70,8 +71,9 @@ export class AddItem implements OnInit {
       next: data => {
         this.categories.set(data);
       },
-      error: error => {
-        alert("Laden der Kategorien fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -81,8 +83,9 @@ export class AddItem implements OnInit {
       next: data => {
         this.countries.set(data);
       },
-      error: error => {
-        alert("Laden der Länder fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -97,8 +100,9 @@ export class AddItem implements OnInit {
         this.selectedPostalCode.set('');
         this.selectedPlace.set('');
       },
-      error: err => {
-        alert("Laden der Bundesländer fehlgeschlagen: " + err.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -110,8 +114,9 @@ export class AddItem implements OnInit {
         this.selectedPostalCode.set('');
         this.selectedPlace.set('');
       },
-      error: err => {
-        alert("Laden der Postleitzahlen/Orte fehlgeschlagen: " + err.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -161,8 +166,9 @@ export class AddItem implements OnInit {
             alert("Item hinzugefügt");
             this.clearFields();
           },
-          error: error => {
-            alert("Fehler: " + error.message);
+          error: (err) => {
+            const message = extractErrorMessage(err);
+            alert(message);
           }
         });
       this.isTriedToSave.set(false);

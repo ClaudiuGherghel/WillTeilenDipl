@@ -75,47 +75,67 @@
         </div>
 
         <div class="form-group">
-            <input class="form-control" type="date" [(ngModel)]="birthDate" name="birthDate" />
+            <input class="form-control" type="date" [(ngModel)]="birthDate" #birthDateElement="ngModel"
+                appDateNotInFuture name="birthDate" />
+            @if (birthDateElement?.errors?.['appDateNotInFuture']) {
+            <div [hidden]="!isTriedToSave()" class="alert alert-danger">
+                Datum darf nicht in der Zukunft liegen!
+            </div>
+            }
         </div>
 
 
         <div class="form-group">
             <label for="country">Land:</label>
             <select [(ngModel)]="selectedCountry" (change)="onCountryChanged()" id="country" name="country"
-                class="form-select">
+                class="form-select" #countryElement="ngModel" required>
                 <option value="" disabled selected>Bitte Land auswählen</option>
                 @for (country of countries(); track $index) {
                 <option [value]="country">{{ country }}</option>
+                }
+                @if(countryElement?.errors?.['required']){
+                <div [hidden]="!isTriedToSave()" class="invalid-feedback">Land muss ausgewählt werden!</div>
                 }
             </select>
         </div>
         <div class="form-group">
             <label for="state">Bundesland:</label>
-            <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" name="state" class="form-select">
+            <select [(ngModel)]="selectedState" (change)="onStateChanged()" id="state" name="state" class="form-select"
+                #stateElement="ngModel" required>
                 <option value="" disabled selected></option>
                 @for (state of states(); track $index) {
                 <option [value]="state">{{state}}</option>
                 }
             </select>
+            @if(stateElement?.errors?.['required']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Bundesland muss ausgewählt werden!</div>
+            }
         </div>
         <div class="form-group">
             <label for="postalCode">Postleitzahl:</label>
             <select [(ngModel)]="selectedPostalCode" (change)="onPostalCodeChanged()" id="postalCode" name="postalCode"
-                class="form-select">
+                class="form-select" #postalCodeElement="ngModel">
                 <option value="" disabled selected></option>
                 @for (item of postalCodesAndPlaces(); track $index) {
                 <option [value]="item.postalCode">{{ item.postalCode }}</option>
                 }
             </select>
+            @if(postalCodeElement?.errors?.['required']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Postleitzahl muss ausgewählt werden!</div>
+            }
         </div>
         <div class="form-group">
             <label for="place">Ort:</label>
-            <select class="form-select" [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" name="place">
+            <select class="form-select" [(ngModel)]="selectedPlace" (change)="onPlaceChanged()" id="place" name="place"
+                #placeElement="ngModel" required>
                 <option value="" disabled selected></option>
                 @for (item of postalCodesAndPlaces(); track $index) {
                 <option [value]="item.place">{{ item.place }}</option>
                 }
             </select>
+            @if(placeElement?.errors?.['required']){
+            <div [hidden]="!isTriedToSave()" class="invalid-feedback">Ort muss ausgewählt werden!</div>
+            }
         </div>
 
         <div class="form-group">

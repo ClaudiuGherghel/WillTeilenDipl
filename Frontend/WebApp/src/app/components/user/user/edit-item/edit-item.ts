@@ -12,6 +12,7 @@ import { CommonDataService } from '../../../../services/common-data-service';
 import { GeoPostalService } from '../../../../services/geo-postal-service';
 import { ItemService } from '../../../../services/item-service';
 import { ActivatedRoute } from '@angular/router';
+import { extractErrorMessage } from '../../../../utils/error';
 
 @Component({
   selector: 'app-edit-item',
@@ -81,8 +82,9 @@ export class EditItem implements OnInit {
       next: data => {
         this.categories.set(data);
       },
-      error: error => {
-        alert("Laden der Kategorien fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -92,8 +94,9 @@ export class EditItem implements OnInit {
       next: data => {
         this.countries.set(data);
       },
-      error: error => {
-        alert("Laden der Länder fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -103,8 +106,9 @@ export class EditItem implements OnInit {
       next: data => {
         this.fillFields(data);
       },
-      error: error => {
-        alert("Laden des Items fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -180,8 +184,9 @@ export class EditItem implements OnInit {
         this.selectedPostalCode.set('');
         this.selectedPlace.set('');
       },
-      error: err => {
-        alert("Laden der Bundesländer fehlgeschlagen: " + err.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -193,8 +198,9 @@ export class EditItem implements OnInit {
         this.selectedPostalCode.set('');
         this.selectedPlace.set('');
       },
-      error: err => {
-        alert("Laden der Postleitzahlen/Orte fehlgeschlagen: " + err.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -245,8 +251,9 @@ export class EditItem implements OnInit {
           next: () => {
             alert("Item erfolgreich geändert");
           },
-          error: error => {
-            alert("Fehler: " + error.message);
+          error: (err) => {
+            const message = extractErrorMessage(err);
+            alert(message);
           }
         });
       this.isTriedToSave.set(false);

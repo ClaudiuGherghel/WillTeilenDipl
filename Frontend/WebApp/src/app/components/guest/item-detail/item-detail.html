@@ -1,46 +1,54 @@
 <article class="container mx-2">
     <div class="item-detail-view">
-        <!-- Linker Bereich: Image-Gallery -->
+        <!-- Linke Seite: Bild-Galerie -->
         <div class="image-gallery">
-            <!-- Großes Bild -->
-            <div class="main-image" (click)="onMainImageClick()">
-                <img [src]="mainImage" alt="Großes Fahrzeugbild" />
+            <!-- Hauptbild -->
+            <div class="main-image">
+                @if (mainImage() != "") {
+                <img [src]="mainImage()" (click)="onMainImageClick()" />
+                }
+                @else{
+                <img [src]="'No_Image_Available.jpg'" (click)="onMainImageClick()" />
+
+                }
             </div>
 
-            <!-- Horizontale Liste kleiner Bilder -->
+            <!-- Thumbnails unter dem Hauptbild -->
             <div class="thumbnail-gallery">
-                @for (thumbnail of thumbnails; track $index) {
-                <img [src]="thumbnail" [alt]="thumbnail" [class.active]="thumbnail === activeThumbnail"
-                    class="thumbnail" (click)="onThumbnailClick(thumbnail)" />
+                @for (image of item()?.images; track $index) {
+                <img [src]="image.imageUrl" [alt]="image.altText" class="thumbnail"
+                    [class.active]="activeThumbnail() === image.imageUrl" (click)="onThumbnailClick(image.imageUrl)" />
                 }
             </div>
         </div>
 
-        <!-- Rechter Bereich: Item Details -->
+        <!-- Rechte Seite: Details -->
         <div class="item-details">
             <h2>Fahrzeugdetails</h2>
-            <p><strong>Name:</strong> {{item()?.name}}</p>
-            <p><strong>Land:</strong> {{item()?.geoPostal?.country}}</p>
-            <p><strong>Bundesland:</strong> {{item()?.geoPostal?.state}}</p>
-            <p><strong>Postleitzahl:</strong> {{item()?.geoPostal?.postalCode}}</p>
-            <p><strong>Ort:</strong> {{item()?.geoPostal?.place}}</p>
-            <p><strong>Adresse:</strong> {{item()?.address}}</p>
-            <p><strong>Miete:</strong> {{item()?.price}}</p>
-            <p><strong>Stock:</strong> {{item()?.stock}}</p>
-            <p><strong>Rental Type:</strong> {{item()?.rentalType}}</p>
-            <p><strong>Zustand des Gegenstandes:</strong> {{item()?.itemCondition}}</p>
+            <p><strong>Name:</strong> {{ item()?.name }}</p>
+            <p><strong>Land:</strong> {{ item()?.geoPostal?.country }}</p>
+            <p><strong>Bundesland:</strong> {{ item()?.geoPostal?.state }}</p>
+            <p><strong>Postleitzahl:</strong> {{ item()?.geoPostal?.postalCode }}</p>
+            <p><strong>Ort:</strong> {{ item()?.geoPostal?.place }}</p>
+            <p><strong>Adresse:</strong> {{ item()?.address }}</p>
+            <p><strong>Miete:</strong> {{ item()?.price }} €/h</p>
+            <p><strong>Auf Lager:</strong> {{ item()?.stock }}</p>
+            <p><strong>Rental Type:</strong> {{ rentalType }}</p>
+            <p><strong>Zustand des Gegenstandes:</strong> {{ itemCondition }}</p>
         </div>
     </div>
 
-    <!-- Beschreibung unten -->
+    <!-- Beschreibung -->
     <div class="item-description">
         <h3>Beschreibung</h3>
-        <p>{{item()?.description}}</p>
+        <p>{{ item()?.description }}</p>
     </div>
 
-    <!-- Vollbildansicht -->
+    <!-- Vollbild Modal -->
     <div id="fullscreenModal" class="modal">
-        <span class="close" (click)="closeFullscreen()">&times;</span>
-        <img class="modal-content" id="fullImage" />
+        <button class="close" (click)="closeFullscreen()">&times;</button>
+        <button class="nav left" (click)="prevImage()">&#10094;</button>
+        <img id="fullImage" class="modal-content" />
+        <button class="nav right" (click)="nextImage()">&#10095;</button>
     </div>
 </article>

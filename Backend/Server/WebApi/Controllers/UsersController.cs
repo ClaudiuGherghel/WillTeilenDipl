@@ -95,7 +95,7 @@ namespace WebApi.Controllers
         {
             var user = await _uow.UserRepository.AuthenticateAsync(request.Username, request.Password);
             if (user == null)
-                return Unauthorized("Invalid credentials");
+                return Unauthorized("Benutzerdaten sind ungültig");
             var token = GenerateJwtToken(user);
             return Ok(new { Token = token });
         }
@@ -180,7 +180,7 @@ namespace WebApi.Controllers
 
             var user = await _uow.UserRepository.AuthenticateAsync(userToPut.UserName, userDto.CurrentPassword);
             if (user == null)
-                return Unauthorized("Invalid credentials");
+                return Unauthorized("Benutzerdaten sind ungültig");
 
             userDto.ChangePassword(userToPut);
 

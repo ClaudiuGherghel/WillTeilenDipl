@@ -9,8 +9,10 @@
     gap: 20px;
     margin-bottom: 60px;
     color: #333;
-    flex-wrap: wrap;
     /* sorgt dafür, dass bei kleinen Screens alles umbrechen darf */
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
 }
 
 /* Links */
@@ -49,8 +51,6 @@ a:hover {
 .navButtons {
     display: flex;
     gap: 15px;
-    margin-left: auto;
-    /* schiebt Buttons nach rechts */
     flex-wrap: wrap;
 }
 

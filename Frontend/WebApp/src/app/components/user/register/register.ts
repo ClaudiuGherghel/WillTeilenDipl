@@ -6,11 +6,13 @@ import { GeoPostalService } from '../../../services/geo-postal-service';
 import { PostalCodeAndPlaceDto } from '../../../dtos/postal-code-and-place-dto';
 import { RegisterRequest } from '../../../models/register-request';
 import { switchMap } from 'rxjs';
+import { DateNotInFutureDirective } from "../../../directives/date-not-in-future";
+import { extractErrorMessage } from '../../../utils/error';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, DateNotInFutureDirective],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
@@ -104,7 +106,7 @@ export class Register implements OnInit {
   register(form: NgForm) {
     this.isTriedToSave.set(true);
 
-    if (form.valid && this.password() != this.passwordRepeat()) {
+    if (form.valid && this.password() == this.passwordRepeat()) {
 
       this.geoPostalService.getByQuery(this.selectedCountry(), this.selectedState(), this.selectedPostalCode(), this.selectedPlace())
         .pipe(
@@ -129,8 +131,9 @@ export class Register implements OnInit {
           next: (data) => {
             this.router.navigate(['/categories']);
           },
-          error: error => {
-            alert('Registration failed' + error.message);
+          error: (err) => {
+            const message = extractErrorMessage(err);
+            alert(message);
           }
         });
       this.isTriedToSave.set(false);

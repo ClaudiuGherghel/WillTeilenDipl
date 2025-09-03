@@ -1,7 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SubCategoryService } from '../../../services/sub-category-service';
-import { SubCategory } from '../../../models/sub-category.model';
 import { SidebarFilter } from '../../../models/sidebar-filter';
 import { Item } from '../../../models/item.model';
 import { ItemService } from '../../../services/item-service';
@@ -10,6 +9,7 @@ import { CommonDataService } from '../../../services/common-data-service';
 import { MainImageDto } from '../../../dtos/main-image-dto';
 import { ItemDtoForSearchQuery } from '../../../dtos/item-dto-for-search-query';
 import { SubCategoryWithMainImageDto } from '../../../dtos/sub-category-with-main-image-dto';
+import { extractErrorMessage } from '../../../utils/error';
 
 @Component({
   selector: 'app-items',
@@ -67,11 +67,10 @@ export class Items implements OnInit {
     this.subCategoryService.getWithMainImage(this.subCategoryId).subscribe({
       next: data => {
         this.subCategoryDto.set(data);
-
-
       },
-      error: error => {
-        alert("Laden der Subkategorie ist fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -81,8 +80,9 @@ export class Items implements OnInit {
       next: data => {
         this.items.set(data);
       },
-      error: error => {
-        alert("Fehler beim Laden der Items: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -91,8 +91,6 @@ export class Items implements OnInit {
     if (this.sideBarFilter() == undefined) {
       return true;
     }
-
-
 
     if (!(this.sideBarFilter()!.country == '' || item.geoPostal.country.includes(this.sideBarFilter()!.country))) return false;
     if (!(this.sideBarFilter()!.state == '' || item.geoPostal.state.includes(this.sideBarFilter()!.state))) return false;

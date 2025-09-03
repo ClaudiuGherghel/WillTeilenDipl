@@ -8,6 +8,7 @@ import { RentalType } from '../../../../enums/rental-type';
 import { ItemCondition } from '../../../../enums/item-condition';
 import { ImageService } from '../../../../services/image-service';
 import { MainImageDto } from '../../../../dtos/main-image-dto';
+import { extractErrorMessage } from '../../../../utils/error';
 
 
 
@@ -53,8 +54,9 @@ export class ItemList implements OnInit {
           }
           this.mainImages.set(imgs);
         },
-        error: error => {
-          alert("Laden der Items fehlgeschlagen: " + error.message);
+        error: (err) => {
+          const message = extractErrorMessage(err);
+          alert(message);
         }
       });
     }
@@ -97,8 +99,9 @@ export class ItemList implements OnInit {
         console.log(data);
         this.loadItems();
       },
-      error: error => {
-        alert("Änderung fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -114,8 +117,9 @@ export class ItemList implements OnInit {
         console.log(data);
         this.loadItems();
       },
-      error: error => {
-        alert("Fehler beim Löschen des Items: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }

@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonDataService } from '../../services/common-data-service';
 import { GeoPostalService } from '../../services/geo-postal-service';
 import { PostalCodeAndPlaceDto } from '../../dtos/postal-code-and-place-dto';
+import { extractErrorMessage } from '../../utils/error';
 
 @Component({
   selector: 'app-side-bar',
@@ -51,8 +52,9 @@ export class SideBar implements OnInit {
       next: data => {
         this.countries.set(data);
       },
-      error: error => {
-        alert("Laden der Länder fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -65,8 +67,9 @@ export class SideBar implements OnInit {
         this.selectedPostalCode.set('');
         this.selectedPlace.set('');
       },
-      error: err => {
-        alert("Laden der Bundesländer fehlgeschlagen: " + err.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -78,8 +81,9 @@ export class SideBar implements OnInit {
         this.selectedPostalCode.set('');
         this.selectedPlace.set('');
       },
-      error: err => {
-        alert("Laden der Postleitzahlen/Orte fehlgeschlagen: " + err.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }

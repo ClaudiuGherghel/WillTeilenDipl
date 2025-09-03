@@ -1,10 +1,10 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ImageService } from '../../../../services/image-service';
-import { ItemService } from '../../../../services/item-service';
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Image, ImagePutDto } from '../../../../models/image.model';
 import { FormsModule } from '@angular/forms';
+import { extractErrorMessage } from '../../../../utils/error';
 
 @Component({
   selector: 'app-add-edit-images',
@@ -40,8 +40,9 @@ export class AddEditImages implements OnInit {
         console.log(data);
         this.loadImages();
       },
-      error: error => {
-        alert("Upload fehlgeschlagen " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -52,8 +53,9 @@ export class AddEditImages implements OnInit {
         this.images.set(data);
         console.log(data);
       },
-      error: error => {
-        alert("Laden der Bilder fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -74,8 +76,9 @@ export class AddEditImages implements OnInit {
       next: data => {
         this.loadImages();
       },
-      error: error => {
-        alert("Update ist fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -85,8 +88,9 @@ export class AddEditImages implements OnInit {
       next: data => {
         this.loadImages();
       },
-      error: error => {
-        alert("Löschen des Bildes fehlgeschlagen:" + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }

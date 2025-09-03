@@ -7,10 +7,12 @@ import { GeoPostalService } from '../../../../services/geo-postal-service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserService } from '../../../../services/user-service';
 import { User, UserPutDo } from '../../../../models/user.model';
+import { DateNotInFutureDirective } from "../../../../directives/date-not-in-future";
+import { extractErrorMessage } from '../../../../utils/error';
 
 @Component({
   selector: 'app-profile',
-  imports: [FormsModule],
+  imports: [FormsModule, DateNotInFutureDirective],
   templateUrl: './profile.html',
   styleUrl: './profile.css'
 })
@@ -104,8 +106,9 @@ export class Profile implements OnInit {
       next: data => {
         this.countries.set(data);
       },
-      error: error => {
-        alert("Laden der Länder fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -118,8 +121,9 @@ export class Profile implements OnInit {
         this.selectedPostalCode.set('');
         this.selectedPlace.set('');
       },
-      error: err => {
-        alert("Laden der Bundesländer fehlgeschlagen: " + err.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -131,8 +135,9 @@ export class Profile implements OnInit {
         this.selectedPostalCode.set('');
         this.selectedPlace.set('');
       },
-      error: err => {
-        alert("Laden der Postleitzahlen/Orte fehlgeschlagen: " + err.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }
@@ -208,13 +213,16 @@ export class Profile implements OnInit {
           this.fillFields(data); // Formular wieder befüllen
           alert("Daten wurden geändert");
         },
-        error: error => alert("Fehler beim Speichern: " + error.message)
+        error: (err) => {
+          const message = extractErrorMessage(err);
+          alert(message);
+        }
       });
 
       this.isTriedToSave.set(false);
       this.formIsValid.set(true);
     }
   }
-
+  // alert("Fehler beim Speichern: " + error.message)
 
 }

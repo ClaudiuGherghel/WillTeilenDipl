@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Category } from '../../../models/category.model';
 import { RouterLink } from '@angular/router';
 import { CategoryService } from '../../../services/category-service';
+import { extractErrorMessage } from '../../../utils/error';
 
 @Component({
   selector: 'app-categories',
@@ -26,8 +27,9 @@ export class Categories implements OnInit {
       next: data => {
         this.categories.set(data);
       },
-      error: error => {
-        alert("Laden der Kategorien ist fehlgeschlagen: " + error.message);
+      error: (err) => {
+        const message = extractErrorMessage(err);
+        alert(message);
       }
     });
   }

@@ -51,7 +51,7 @@ public async Task<SubCategoryWithMainImageDto?> GetWithMainImageByIdAsync(int id
             Id = sc.Id,
             Name = sc.Name,
             ItemsDto = sc.Items
-                .Where(i => !i.IsDeleted)
+                .Where(i => !i.IsDeleted && i.IsAvailable)
                 .Select(i => new ItemForSearchQueryDto
                 {
                     Id = i.Id,

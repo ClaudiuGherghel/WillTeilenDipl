@@ -109,6 +109,7 @@ namespace Persistence
             );
 
             var result = await query
+                .Where(i => i.IsAvailable)
                 .Select(i => new ItemForSearchQueryDto
                 {
                     Id = i.Id,
