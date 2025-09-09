@@ -31,18 +31,14 @@ namespace Persistence.Validations.ValidationRules
                    .ToList();
             }
 
-
             bool emailExistsInDb = await DbContext.Users
                 .AnyAsync(u => u != user && EF.Functions.Like(u.Email, user.Email));
-
 
             if (emailExistsInMemory || emailExistsInDb)
             {
                 throw new ValidationException(
                     new ValidationResult($"E-Mail {user.Email} existiert bereits", [nameof(User.Email)]), null, user);
             }
-
-
         }
     }
 }

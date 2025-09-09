@@ -107,7 +107,6 @@ export class Register implements OnInit {
     this.isTriedToSave.set(true);
 
     if (form.valid && this.password() == this.passwordRepeat()) {
-
       this.geoPostalService.getByQuery(this.selectedCountry(), this.selectedState(), this.selectedPostalCode(), this.selectedPlace())
         .pipe(
           switchMap(data => {

@@ -14,7 +14,6 @@ export class AuthService {
   private _userId = signal<number | null>(null);
   private _role = signal<string | null>(null);
 
-  // ---- Signale ----
   isAuthenticated = this._isAuthenticated.asReadonly();
   userId = this._userId.asReadonly();
   role = this._role.asReadonly();
@@ -25,7 +24,6 @@ export class AuthService {
     this.restoreSession();
   }
 
-
   register(registerRequest: RegisterRequest): Observable<{ token: string }> {
     console.log(registerRequest);
 
@@ -33,8 +31,6 @@ export class AuthService {
       tap(res => this.saveToken(res.token))
     );
   }
-
-
   login(username: string, password: string): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(`${this.apiUrl}/login`, { username, password }).pipe(
       tap(res => {
@@ -42,8 +38,6 @@ export class AuthService {
       })
     );
   }
-
-  // ---- Logout ----
   logout() {
     localStorage.removeItem('token');
     this._isAuthenticated.set(false);
@@ -51,13 +45,11 @@ export class AuthService {
     this._role.set(null);
     this.router.navigate(['/login']);
   }
-
   // ---- Token speichern & Signale setzen ----
   private saveToken(token: string) {
     localStorage.setItem('token', token);
     this.decodeAndStore(token);
   }
-
   // ---- Session beim App-Start prüfen ----
   private restoreSession() {
     const token = localStorage.getItem('token');
@@ -65,7 +57,6 @@ export class AuthService {
       this.decodeAndStore(token);
     }
   }
-
   private decodeAndStore(token: string) {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
